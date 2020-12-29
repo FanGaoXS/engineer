@@ -1,0 +1,9 @@
+
+spring:
+  ldap:
+    urls: ldap://47.107.191.93:389
+    base: dc=blctek,dc=com
+    username: cn=admin,dc=blctek,dc=com
+    password: 954278478
+server:
+  port: 8091
