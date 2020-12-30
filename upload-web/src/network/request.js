@@ -43,7 +43,7 @@ function wqkRequest(config) {
 function blctekRequest(config) {
   // 创建axios实例，配置baseURL
   let axiosInstance = Axios.create({
-    baseURL: 'http://upload-server.wqkd.blctek.com/',
+    baseURL: 'http://car-server.wqkd.blctek.com/',
     timeout: 5000
   });
   // response拦截器，过滤data

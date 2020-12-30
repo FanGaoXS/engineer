@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-
+import router from "./router";
 
 // 引入elementUI相关并全局使用
 import ElementUI from 'element-ui';
@@ -16,4 +16,5 @@ Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
+  router
 }).$mount('#app');

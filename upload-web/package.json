@@ -11,7 +11,8 @@
     "core-js": "^2.6.5",
     "element-ui": "^2.14.1",
     "input-number-plate-plus": "^1.1.5",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vue-router": "^3.4.9"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.4",

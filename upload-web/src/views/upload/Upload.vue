@@ -9,6 +9,14 @@
       </el-button-group>
       <!--普通车辆表单-->
       <el-form label-position="left" v-if="isVehicle">
+        <!--设备编号（从url中获取devId）-->
+        <el-form-item label="设备编号">
+          <el-input
+                  type="text"
+                  :value="$route.params.devId"
+                  disabled
+          ></el-input>
+        </el-form-item>
         <!--车牌类型-->
         <el-form-item label="车牌类型">
           <!--开关-->
@@ -155,7 +163,6 @@
 
   // 引入网络请求的函数
   import {
-    uploadImg,
     uploadVehicle,
     uploadMachine
   } from "../../network/uploadRequest";
@@ -172,7 +179,7 @@
         // 普通车辆或者机械
         isVehicle: true,
         // 芯片编号
-        chipId: '10001',
+        chipId: '',
         formItem1: {
           /*
           *   普通车辆表单

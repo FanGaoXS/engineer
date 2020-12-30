@@ -1,14 +1,15 @@
 import {
-  localCarRequest
+  localCarRequest,
+  blctekCarRequest
 } from "./request";
 
 /**
- *  获取机械列表（本地）
+ *  获取机械列表
  */
 export function getMachineList(){
   let config={
     url: '/machine/allMachine',
     method: 'GET'
   };
-  return localCarRequest(config);
+  return blctekCarRequest(config);
 }

@@ -1,5 +1,6 @@
 import {
-  localLdapRequest
+  localLdapRequest,
+  blctekLdapRequest
 } from "./request";
 
 export function getDevelopList() {
@@ -7,7 +8,7 @@ export function getDevelopList() {
     url: '/develop/developList',
     method: 'GET'
   }
-  return localLdapRequest(config);
+  return blctekLdapRequest(config);
 }
 
 export function insertDevelop(formData) {
@@ -19,7 +20,7 @@ export function insertDevelop(formData) {
     },
     data: formData
   };
-  return localRequest(config);
+  return blctekLdapRequest(config);
 }
 
 export function deleteDevelop(commonName) {
@@ -30,5 +31,5 @@ export function deleteDevelop(commonName) {
       commonName: commonName
     }
   };
-  return localLdapRequest(config);
+  return blctekLdapRequest(config);
 }
