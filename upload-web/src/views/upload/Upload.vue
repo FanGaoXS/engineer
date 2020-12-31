@@ -13,7 +13,7 @@
         <el-form-item label="设备编号">
           <el-input
                   type="text"
-                  :value="$route.params.devId"
+                  :value="devId"
                   disabled
           ></el-input>
         </el-form-item>
@@ -92,6 +92,14 @@
 
       <!--机械用具表单-->
       <el-form label-position="left" v-if="!isVehicle">
+        <!--设备编号（从url中获取devId）-->
+        <el-form-item label="设备编号">
+          <el-input
+                  type="text"
+                  :value="devId"
+                  disabled
+          ></el-input>
+        </el-form-item>
         <el-form-item label="机械类型">
           <el-select v-model="formItem2.machineModel" placeholder="请选择">
             <!--机械选择组-->
@@ -261,6 +269,12 @@
         ],
       };
     },
+    computed: {
+      // 从url中获取参数devId（设备编号）
+      devId() {
+        return this.$route.params.devId;
+      }
+    },
     methods: {
       handleRemove(file, fileList) {
         console.log(file, fileList);
@@ -315,6 +329,7 @@
         let limitFileSize = this.limitFileSize;
         // 待上传的图片是否在范围之内，true小于限制，false大于限制
         let compareFileSizeResult = this.compareFileSize(file,limitFileSize);
+        this.chipId=this.devId;
         if (this.isVehicle){ // 普通车辆上传前处理
           if (this.chipId!==''
               && this.formItem1.plateType!==null

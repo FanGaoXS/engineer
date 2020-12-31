@@ -61,8 +61,8 @@
                 prop="driver.driverName"/>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="small" type="primary" @click="uploadVehicle(scope.$index,scope.row)">修改</el-button>
-            <el-button size="small" type="danger" @click="deleteVehicle(scope.$index,scope.row)">删除</el-button>
+            <el-button size="small" type="primary" @click="updateVehicle(scope.$index,scope.row)">修改</el-button>
+            <el-button size="small" type="danger" @click="removeVehicle(scope.$index,scope.row)">删除</el-button>
           </template>
         </el-table-column>
 
@@ -74,8 +74,10 @@
 <script>
 
   import {
-    getVehicleList
+    getVehicleList,
+    removeVehicleRow
   } from "../../../network/vehicleRequest";
+  import {deleteMachineRow} from "../../../network/machineRequest";
 
   export default {
     name: "VehicleList",
@@ -114,13 +116,28 @@
       });
     },
     methods: {
-      uploadVehicle(index,machineRow){
+      updateVehicle(index,vehicleRow){
         console.log(index);
-        console.log(machineRow);
+        console.log(vehicleRow);
       },
-      deleteVehicle(index,machineRow){
-        console.log(index);
-        console.log(machineRow);
+      removeVehicle(index,vehicleRow){
+        this.vehicleList.splice(index,1); // 从数组对象中动态移除该行记录
+        let vehicleId = vehicleRow.vehicleId; //  从行中获取到vehicleId
+        let carId = vehicleRow.car.carId; // 从行中获取到carId
+        let driverId = vehicleRow.driver.driverId;  // 从行中获取driverId
+        removeVehicleRow(vehicleId,carId,driverId).then(res=>{
+          this.$message({
+            showClose: true,
+            message: res.msg+'成功！',
+            type: "success",
+          });
+        }).catch(error=>{
+          this.$message({
+            showClose: true,
+            message: error.msg,
+            type: "error",
+          });
+        });
       }
     },
   }

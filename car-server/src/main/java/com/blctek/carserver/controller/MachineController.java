@@ -127,6 +127,9 @@ public class MachineController {
     public Map<String,Object> removeMachine(Integer machineId,
                                             Integer carId,
                                             Integer driverId){
+        log.info("机械编号->[{}]",machineId);
+        log.info("所属工程用具编号->[{}]",carId);
+        log.info("驾驶员编号->[{}]",driverId);
         Boolean result = machineService.removeMachine(machineId, carId, driverId);
         log.info("Machine是否删除成功->[{}]",result?"是":"否");
         HashMap<String, Object> resMap = new HashMap<>();

@@ -45,8 +45,8 @@
         <el-table-column label="驾驶员" prop="driver.driverName"/>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="small" type="primary" @click="uploadMachine(scope.$index,scope.row)">修改</el-button>
-            <el-button size="small" type="danger" @click="deleteMachine(scope.$index,scope.row)">删除</el-button>
+            <el-button size="small" type="primary" @click="modifyMachine(scope.$index,scope.row)">修改</el-button>
+            <el-button size="small" type="danger" @click="removeMachine(scope.$index,scope.row)">删除</el-button>
           </template>
         </el-table-column>
 
@@ -58,7 +58,8 @@
 <script>
 
   import {
-    getMachineList
+    getMachineList,
+    removeMachineRow
   } from "../../../network/machineRequest";
 
   export default {
@@ -98,13 +99,33 @@
       });
     },
     methods: {
-      uploadMachine(index,machineRow){
+      modifyMachine(index,machineRow){
         console.log(index);
         console.log(machineRow);
       },
-      deleteMachine(index,machineRow){
-        console.log(index);
-        console.log(machineRow);
+      /**
+       *  删除一行机械记录
+       * @param index 该行记录所在的下标
+       * @param machineRow  该行记录对象
+       */
+      removeMachine(index,machineRow){
+        this.machineList.splice(index,1); // 从数组对象中动态移除该行记录
+        let machineId = machineRow.machineId; //  从行中获取到machineId
+        let carId = machineRow.car.carId; // 从行中获取到carId
+        let driverId = machineRow.driver.driverId;  // 从行中获取driverId
+        removeMachineRow(machineId,carId,driverId).then(res=>{
+          this.$message({
+            showClose: true,
+            message: res.msg+'成功！',
+            type: "success",
+          });
+        }).catch(error=>{
+          this.$message({
+            showClose: true,
+            message: error.msg,
+            type: "error",
+          });
+        });
       }
     },
   }
