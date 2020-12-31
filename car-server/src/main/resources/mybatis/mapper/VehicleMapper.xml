@@ -44,16 +44,16 @@
             vehicle
         <trim prefix="set" suffixOverrides=",">
             <if test=" carId!=null and carId!='' ">
-                carId=#{carId}
+                carId=#{carId},
             </if>
             <if test=" plateNumber!=null and plateNumber!='' ">
-                plateNumber=#{plateNumber}
+                plateNumber=#{plateNumber},
             </if>
             <if test=" plateType!=null and plateType!='' ">
-                plateType=#{plateType}
+                plateType=#{plateType},
             </if>
             <if test=" vehicleModel!=null and vehicleModel!='' ">
-                vehicleModel=#{vehicleModel}
+                vehicleModel=#{vehicleModel},
             </if>
         </trim>
         WHERE

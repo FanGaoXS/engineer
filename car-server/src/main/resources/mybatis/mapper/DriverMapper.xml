@@ -20,10 +20,10 @@
             driver
         <trim prefix="set" suffixOverrides=",">
             <if test=" driverName!=null and driverName!='' ">
-                driverName=#{driverName}
+                driverName=#{driverName},
             </if>
             <if test=" driverPhone!=null and driverPhone!='' ">
-                driverPhone=#{driverPhone}
+                driverPhone=#{driverPhone},
             </if>
         </trim>
         WHERE

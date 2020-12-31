@@ -34,13 +34,13 @@
             car
         <trim prefix="set" suffixOverrides=",">
             <if test=" type!=null and type!='' ">
-                type=#{type}
+                type=#{type},
             </if>
             <if test=" driverId!=null and driverId!='' ">
-                driverId=#{driverId}
+                driverId=#{driverId},
             </if>
             <if test=" chipId!=null and chipId!='' ">
-                chipId=#{chipId}
+                chipId=#{chipId},
             </if>
         </trim>
         WHERE

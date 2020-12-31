@@ -43,7 +43,9 @@
     name: "DevelopList",
     data() {
       return {
-        developList: []
+        developList: [
+
+        ]
       }
     },
     created() {

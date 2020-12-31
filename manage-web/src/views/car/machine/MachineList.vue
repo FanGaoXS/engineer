@@ -20,7 +20,7 @@
               <el-form-item label="工程用具类型">
                 <span>{{scope.row.car.type}}</span>
               </el-form-item>
-              <el-form-item label="芯片编号">
+              <el-form-item label="设备编号">
                 <span>{{scope.row.car.chipId}}</span>
               </el-form-item>
               <el-form-item label="驾驶员编号">
@@ -38,7 +38,7 @@
 
         <!--常规表格-->
         <el-table-column label="机械编号" prop="machineId"/>
-        <el-table-column label="芯片编号" prop="car.chipId"/>
+        <el-table-column label="设备编号" prop="car.chipId"/>
         <el-table-column label="机械或车辆" prop="car.type"/>
         <el-table-column label="机械类型" prop="machineModel"/>
         <el-table-column label="机械型号" prop="machineNumber"/>
@@ -67,7 +67,7 @@
     data() {
       return {
         machineList: [
-          {
+          /*{
             machineId: 8, //机械编号
             carId: 26,  //所属工程用具编号
             machineNumber: "卡特320D",  //机械型号
@@ -85,14 +85,13 @@
               driverName: "杨非", //所属驾驶员姓名
               driverPhone: "17760340437"  //所属驾驶员电话号码
             }
-          },
+          },*/
         ]
       }
     },
     created() {
       getMachineList().then(res=>{
         console.log('response->',res);
-        console.log(res.data)
         this.machineList=res.data;
       }).catch(error=>{
         console.log(error);
@@ -109,23 +108,32 @@
        * @param machineRow  该行记录对象
        */
       removeMachine(index,machineRow){
-        this.machineList.splice(index,1); // 从数组对象中动态移除该行记录
         let machineId = machineRow.machineId; //  从行中获取到machineId
         let carId = machineRow.car.carId; // 从行中获取到carId
         let driverId = machineRow.driver.driverId;  // 从行中获取driverId
-        removeMachineRow(machineId,carId,driverId).then(res=>{
-          this.$message({
-            showClose: true,
-            message: res.msg+'成功！',
-            type: "success",
+        this.$confirm('此操作将永久删除该行车辆记录，确认删除？','提示',{
+          confirmButtonText: '确定',  //确认按钮的文字
+          cancelButtonText: '取消',   //取消按钮的文字
+          type: "warning"
+        }).then(()=>{ // 确认按钮
+          removeMachineRow(machineId,carId,driverId).then(res=>{
+            this.$message({ //request请求成功
+              showClose: true,
+              message: res.msg+'成功！',
+              type: "success",
+            });
+            this.machineList.splice(index,1); // 从数组对象中动态移除该行记录
+          }).catch(error=>{ //request请求失败
+            this.$message({
+              showClose: true,
+              message: error.msg,
+              type: "error",
+            });
           });
-        }).catch(error=>{
-          this.$message({
-            showClose: true,
-            message: error.msg,
-            type: "error",
-          });
+        }).catch(()=>{  //取消按钮
+
         });
+
       }
     },
   }

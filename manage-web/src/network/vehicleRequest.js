@@ -32,3 +32,25 @@ export function removeVehicleRow(vehicleId,carId,driverId) {
   }
   return blctekCarRequest(config);
 }
+
+/**
+ * 修改车辆信息
+ * @param vehicleForm
+ * @returns {AxiosPromise}
+ */
+export function modifyVehicleRow(vehicleForm) {
+  let config={
+    url: 'vehicle/modifyVehicle',
+    method: 'GET',
+    params: {
+      vehicleId: vehicleForm.vehicleId,
+      plateNumber: vehicleForm.plateNumber,
+      plateType: vehicleForm.plateType,
+      vehicleModel: vehicleForm.vehicleModel,
+      driverId: vehicleForm.driverId,
+      driverName: vehicleForm.driverName,
+      driverPhone: vehicleForm.driverPhone
+    }
+  };
+  return blctekCarRequest(config);
+}
