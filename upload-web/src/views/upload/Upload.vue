@@ -172,7 +172,7 @@
   // 引入网络请求的函数
   import {
     uploadVehicle,
-    uploadMachine
+    uploadMachine,
   } from "../../network/uploadRequest";
 
   export default {
@@ -388,62 +388,68 @@
           }
         }
       },
+      uploadMachine(param){
+        let formData = new FormData();
+        formData.append('file',param.file);
+        formData.append('chipId',this.chipId);
+        formData.append('machineModel',this.formItem2.machineModel);
+        formData.append('machineNumber',this.formItem2.machineNumber);
+        formData.append('engineNumber',this.formItem2.engineNumber);
+        formData.append('driverName',this.formItem2.driverName);
+        formData.append('driverPhone',this.formItem2.driverPhone);
+        uploadMachine(formData).then(res=>{ // request成功
+          console.log('上传成功->',res);
+          this.$notify({
+            title: '成功',
+            message: res.msg,
+            type: 'success',
+            offset: 100
+          });
+        }).catch(error=>{ // request失败
+          console.log('上传失败->',error);
+          this.$notify({
+            title: '失败',
+            message: '您的机械信息上传失败，请联系管理员',
+            type: 'error',
+            offset: 100
+          });
+        });
+      },
+      uploadVehicle(param){
+        let formData = new FormData();
+        formData.append('file',param.file);
+        formData.append('chipId',this.chipId);
+        formData.append('plateType',this.formItem1.plateType?'新能源':'汽油车');
+        formData.append('plateNumber',this.formItem1.plateNumber);
+        formData.append('vehicleModel',this.formItem1.vehicleModel);
+        formData.append('driverName',this.formItem1.driverName);
+        formData.append('driverPhone',this.formItem1.driverPhone);
+        uploadVehicle(formData).then(res=>{ // request成功
+          console.log('上传成功->',res);
+          this.$notify({
+            title: '成功',
+            message: res.msg,
+            type: 'success',
+            offset: 100
+          });
+        }).catch(error=>{ // request失败
+          console.log('上传失败->',error);
+          this.$notify({
+            title: '失败',
+            message: '您的车辆信息上传失败，请联系管理员',
+            type: 'error',
+            offset: 100
+          });
+        });
+      },
       /* 上传文件函数
       *  params参数是el-upload里的fileList
       *  */
       upload(param){
         if (this.isVehicle){ // 上传车辆信息
-          let formData = new FormData();
-          formData.append('file',param.file);
-          formData.append('chipId',this.chipId);
-          formData.append('plateType',this.formItem1.plateType?'新能源':'汽油车');
-          formData.append('plateNumber',this.formItem1.plateNumber);
-          formData.append('vehicleModel',this.formItem1.vehicleModel);
-          formData.append('driverName',this.formItem1.driverName);
-          formData.append('driverPhone',this.formItem1.driverPhone);
-          uploadVehicle(formData).then(res=>{ // request成功
-            console.log('上传成功->',res);
-            this.$notify({
-              title: '成功',
-              message: res.msg,
-              type: 'success',
-              offset: 100
-            });
-          }).catch(error=>{ // request失败
-            console.log('上传失败->',error);
-            this.$notify({
-              title: '失败',
-              message: '您的车辆信息上传失败，请联系管理员',
-              type: 'error',
-              offset: 100
-            });
-          });
+          this.uploadVehicle(param);
         } else { //上传机械信息
-          let formData = new FormData();
-          formData.append('file',param.file);
-          formData.append('chipId',this.chipId);
-          formData.append('machineModel',this.formItem2.machineModel);
-          formData.append('machineNumber',this.formItem2.machineNumber);
-          formData.append('engineNumber',this.formItem2.engineNumber);
-          formData.append('driverName',this.formItem2.driverName);
-          formData.append('driverPhone',this.formItem2.driverPhone);
-          uploadMachine(formData).then(res=>{ // request成功
-            console.log('上传成功->',res);
-            this.$notify({
-              title: '成功',
-              message: res.msg,
-              type: 'success',
-              offset: 100
-            });
-          }).catch(error=>{ // request失败
-            console.log('上传失败->',error);
-            this.$notify({
-              title: '失败',
-              message: '您的机械信息上传失败，请联系管理员',
-              type: 'error',
-              offset: 100
-            });
-          });
+          this.uploadMachine(param);
         }
       },
       /* 提交上传（调用上传文件函数） */

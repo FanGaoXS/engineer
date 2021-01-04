@@ -24,6 +24,13 @@ public interface VehicleMapper {
     List<Vehicle> selectAllVehicleAndCarAndDriver();
 
     /**
+     * 查询车辆（根据车牌号条件查询车辆）
+     * @param plateNumber   车牌号
+     * @return  查询到的车辆对象
+     */
+    Vehicle selectVehicleByPlateNumber(String plateNumber);
+
+    /**
      *  新增车辆
      * @param vehicle 车辆对象
      * @return 新增车辆的数量

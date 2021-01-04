@@ -13,6 +13,20 @@
         AND
             d.driverId=c.driverId
     </select>
+    <select id="selectVehicleByPlateNumber" resultMap="VehicleMap" parameterType="string">
+        SELECT
+            *
+        FROM
+            vehicle v,
+            car c,
+            driver d
+        WHERE
+            v.carId=c.carId
+        AND
+            d.driverId=c.driverId
+        AND
+            v.plateNumber=#{plateNumber}
+    </select>
     <resultMap id="VehicleMap" type="com.blctek.carserver.pojo.Vehicle">
         <id property="vehicleId" column="vehicleId"/>
         <result property="vehicleModel" column="vehicleModel"/>

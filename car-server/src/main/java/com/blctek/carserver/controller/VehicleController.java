@@ -1,12 +1,15 @@
 package com.blctek.carserver.controller;
 
+import com.blctek.carserver.mapper.VehicleMapper;
 import com.blctek.carserver.pojo.Car;
 import com.blctek.carserver.pojo.Driver;
 import com.blctek.carserver.pojo.Machine;
 import com.blctek.carserver.pojo.Vehicle;
 import com.blctek.carserver.service.VehicleService;
+import com.blctek.carserver.utils.HttpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +32,9 @@ public class VehicleController {
 
     @Autowired
     private VehicleService vehicleService;
+
+    @Autowired
+    private VehicleMapper vehicleMapper;
 
     /**
      *  新增车辆信息（上传）
@@ -65,6 +71,11 @@ public class VehicleController {
         }
         log.info("文件大小->[{}]",fileSize);
 
+        Vehicle vehicleByPlateNumber = vehicleMapper.selectVehicleByPlateNumber(plateNumber); //根据车牌号从数据中查询有无该记录
+        if (vehicleByPlateNumber!=null) {   //不为空，说明数据库中已经存在，则覆盖（删除原记录再新插入）
+            vehicleService.removeVehicle(vehicleByPlateNumber.getVehicleId(),vehicleByPlateNumber.getCar().getCarId(),vehicleByPlateNumber.getDriver().getDriverId());
+        }
+
         Car car = new Car();
         car.setChipId(chipId);
 
@@ -79,8 +90,12 @@ public class VehicleController {
 
         Vehicle vehicleDB = vehicleService.addVehicle(car, driver, vehicle);
 
+        ResponseEntity<String> responseEntity = HttpUtils.updateDevByPut(chipId, plateNumber);
+        log.info("updateDevByPut.statusCode->[{}]",responseEntity.getStatusCode());
+
         HashMap<String, Object> resMap = new HashMap<>();
         resMap.put("status",true);
+        resMap.put("statusCode",responseEntity.getStatusCode());
         resMap.put("msg","上传车辆信息成功！");
         resMap.put("data",vehicleDB);
         log.info("---uploadVehicle end---");

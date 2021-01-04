@@ -53,7 +53,7 @@ export function localCarRequest(config) {
  */
 export function blctekLdapRequest(config) {
   let axiosInstance = axios.create({
-    baseURL: 'http://ldap-server.wqkd.blctek.com/',
+    baseURL: '//ldap-server.wqkd.blctek.com/',
     timeout: 5000
   });
   axiosInstance.interceptors.request.use(config=>{
@@ -76,7 +76,7 @@ export function blctekLdapRequest(config) {
  */
 export function blctekCarRequest(config) {
   let axiosInstance = axios.create({
-    baseURL: 'http://car-server.wqkd.blctek.com/',
+    baseURL: '//car-server.wqkd.blctek.com/',
     timeout: 5000
   });
   axiosInstance.interceptors.request.use(config=>{

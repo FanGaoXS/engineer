@@ -67,7 +67,7 @@
             <el-input v-model="dialogForm.vehicleId" disabled/>
           </el-form-item>
           <el-form-item label="车牌号">
-            <el-input type="text" v-model="dialogForm.plateNumber"/>
+            <el-input type="text" v-model="dialogForm.plateNumber" disabled/>
           </el-form-item>
           <el-form-item label="车牌类型">
             <el-input type="text" v-model="dialogForm.plateType"/>
@@ -193,7 +193,8 @@
           cancelButtonText: '取消',
           type: "warning"
         }).then(()=>{   //点击“confirm”
-          this.removeVehicle(vehicleId,carId,driverId);
+          this.removeVehicle(vehicleId,carId,driverId,index);
+
         }).catch(()=>{}); // 点击"cancel"
       },
       // 向后端发起请求修改该行车辆信息
@@ -205,7 +206,7 @@
             type: "success",
           });
           this.closeModifyDialog(); //关闭对话框
-          this.getVehicleList(); // 重新从后端获取车辆列表，达到刷新页面的目的
+          this.getVehicleList();    // 重新从后端获取车辆列表，达到刷新页面的目的
         }).catch(error=>{
           this.$message({
             showClose: true,
@@ -214,8 +215,14 @@
           });
         });
       },
-      // 向后端发起请求删除该行车辆信息
-      removeVehicle(vehicleId,carId,driverId){
+      /**
+       * 向后端发起请求删除该行车辆信息
+       * @param vehicleId
+       * @param carId
+       * @param driverId
+       * @param index 该行记录所在的数组下标
+       */
+      removeVehicle(vehicleId,carId,driverId,index){
         removeVehicleRow(vehicleId,carId,driverId).then(res=>{
           this.$message({ //request请求删除成功
             showClose: true,

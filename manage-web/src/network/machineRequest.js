@@ -32,3 +32,19 @@ export function removeMachineRow(machineId,carId,driverId) {
   };
   return blctekCarRequest(config);
 }
+
+export function modifyMachineRow(machineForm) {
+  let config={
+    url: '/machine/modifyMachine',
+    method: 'GET',
+    params: {
+      machineId: machineForm.machineId,
+      machineNumber: machineForm.machineNumber,
+      machineModel: machineForm.machineModel,
+      driverId: machineForm.driverId,
+      driverName: machineForm.driverName,
+      driverPhone: machineForm.driverPhone
+    }
+  };
+  return blctekCarRequest(config);
+}

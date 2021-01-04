@@ -47,4 +47,11 @@ public class VehicleMapperTest {
         int result = vehicleMapper.updateVehicle(vehicle);
         System.out.println(result);
     }
+
+    @Test
+    public void selectVehicleByPlateNumber() {
+        String plateNumber = "川A234";
+        Vehicle vehicle = vehicleMapper.selectVehicleByPlateNumber(plateNumber);
+        System.out.println(vehicle);
+    }
 }

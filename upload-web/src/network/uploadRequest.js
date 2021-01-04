@@ -2,7 +2,6 @@ import {
   localRequest,
   wqkRequest,
   blctekRequest,
-  lanRequest
 } from "./request";
 
 // 上传车辆信息
@@ -43,13 +42,4 @@ export function uploadMachine(formData) {
     data:formData
   }
   return blctekRequest(config);
-}
-
-// 上传车牌和设备编号到局域网
-export function uploadPlateNumberAndDevId(plateNumber,devId) {
-  let config={
-    url: '/v1/vn/'+devId+'/'+plateNumber,
-    method: 'PUT'
-  };
-  return lanRequest(config);
 }

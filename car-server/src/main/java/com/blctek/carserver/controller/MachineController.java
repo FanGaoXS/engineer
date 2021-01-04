@@ -4,6 +4,7 @@ import com.blctek.carserver.pojo.Car;
 import com.blctek.carserver.pojo.Driver;
 import com.blctek.carserver.pojo.Machine;
 import com.blctek.carserver.service.MachineService;
+import com.blctek.carserver.utils.HttpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -77,6 +78,8 @@ public class MachineController {
         machine.setMachineModel(machineModel);
 
         Machine machineDB = machineService.addMachine(car,driver,machine);
+
+        // HttpUtils.updateDevByPut(chipId,engineNumber);
 
         HashMap<String, Object> resMap = new HashMap<>();
         resMap.put("status",true);
