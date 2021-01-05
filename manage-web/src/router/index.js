@@ -6,7 +6,7 @@ Vue.use(VueRouter);
 let routes=[
   { //进入该系统的默认页
     path: '/',
-    redirect: '/main'
+    redirect: '/main/mapDetail'
   },
   {
     path: '/login',
@@ -35,6 +35,14 @@ let routes=[
       { //机械列表
         path: 'machineList',
         component: () => import('../views/car/machine/MachineList')
+      },
+      { //工时列表
+        path: 'taskList',
+        component: () => import('../views/car/task/TaskList')
+      },
+      { //地图详情
+        path: 'mapDetail',
+        component: () => import('../views/car/detail/MapDetail')
       },
     ]
   }
