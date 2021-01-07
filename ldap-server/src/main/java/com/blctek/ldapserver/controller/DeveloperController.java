@@ -61,15 +61,6 @@ public class DeveloperController {
         resMap.put("msg","删除开发人员成功");
         return resMap;
     }
-    @GetMapping("/developFindByUsername/{username}")
-    public Developer developFindByUsername(@PathVariable("username")String username){
-        log.info("用户名->[{}]",username);
-        try {
-            return developRepo.selectOneByUid(username);
-        } catch (EmptyResultDataAccessException e){
-            return null;
-        }
-    }
 
     /**
      * 开发人员身份的验证（如果用户名密码匹配返回developer对象）
