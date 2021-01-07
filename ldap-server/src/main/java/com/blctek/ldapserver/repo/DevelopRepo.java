@@ -2,6 +2,7 @@ package com.blctek.ldapserver.repo;
 
 import com.blctek.ldapserver.pojo.Developer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.ldap.repository.Query;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.stereotype.Repository;
@@ -61,7 +62,7 @@ public class DevelopRepo {
     *   根据uid（用户名）developer
     * */
     public Developer selectOneByUid(String uid) {
-        return ldapTemplate.findOne(query().where("uid").is(uid),Developer.class);
+        return ldapTemplate.findOne(query().where("uid").is(uid), Developer.class);
     }
 
     /*
