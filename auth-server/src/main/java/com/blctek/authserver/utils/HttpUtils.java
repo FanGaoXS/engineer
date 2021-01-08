@@ -1,6 +1,7 @@
 package com.blctek.authserver.utils;
 
-import com.blctek.authserver.pojo.Developer;
+
+import com.blctek.ldapserver.pojo.Developer;
 import org.springframework.web.client.RestTemplate;
 
 
@@ -12,8 +13,13 @@ import org.springframework.web.client.RestTemplate;
  * @Description:
  */
 public class HttpUtils {
-    //利用http发送GET请求
-    public static Developer developerAuth(String username,String password){
+    /**
+     * 利用http请求向保存有ldap的开发人员的服务器发起请求
+     * @param username
+     * @param password
+     * @return
+     */
+    public static Developer developerAuth(String username, String password){
         RestTemplate restTemplate = new RestTemplate();
         // http请求的地址+参数
         String url = "http://localhost:8091/develop/developAuth/"+username+"/"+password;

@@ -1,11 +1,10 @@
 package com.blctek.authserver.controller;
 
-import com.blctek.authserver.pojo.Developer;
+import com.blctek.ldapserver.pojo.Developer;
 import com.blctek.authserver.utils.HttpUtils;
 import com.blctek.authserver.utils.JWTUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +25,10 @@ public class LoginController {
     @PostMapping("/auth")
     public Map<String,Object> auth(@RequestParam("username")String username,
                                     @RequestParam("password")String password){
+        log.info("用户输入的用户名->[{}]",username);
+        log.info("用户输入的密码->[{}]",password);
         Developer developer = HttpUtils.developerAuth(username,password);
+        log.info("是否存在该开发人员->[{}]",developer==null?"不存在":"存在");
         HashMap<String, Object> resMap = new HashMap<>();
         if (developer==null) {  //开发人员为空（说明没有查询到）
             resMap.put("status",false);
