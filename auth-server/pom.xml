@@ -20,7 +20,7 @@
 
     <dependencies>
 
-        <dependency>
+        <dependency><!--引入ldap-server项目-->
             <groupId>com.blctek</groupId>
             <artifactId>ldap-server</artifactId>
             <version>0.0.2-SNAPSHOT</version>

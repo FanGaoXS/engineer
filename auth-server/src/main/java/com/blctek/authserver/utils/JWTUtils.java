@@ -15,8 +15,8 @@ import java.util.Map;
  * @Auther: 吴青珂
  * @Date: 2020/12/24/16:44
  * @Description: JWT工具类：
- *                      1、生成token
- *                      2、解开token
+ *                      1、下发token
+ *                      2、验证token
  */
 
 public class JWTUtils {

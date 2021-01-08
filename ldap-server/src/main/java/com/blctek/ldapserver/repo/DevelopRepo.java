@@ -29,9 +29,8 @@ public class DevelopRepo {
     /*
     *   插入developer
     * */
-    public Developer insert(Developer developer) {
+    public void insert(Developer developer) {
         ldapTemplate.create(developer);
-        return developer;
     }
 
     /*
@@ -44,11 +43,8 @@ public class DevelopRepo {
     /*
     *   修改developer
     * */
-    public Developer update(Developer developer) {
-        System.out.println(developer.getPassword());
+    public void update(Developer developer) {
         ldapTemplate.update(developer);
-        System.out.println(developer.getPassword());
-        return developer;
     }
 
     /*

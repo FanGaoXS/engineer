@@ -69,7 +69,7 @@
         </plugins>
     </build>-->
 
-    <!--不可执行jar打包插件-->
+    <!--不可执行jar打包插件（让auth-server项目能够依赖该项目）-->
     <build>
         <plugins>
             <plugin>

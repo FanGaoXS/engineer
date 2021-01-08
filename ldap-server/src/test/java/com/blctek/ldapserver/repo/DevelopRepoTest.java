@@ -31,7 +31,7 @@ public class DevelopRepoTest {
         developer.setSn("万琦");
         developer.setUid("wanqi");
         developer.setPassword("954278478");
-        Developer resultDeveloper = developRepo.insert(developer);
+        developRepo.insert(developer);
     }
 
     @Test
