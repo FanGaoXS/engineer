@@ -62,7 +62,7 @@ public class LdapController {
         return resMap;
     }
 
-    @GetMapping("/developInsert")
+    @PostMapping("/developInsert")
     public Map<String,Object> developInsert(@RequestParam("commonName")String commonName,
                                             @RequestParam("surName")String surName,
                                             @RequestParam("username")String username,

@@ -65,8 +65,8 @@
         let formData = new FormData();
         formData.append('commonName',this.formItem.commonName);
         formData.append('surName',this.formItem.surName);
-        formData.append('userName',this.formItem.userName);
-        formData.append('passWord',this.formItem.passWord);
+        formData.append('username',this.formItem.userName);
+        formData.append('password',this.formItem.passWord);
         insertDevelop(formData).then(res=>{
           console.log(res);
         }).catch(error=>{

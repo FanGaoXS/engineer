@@ -1,35 +1,37 @@
 import {
   localLdapRequest,
-  blctekLdapRequest
+  blctekLdapRequest,
+  localAuthServerRequsest,
+  blctekAuthServerRequsest
 } from "./request";
 
 export function getDevelopList() {
   let config={
-    url: '/develop/developList',
+    url: '/ldap/developList',
     method: 'GET'
   }
-  return blctekLdapRequest(config);
+  return blctekAuthServerRequsest(config);
 }
 
 export function insertDevelop(formData) {
   let config={
-    url: '/develop/developInsert',
+    url: '/ldap/developInsert',
     method: 'POST',
     headers: {
       'Content-Type': 'multipart/form-data'
     },
     data: formData
   };
-  return blctekLdapRequest(config);
+  return blctekAuthServerRequsest(config);
 }
 
 export function deleteDevelop(commonName) {
   let config= {
-    url: '/develop/developDelete',
+    url: '/ldap/developDelete',
     method: 'GET',
     params: {
       commonName: commonName
     }
   };
-  return blctekLdapRequest(config);
+  return blctekAuthServerRequsest(config);
 }
