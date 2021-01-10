@@ -20,7 +20,13 @@
 
     <dependencies>
 
-        <dependency><!--引入ldap-server项目-->
+        <dependency><!--引入car-server项目的目的是为了直接使用该项目中的pojo实体类-->
+            <groupId>com.blctek</groupId>
+            <artifactId>car-server</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
+        </dependency>
+
+        <dependency><!--引入ldap-server项目目的是为了直接使用该项目中的pojo实体类-->
             <groupId>com.blctek</groupId>
             <artifactId>ldap-server</artifactId>
             <version>0.0.2-SNAPSHOT</version>

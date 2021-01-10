@@ -44,33 +44,29 @@ public class VehicleController {
      * @param plateNumber   车牌号
      * @param driverName    驾驶员姓名
      * @param driverPhone   驾驶员电话号码
-     * @param file          上传的图片
      * @return              responseMap（状态码、数据、提示信息）
      */
-    @PostMapping("/addVehicle")
-    public Map<String,Object> addVehicle(@RequestParam("chipId") String chipId,
-                                         @RequestParam("plateType") String plateType,
-                                         @RequestParam("vehicleModel") String vehicleModel,
-                                         @RequestParam("plateNumber") String plateNumber,
-                                         @RequestParam("driverName") String driverName,
-                                         @RequestParam("driverPhone") String driverPhone,
-                                         @RequestParam("file") MultipartFile file){
-        log.info("---上传车辆信息 start---");
+    @GetMapping("/addVehicle/" +
+            "{chipId}/" +
+            "{plateType}/" +
+            "{vehicleModel}/" +
+            "{plateNumber}/" +
+            "{driverName}/" +
+            "{driverPhone}")
+    public Boolean addVehicle(@PathVariable("chipId") String chipId,
+                              @PathVariable("plateType") String plateType,
+                              @PathVariable("vehicleModel") String vehicleModel,
+                              @PathVariable("plateNumber") String plateNumber,
+                              @PathVariable("driverName") String driverName,
+                              @PathVariable("driverPhone") String driverPhone/*,
+                              @RequestParam("file") MultipartFile file*/){
+        log.info("想要新增车辆信息：");
         log.info("芯片编号->[{}]",chipId);
         log.info("车牌类型->[{}]",plateType);
         log.info("车辆类型->[{}]",vehicleModel);
         log.info("车牌号->[{}]",plateNumber);
         log.info("驾驶员姓名->[{}]",driverName);
         log.info("驾驶员手机号码->[{}]",driverPhone);
-        log.info("文件是否为空->[{}]",file.isEmpty());
-        String fileSize=new String();
-        if (file.getSize()>0&&file.getSize()<=(1024*1024)){ //如果文件大小小于1M
-            fileSize=file.getSize()/1024+"Kb"; //以kb显示
-        } else if (file.getSize()>(1024*1024)){// 如果文件大小大于1M
-            fileSize=file.getSize()/1024/1024+"M"; //以显示M
-        }
-        log.info("文件大小->[{}]",fileSize);
-
         Vehicle vehicleByPlateNumber = vehicleMapper.selectVehicleByPlateNumber(plateNumber); //根据车牌号从数据中查询有无该记录
         if (vehicleByPlateNumber!=null) {   //不为空，说明数据库中已经存在，则覆盖（删除原记录再新插入）
             vehicleService.removeVehicle(vehicleByPlateNumber.getVehicleId(),vehicleByPlateNumber.getCar().getCarId(),vehicleByPlateNumber.getDriver().getDriverId());
@@ -88,32 +84,25 @@ public class VehicleController {
         vehicle.setPlateType(plateType);
         vehicle.setVehicleModel(vehicleModel);
 
-        Vehicle vehicleDB = vehicleService.addVehicle(car, driver, vehicle);
-
-        ResponseEntity<String> responseEntity = HttpUtils.updateDevByPut(chipId, plateNumber);
-        log.info("updateDevByPut.statusCode->[{}]",responseEntity.getStatusCode());
-
-        HashMap<String, Object> resMap = new HashMap<>();
-        resMap.put("status",true);
-        resMap.put("statusCode",responseEntity.getStatusCode());
-        resMap.put("msg","上传车辆信息成功！");
-        resMap.put("data",vehicleDB);
-        log.info("---uploadVehicle end---");
-        return resMap;
+        try {
+            vehicleService.addVehicle(car, driver, vehicle);
+            log.info("上传车辆信息成功");
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            log.info("上传车辆信息成功");
+            return false;
+        }
     }
 
     /**
      *  查询所有车辆集合
-     * @return  responseMap（状态码、数据、提示信息）
+     * @return  车辆集合
      */
     @GetMapping("/allVehicle")
-    public Map<String,Object> allVehicle(){
-        List<Vehicle> vehicleList = vehicleService.findAllVehicle();
-        HashMap<String, Object> resMap = new HashMap<>();
-        resMap.put("status",true);
-        resMap.put("msg","查询所有车辆信息");
-        resMap.put("data",vehicleList);
-        return resMap;
+    public List<Vehicle> allVehicle(){
+        log.info("想要查询所有车辆");
+        return vehicleService.findAllVehicle();
     }
 
     /**
@@ -123,13 +112,20 @@ public class VehicleController {
      * @return
      */
     @GetMapping("/modifyVehicle")
-    public Map<String,Object> modifyVehicle(Vehicle vehicle,Driver driver){
-        Boolean result = vehicleService.modifyVehicleAndDriverInfo(vehicle, driver);
-        log.info("Vehicle是否修改成功->[{}]",result?"是":"否");
-        HashMap<String, Object> resMap = new HashMap<>();
-        resMap.put("status",result);
-        resMap.put("msg","修改车辆信息");
-        return resMap;
+    public Boolean modifyVehicle(@RequestParam("vehicle") Vehicle vehicle,
+                                 @RequestParam("driver") Driver driver){
+        log.info("想要修改车辆信息");
+        log.info("修改车辆信息为->[{}]",vehicle.toString());
+        log.info("修改驾驶员信息为->[{}]",driver.toString());
+        try {
+            vehicleService.modifyVehicleAndDriverInfo(vehicle, driver);
+            log.info("修改车辆信息成功");
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            log.info("修改车辆信息失败");
+            return false;
+        }
     }
 
     /**
@@ -139,18 +135,22 @@ public class VehicleController {
      * @param driverId
      * @return
      */
-    @GetMapping("/removeVehicle")
-    public Map<String,Object> removeVehicle(Integer vehicleId,
-                                            Integer carId,
-                                            Integer driverId){
+    @GetMapping("/removeVehicle/{vehicleId}/{carId}/{driverId}")
+    public Boolean removeVehicle(@PathVariable("vehicleId") Integer vehicleId,
+                                 @PathVariable("carId") Integer carId,
+                                 @PathVariable("driverId") Integer driverId){
+        log.info("想要删除车辆信息");
         log.info("机械编号->[{}]",vehicleId);
         log.info("所属工程用具编号->[{}]",carId);
         log.info("驾驶员编号->[{}]",driverId);
-        Boolean result = vehicleService.removeVehicle(vehicleId, carId, driverId);
-        log.info("Vehicle是否删除成功->[{}]",result?"是":"否");
-        HashMap<String, Object> resMap = new HashMap<>();
-        resMap.put("status",result);
-        resMap.put("msg","删除车辆信息");
-        return resMap;
+        try {
+            vehicleService.removeVehicle(vehicleId, carId, driverId);
+            log.info("删除车辆信息成功");
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            log.info("删除车辆信息失败");
+            return false;
+        }
     }
 }
