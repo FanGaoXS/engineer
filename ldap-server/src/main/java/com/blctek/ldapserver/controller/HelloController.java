@@ -17,7 +17,6 @@ import java.util.Map;
  * @Description:
  */
 @RestController
-@CrossOrigin(origins = "*")
 public class HelloController {
     @GetMapping("/")
     public Map<String,Object> hello(){

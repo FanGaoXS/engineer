@@ -3,6 +3,7 @@ package com.blctek.authserver.controller;
 import com.blctek.authserver.service.CarHttpService;
 import com.blctek.authserver.service.DevHttpService;
 import com.blctek.carserver.pojo.Driver;
+import com.blctek.carserver.pojo.Machine;
 import com.blctek.carserver.pojo.Vehicle;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("car")
 @Slf4j
+@CrossOrigin("*")
 public class CarController {
 
     @Autowired
@@ -96,11 +98,73 @@ public class CarController {
         log.info("司机电话号码->[{}]",driverPhone);
         log.info("文件大小->[{}]",file.getSize());
         Boolean result = carHttpService.vehicleInsert(chipId, plateType, vehicleModel, plateNumber, driverName, driverPhone);
-        /*ResponseEntity<String> responseEntity = devHttpService.devInsert(chipId, plateNumber);*/
+        ResponseEntity<String> responseEntity = devHttpService.devInsert(chipId, plateNumber);
         HashMap<String, Object> resMap = new HashMap<>();
         resMap.put("msg","新增车辆信息");
         resMap.put("status",result);
-        /*resMap.put("statusCode",responseEntity.getStatusCode());*/
+        resMap.put("statusCode",responseEntity.getStatusCode());
         return resMap;
     }
+
+    @PostMapping("/addMachine")
+    public Map<String,Object> machineAdd(@RequestParam("chipId") String chipId,
+                                         @RequestParam("machineModel") String machineModel,
+                                         @RequestParam("machineNumber") String machineNumber,
+                                         @RequestParam("engineNumber") String engineNumber,
+                                         @RequestParam("driverName") String driverName,
+                                         @RequestParam("driverPhone") String driverPhone,
+                                         @RequestParam("file") MultipartFile file){
+        log.info("想要新增机械");
+        log.info("芯片编号->[{}]",chipId);
+        log.info("机械类型->[{}]",machineModel);
+        log.info("机械型号->[{}]",machineNumber);
+        log.info("机械发动机编号->[{}]",engineNumber);
+        log.info("驾驶员姓名->[{}]",driverName);
+        log.info("驾驶员手机号码->[{}]",driverPhone);
+
+        Boolean result = carHttpService.machineInsert(chipId, machineModel, machineNumber, engineNumber, driverName, driverPhone);
+        HashMap<String, Object> resMap = new HashMap<>();
+        resMap.put("msg","新增机械信息");
+        resMap.put("status",result);
+        return resMap;
+    }
+
+    @GetMapping("/removeMachine")
+    public Map<String,Object> machineRemove(@RequestParam("machineId")Integer machineId,
+                                            @RequestParam("carId")Integer carId,
+                                            @RequestParam("driverId")Integer driverId){
+        log.info("想要删除机械信息");
+        log.info("机械编号->[{}]",machineId);
+        log.info("所属工程用具编号->[{}]",carId);
+        log.info("驾驶员编号->[{}]",driverId);
+        Boolean result = carHttpService.machineDelete(machineId, carId, driverId);
+        HashMap<String, Object> resMap = new HashMap<>();
+        resMap.put("status",result);
+        resMap.put("msg","删除机械信息");
+        return resMap;
+    }
+
+    @GetMapping("/modifyMachine")
+    public Map<String,Object> machineModify(Machine machine,Driver driver){
+        log.info("想要修改机械信息");
+        log.info("机械信息->[{}]",machine.toString());
+        log.info("驾驶员信息->[{}]",driver.toString());
+        Boolean result = carHttpService.machineUpdate(machine, driver);
+        HashMap<String, Object> resMap = new HashMap<>();
+        resMap.put("status",result);
+        resMap.put("msg","修改机械信息");
+        return resMap;
+    }
+
+    @GetMapping("/allMachine")
+    public Map<String,Object> machineList(){
+        log.info("想要查询所有机械信息");
+        List<Machine> machineList = carHttpService.machineList();
+        HashMap<String, Object> resMap = new HashMap<>();
+        resMap.put("status",true);
+        resMap.put("msg","查询所有机械信息");
+        resMap.put("data",machineList);
+        return resMap;
+    }
+
 }

@@ -25,7 +25,6 @@ import java.util.Map;
  * @Description:
  */
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("vehicle")
 @Slf4j
 public class VehicleController {
@@ -46,13 +45,13 @@ public class VehicleController {
      * @param driverPhone   驾驶员电话号码
      * @return              responseMap（状态码、数据、提示信息）
      */
-    @GetMapping("/addVehicle/" +
-            "{chipId}/" +
-            "{plateType}/" +
-            "{vehicleModel}/" +
-            "{plateNumber}/" +
-            "{driverName}/" +
-            "{driverPhone}")
+    @GetMapping("/addVehicle/"
+            + "{chipId}/"
+            + "{plateType}/"
+            + "{vehicleModel}/"
+            + "{plateNumber}/"
+            + "{driverName}/"
+            + "{driverPhone}")
     public Boolean addVehicle(@PathVariable("chipId") String chipId,
                               @PathVariable("plateType") String plateType,
                               @PathVariable("vehicleModel") String vehicleModel,
@@ -111,9 +110,17 @@ public class VehicleController {
      * @param driver
      * @return
      */
-    @GetMapping("/modifyVehicle")
-    public Boolean modifyVehicle(@RequestParam("vehicle") Vehicle vehicle,
-                                 @RequestParam("driver") Driver driver){
+    @GetMapping("/modifyVehicle/"
+            + "{vehicleId}/"
+            + "{plateNumber}/"
+            + "{plateType}/"
+            + "{vehicleModel}/"
+            + "{carId}/"
+            + "{driverId}/"
+            + "{driverName}/"
+            + "{driverPhone}" )
+    public Boolean modifyVehicle(Vehicle vehicle,
+                                 Driver driver){
         log.info("想要修改车辆信息");
         log.info("修改车辆信息为->[{}]",vehicle.toString());
         log.info("修改驾驶员信息为->[{}]",driver.toString());

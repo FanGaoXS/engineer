@@ -151,7 +151,7 @@
       //从后端获取机械数据
       getMachineList(){
         getMachineList().then(res=>{
-          console.log('response->',res);
+          console.log('res->',res);
           this.machineList=res.data;
         }).catch(error=>{
           console.log(error);

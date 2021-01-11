@@ -1,7 +1,5 @@
 import {
-  localLdapRequest,
-  blctekLdapRequest,
-  localAuthServerRequsest,
+  localAuthServerRequest,
   blctekAuthServerRequsest
 } from "./request";
 

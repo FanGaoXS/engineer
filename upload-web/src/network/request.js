@@ -1,58 +1,47 @@
 // 引入axios
 import Axios from "axios";
 
-// 本地request
-export function localRequest(config) {
-  // 创建axios实例，配置baseURL
+/**
+ * 本地鉴权服务器
+ * @param config
+ * @returns {AxiosPromise}
+ */
+export function localAuthServerRequest(config) {
   let axiosInstance = Axios.create({
-    baseURL: 'http://localhost:8092/',
+    baseURL: '//localhost:8090/',
     timeout: 5000
   });
-  // response拦截器，过滤data
-  axiosInstance.interceptors.response.use(res => {
-    console.log('interceptors.response.onFulfilled->',res);
+  axiosInstance.interceptors.request.use(config=>{
+    return config;
+  },error => {
+    throw error;
+  });
+  axiosInstance.interceptors.response.use(res=>{
     return res.data;
   },error => {
-    console.log('interceptors.response.onRejected->',error);
-    // 抛出异常
     throw error;
   });
   return axiosInstance(config);
 }
 
-// 远程wqk服务器
-export function wqkRequest(config) {
-  // 创建axios实例，配置baseURL
+/**
+ * 远程鉴权服务器
+ * @param config
+ * @returns {AxiosPromise}
+ */
+export function blctekAuthServerRequest(config) {
   let axiosInstance = Axios.create({
-    baseURL: '//upload-server.yueke.cloud/',
+    baseURL: '//auth-server.wqkd.blctek.com/',
     timeout: 5000
   });
-  // response拦截器，过滤data
-  axiosInstance.interceptors.response.use(res => {
-    console.log('interceptors.response.onFulfilled->',res);
-    return res.data;
+  axiosInstance.interceptors.request.use(config=>{
+    return config;
   },error => {
-    console.log('interceptors.response.onRejected->',error);
-    // 抛出异常
     throw error;
   });
-  return axiosInstance(config);
-}
-
-// 远程blctek服务器
-export function blctekRequest(config) {
-  // 创建axios实例，配置baseURL
-  let axiosInstance = Axios.create({
-    baseURL: '//car-server.wqkd.blctek.com/',
-    timeout: 5000
-  });
-  // response拦截器，过滤data
-  axiosInstance.interceptors.response.use(res => {
-    console.log('interceptors.response.onFulfilled->',res);
+  axiosInstance.interceptors.response.use(res=>{
     return res.data;
   },error => {
-    console.log('interceptors.response.onRejected->',error);
-    // 抛出异常
     throw error;
   });
   return axiosInstance(config);

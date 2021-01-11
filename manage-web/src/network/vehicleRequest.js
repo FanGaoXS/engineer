@@ -1,6 +1,6 @@
 import {
-  localCarRequest,
-  blctekCarRequest
+  localAuthServerRequest,
+  blctekAuthServerRequsest
 } from "./request";
 
 /**
@@ -8,10 +8,10 @@ import {
  */
 export function getVehicleList(){
   let config={
-    url: '/vehicle/allVehicle',
+    url: '/car/allVehicle',
     method: 'GET'
   };
-  return blctekCarRequest(config);
+  return blctekAuthServerRequsest(config);
 }
 
 /**
@@ -22,7 +22,7 @@ export function getVehicleList(){
  */
 export function removeVehicleRow(vehicleId,carId,driverId) {
   let config={
-    url: 'vehicle/removeVehicle',
+    url: '/car/removeVehicle',
     method: 'GET',
     params: {
       vehicleId: vehicleId,
@@ -30,7 +30,7 @@ export function removeVehicleRow(vehicleId,carId,driverId) {
       driverId: driverId
     }
   }
-  return blctekCarRequest(config);
+  return blctekAuthServerRequsest(config);
 }
 
 /**
@@ -40,7 +40,7 @@ export function removeVehicleRow(vehicleId,carId,driverId) {
  */
 export function modifyVehicleRow(vehicleForm) {
   let config={
-    url: 'vehicle/modifyVehicle',
+    url: '/car/modifyVehicle',
     method: 'GET',
     params: {
       vehicleId: vehicleForm.vehicleId,
@@ -52,5 +52,5 @@ export function modifyVehicleRow(vehicleForm) {
       driverPhone: vehicleForm.driverPhone
     }
   };
-  return blctekCarRequest(config);
+  return blctekAuthServerRequsest(config);
 }

@@ -1,6 +1,6 @@
 import {
-  localCarRequest,
-  blctekCarRequest
+  localAuthServerRequest,
+  blctekAuthServerRequsest
 } from "./request";
 
 /**
@@ -8,10 +8,10 @@ import {
  */
 export function getMachineList(){
   let config={
-    url: '/machine/allMachine',
+    url: '/car/allMachine',
     method: 'GET'
   };
-  return blctekCarRequest(config);
+  return blctekAuthServerRequsest(config);
 }
 
 /**
@@ -22,7 +22,7 @@ export function getMachineList(){
  */
 export function removeMachineRow(machineId,carId,driverId) {
   let config={
-    url: '/machine/removeMachine',
+    url: '/car/removeMachine',
     method: 'GET',
     params: {
       machineId: machineId,
@@ -30,12 +30,12 @@ export function removeMachineRow(machineId,carId,driverId) {
       driverId: driverId
     }
   };
-  return blctekCarRequest(config);
+  return blctekAuthServerRequsest(config);
 }
 
 export function modifyMachineRow(machineForm) {
   let config={
-    url: '/machine/modifyMachine',
+    url: '/car/modifyMachine',
     method: 'GET',
     params: {
       machineId: machineForm.machineId,
@@ -46,5 +46,5 @@ export function modifyMachineRow(machineForm) {
       driverPhone: machineForm.driverPhone
     }
   };
-  return blctekCarRequest(config);
+  return blctekAuthServerRequsest(config);
 }

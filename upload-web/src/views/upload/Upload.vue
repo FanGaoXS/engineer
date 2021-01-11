@@ -401,7 +401,7 @@
           console.log('上传成功->',res);
           this.$notify({
             title: '成功',
-            message: res.msg,
+            message: res.msg+'成功',
             type: 'success',
             offset: 100
           });
@@ -428,7 +428,7 @@
           console.log('上传成功->',res);
           this.$notify({
             title: '成功',
-            message: res.msg,
+            message: res.msg+'成功',
             type: 'success',
             offset: 100
           });

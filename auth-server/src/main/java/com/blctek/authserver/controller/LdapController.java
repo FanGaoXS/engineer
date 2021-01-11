@@ -17,7 +17,7 @@ import java.util.Map;
  * @Date: 2021/01/08/17:26
  * @Description:
  */
-@CrossOrigin(origins = "*")
+@CrossOrigin("*")
 @RestController
 @Slf4j
 @RequestMapping("ldap")

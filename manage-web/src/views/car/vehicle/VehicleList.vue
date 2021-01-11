@@ -53,7 +53,7 @@
         <el-table-column label="驾驶员联系方式" prop="driver.driverPhone"/>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="small" type="info" @click="toTaskList(scope.$index,scope.row)">查看</el-button>
+            <!--<el-button size="small" type="info" @click="toTaskList(scope.$index,scope.row)">查看</el-button>-->
             <el-button size="small" type="primary" @click="openModifyDialog(scope.$index,scope.row)">修改</el-button>
             <el-button size="small" type="danger" @click="openRemoveConfirm(scope.$index,scope.row)">删除</el-button>
           </template>

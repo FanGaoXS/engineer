@@ -22,7 +22,6 @@ import java.util.Map;
  * @Description:
  */
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("machine")
 @Slf4j
 public class MachineController {
@@ -38,32 +37,28 @@ public class MachineController {
      * @param engineNumber  发动机编号
      * @param driverName    驾驶员姓名
      * @param driverPhone   驾驶员电话号码
-     * @param file          上传的图片文件
-     * @return              responseMap（状态码、数据、提示信息）
+     * @return
      */
-    @PostMapping("/addMachine")
-    public Map<String,Object> addMachine(@RequestParam("chipId") String chipId,
-                                         @RequestParam("machineModel") String machineModel,
-                                         @RequestParam("machineNumber") String machineNumber,
-                                         @RequestParam("engineNumber") String engineNumber,
-                                         @RequestParam("driverName") String driverName,
-                                         @RequestParam("driverPhone") String driverPhone,
-                                         @RequestParam("file") MultipartFile file){
-        log.info("---上传机械信息 start---");
+    @GetMapping("/addMachine/" +
+            "{chipId}/" +
+            "{machineModel}/" +
+            "{machineNumber}/" +
+            "{engineNumber}/" +
+            "{driverName}/" +
+            "{driverPhone}")
+    public Boolean addMachine(@PathVariable("chipId") String chipId,
+                              @PathVariable("machineModel") String machineModel,
+                              @PathVariable("machineNumber") String machineNumber,
+                              @PathVariable("engineNumber") String engineNumber,
+                              @PathVariable("driverName") String driverName,
+                              @PathVariable("driverPhone") String driverPhone){
+        log.info("想要上传机械信息");
         log.info("芯片编号->[{}]",chipId);
         log.info("机械类型->[{}]",machineModel);
         log.info("机械型号->[{}]",machineNumber);
         log.info("机械发动机编号->[{}]",engineNumber);
         log.info("驾驶员姓名->[{}]",driverName);
         log.info("驾驶员手机号码->[{}]",driverPhone);
-        log.info("文件是否为空->[{}]",file.isEmpty());
-        String fileSize = new String();
-        if (file.getSize()>0&&file.getSize()<=(1024*1024)){ //如果文件大小小于1M
-            fileSize = file.getSize()/1024+"Kb"; //以kb显示
-        } else if (file.getSize()>(1024*1024)){// 如果文件大小大于1M
-            fileSize = file.getSize()/1024/1024+"M"; //以显示M
-        }
-        log.info("文件大小->[{}]",fileSize);
 
         Car car = new Car();
         car.setChipId(chipId);
@@ -77,16 +72,15 @@ public class MachineController {
         machine.setEngineNumber(engineNumber);
         machine.setMachineModel(machineModel);
 
-        Machine machineDB = machineService.addMachine(car,driver,machine);
-
-        // HttpUtils.updateDevByPut(chipId,engineNumber);
-
-        HashMap<String, Object> resMap = new HashMap<>();
-        resMap.put("status",true);
-        resMap.put("msg","上传机械信息成功");
-        resMap.put("data",machineDB);
-        log.info("---上传车辆信息 end---");
-        return resMap;
+        try {
+            machineService.addMachine(car,driver,machine);
+            log.info("上传机械信息成功");
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            log.info("上传机械信息失败");
+            return false;
+        }
     }
 
     /**
@@ -94,13 +88,9 @@ public class MachineController {
      * @return  responseMap（状态码、数据、提示信息）
      */
     @GetMapping("/allMachine")
-    public Map<String,Object> allMachine(){
-        List<Machine> machineList = machineService.findAllMachine();
-        HashMap<String, Object> resMap = new HashMap<>();
-        resMap.put("status",true);
-        resMap.put("msg","查询所有机械集合");
-        resMap.put("data",machineList);
-        return resMap;
+    public List<Machine> allMachine(){
+        log.info("查询所有机械");
+        return machineService.findAllMachine();
     }
 
     /**
@@ -109,14 +99,28 @@ public class MachineController {
      * @param driver
      * @return
      */
-    @GetMapping("/modifyMachine")
-    public Map<String,Object> modifyMachine(Machine machine,Driver driver){
-        Boolean result = machineService.modifyMachineAndDriverInfo(machine,driver);
-        log.info("Machine是否修改成功->[{}]",result?"是":"否");
-        HashMap<String, Object> resMap = new HashMap<>();
-        resMap.put("status",result);
-        resMap.put("msg","修改机械信息");
-        return resMap;
+    @GetMapping("/modifyMachine/" +
+            "{machineId}/" +
+            "{machineNumber}/" +
+            "{engineNumber}/" +
+            "{machineModel}/" +
+            "{driverId}/" +
+            "{driverName}/" +
+            "{driverPhone}")
+    public Boolean modifyMachine(Machine machine,
+                                 Driver driver){
+        log.info("修改机械信息");
+        log.info("机械信息->[{}]",machine.toString());
+        log.info("驾驶员信息->[{}]",driver.toString());
+        try {
+            machineService.modifyMachineAndDriverInfo(machine, driver);
+            log.info("修改机械信息成功");
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            log.info("修改机械信息失败");
+            return false;
+        }
     }
 
     /**
@@ -126,18 +130,24 @@ public class MachineController {
      * @param driverId
      * @return
      */
-    @GetMapping("/removeMachine")
-    public Map<String,Object> removeMachine(Integer machineId,
-                                            Integer carId,
-                                            Integer driverId){
+    @GetMapping("/removeMachine/" +
+            "{machineId}/" +
+            "{carId}/" +
+            "{driverId}")
+    public Boolean removeMachine(@PathVariable("machineId") Integer machineId,
+                                 @PathVariable("carId") Integer carId,
+                                 @PathVariable("driverId") Integer driverId){
+        log.info("删除机械信息");
         log.info("机械编号->[{}]",machineId);
         log.info("所属工程用具编号->[{}]",carId);
         log.info("驾驶员编号->[{}]",driverId);
-        Boolean result = machineService.removeMachine(machineId, carId, driverId);
-        log.info("Machine是否删除成功->[{}]",result?"是":"否");
-        HashMap<String, Object> resMap = new HashMap<>();
-        resMap.put("status",result);
-        resMap.put("msg","删除机械信息");
-        return resMap;
+        try {
+            machineService.removeMachine(machineId, carId, driverId);
+            log.info("删除机械信息成功");
+            return true;
+        } catch (Exception e){
+            log.info("删除机械信息失败");
+            return false;
+        }
     }
 }

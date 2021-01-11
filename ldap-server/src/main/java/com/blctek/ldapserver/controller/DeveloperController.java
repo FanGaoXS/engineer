@@ -18,7 +18,6 @@ import java.util.List;
  * @Description:    restful对developer的增删改查
  */
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("develop")
 @Slf4j
 public class DeveloperController {

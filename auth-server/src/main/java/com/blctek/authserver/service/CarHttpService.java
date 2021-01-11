@@ -1,6 +1,7 @@
 package com.blctek.authserver.service;
 
 import com.blctek.carserver.pojo.Driver;
+import com.blctek.carserver.pojo.Machine;
 import com.blctek.carserver.pojo.Vehicle;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -27,58 +28,86 @@ public class CarHttpService {
                                  String plateNumber,
                                  String driverName,
                                  String driverPhone){
-        String url = CAR_BASE_URL + "/vehicle/addVehicle/"
-                + chipId + "/"
-                + plateType + "/"
-                + vehicleModel + "/"
-                + plateNumber + "/"
-                + driverName + "/"
-                + driverPhone ;
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(url, Boolean.class);
+        String url = CAR_BASE_URL + "/vehicle/addVehicle/" +
+                chipId + "/" +
+                plateType + "/" +
+                vehicleModel + "/" +
+                plateNumber + "/" +
+                driverName + "/" +
+                driverPhone ;
+        return new RestTemplate().getForObject(url, Boolean.class);
 
     }
 
     public Boolean vehicleDelete(Integer vehicleId,
                                  Integer carId,
                                  Integer driverId){
-        String url = CAR_BASE_URL + "/vehicle/removeVehicle/"
-                + vehicleId + "/"
-                + carId + "/"
-                + driverId ;
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(url, Boolean.class);
+        String url = CAR_BASE_URL + "/vehicle/removeVehicle/" +
+                vehicleId + "/" +
+                carId + "/" +
+                driverId ;
+        return new RestTemplate().getForObject(url, Boolean.class);
     }
 
     public Boolean vehicleUpdate(Vehicle vehicle, Driver driver){
-        String url = CAR_BASE_URL + "/vehicle/modifyVehicle?"
-                + "vehicleId={vehicleId}&" +
-                "plateNumber={plateNumber}&" +
-                "plateType={plateType}&" +
-                "vehicleModel={vehicleModel}&" +
-                "car={car}&" +
-                "carId={carId}&" +
-                "driver={driver}&" +
-                "driverId={driverId}&" +
-                "driverName={driverName}" ;
-        RestTemplate restTemplate = new RestTemplate();
-        HashMap<String, Object> reqMap = new HashMap<>();
-        reqMap.put("vehicleId",vehicle.getVehicleId());
-        reqMap.put("plateNumber",vehicle.getPlateNumber());
-        reqMap.put("plateType",vehicle.getPlateType());
-        reqMap.put("vehicleModel",vehicle.getVehicleModel());
-        reqMap.put("car",vehicle.getCar());
-        reqMap.put("carId",vehicle.getCarId());
-        reqMap.put("driver",vehicle.getDriver());
-        reqMap.put("driverId",driver.getDriverId());
-        reqMap.put("driverName",driver.getDriverName());
-        return restTemplate.getForObject(url,Boolean.class,reqMap);
+        String url = CAR_BASE_URL + "/vehicle/modifyVehicle/" +
+                vehicle.getVehicleId() + "/" +
+                vehicle.getPlateNumber() + "/" +
+                vehicle.getPlateType() + "/" +
+                vehicle.getVehicleModel() + "/" +
+                vehicle.getCarId() + "/" +
+                driver.getDriverId() + "/" +
+                driver.getDriverName() + "/" +
+                driver.getDriverPhone() ;
+        return new RestTemplate().getForObject(url ,Boolean.class);
     }
 
     public List<Vehicle> vehicleList(){
         String url = CAR_BASE_URL + "/vehicle/allVehicle";
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(url, List.class);
+        return new RestTemplate().getForObject(url, List.class);
+    }
+
+    public Boolean machineInsert(String chipId,
+                                 String machineModel,
+                                 String machineNumber,
+                                 String engineNumber,
+                                 String driverName,
+                                 String driverPhone){
+        String url = CAR_BASE_URL + "/machine/addMachine/" +
+                chipId + "/" +
+                machineModel + "/" +
+                machineNumber + "/" +
+                engineNumber + "/" +
+                driverName + "/" +
+                driverPhone ;
+        return new RestTemplate().getForObject(url, Boolean.class);
+    }
+
+    public Boolean machineDelete(Integer machineId,
+                                 Integer carId,
+                                 Integer driverId){
+        String url = CAR_BASE_URL + "/machine/removeMachine/" +
+                machineId + "/" +
+                carId + "/" +
+                driverId ;
+        return new RestTemplate().getForObject(url, Boolean.class);
+    }
+
+    public Boolean machineUpdate(Machine machine,Driver driver) {
+        String url = CAR_BASE_URL + "/machine/modifyMachine/" +
+                machine.getMachineId() + "/" +
+                machine.getMachineNumber() + "/" +
+                machine.getEngineNumber() + "/" +
+                machine.getMachineModel() + "/" +
+                driver.getDriverId() + "/" +
+                driver.getDriverName() + "/" +
+                driver.getDriverPhone() ;
+        return new RestTemplate().getForObject(url, Boolean.class);
+    }
+
+    public List<Machine> machineList() {
+        String url = CAR_BASE_URL + "/machine/allMachine" ;
+        return new RestTemplate().getForObject(url, List.class);
     }
 
 }
