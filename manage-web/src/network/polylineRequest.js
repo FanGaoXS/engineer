@@ -1,10 +1,11 @@
 import {
-  lanPolylineRequest
+  lanPolylineRequest,
+  blctekAuthServerRequsest
 } from "./request";
 
 export function getPolylineArray(plateNumber,time) {
   let config = {
-    url: 'v0/loc/'+plateNumber+'/'+time,
+    url: '/v0/loc/'+plateNumber+'/'+time,
   };
-  return lanPolylineRequest(config);
+  return blctekAuthServerRequsest(config);
 }

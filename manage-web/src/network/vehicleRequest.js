@@ -47,6 +47,7 @@ export function modifyVehicleRow(vehicleForm) {
       plateNumber: vehicleForm.plateNumber,
       plateType: vehicleForm.plateType,
       vehicleModel: vehicleForm.vehicleModel,
+      carId: vehicleForm.carId,
       driverId: vehicleForm.driverId,
       driverName: vehicleForm.driverName,
       driverPhone: vehicleForm.driverPhone

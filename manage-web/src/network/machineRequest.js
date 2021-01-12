@@ -41,6 +41,7 @@ export function modifyMachineRow(machineForm) {
       machineId: machineForm.machineId,
       machineNumber: machineForm.machineNumber,
       machineModel: machineForm.machineModel,
+      carId: machineForm.carId,
       driverId: machineForm.driverId,
       driverName: machineForm.driverName,
       driverPhone: machineForm.driverPhone

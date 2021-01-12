@@ -41,7 +41,6 @@ public class CarController {
             List<Vehicle> vehicleList = carHttpService.vehicleList();
             resMap.put("status",true);
             resMap.put("data",vehicleList);
-
             return resMap;
         } catch (Exception e){
             e.printStackTrace();

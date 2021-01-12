@@ -53,7 +53,7 @@ export function localAuthServerRequest(config) {
  */
 export function blctekAuthServerRequsest(config) {
   let axiosInstance = axios.create({
-    baseURL: '//auth-server.wqkd.blctek.com/',
+    // baseURL: '//auth-server.wqkd.blctek.com/',
     timeout: 5000
   });
   axiosInstance.interceptors.request.use(config=>{
