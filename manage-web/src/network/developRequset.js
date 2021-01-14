@@ -8,7 +8,7 @@ export function getDevelopList() {
     url: '/ldap/developList',
     method: 'GET'
   }
-  return blctekAuthServerRequsest(config);
+  return localAuthServerRequest(config);
 }
 
 export function insertDevelop(formData) {
@@ -20,7 +20,7 @@ export function insertDevelop(formData) {
     },
     data: formData
   };
-  return blctekAuthServerRequsest(config);
+  return localAuthServerRequest(config);
 }
 
 export function deleteDevelop(commonName) {
@@ -31,5 +31,5 @@ export function deleteDevelop(commonName) {
       commonName: commonName
     }
   };
-  return blctekAuthServerRequsest(config);
+  return localAuthServerRequest(config);
 }

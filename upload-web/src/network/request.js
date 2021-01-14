@@ -46,3 +46,22 @@ export function blctekAuthServerRequest(config) {
   });
   return axiosInstance(config);
 }
+
+
+export function localImageServerRequest(config) {
+  let axiosInstance = Axios.create({
+    baseURL: '//localhost:8093/',
+    timeout: 5000
+  });
+  axiosInstance.interceptors.request.use(config=>{
+    return config;
+  },error => {
+    throw error;
+  });
+  axiosInstance.interceptors.response.use(res=>{
+    return res.data;
+  },error => {
+    throw error;
+  });
+  return axiosInstance(config);
+}

@@ -11,7 +11,7 @@ export function getVehicleList(){
     url: '/car/allVehicle',
     method: 'GET'
   };
-  return blctekAuthServerRequsest(config);
+  return localAuthServerRequest(config);
 }
 
 /**
@@ -30,7 +30,7 @@ export function removeVehicleRow(vehicleId,carId,driverId) {
       driverId: driverId
     }
   }
-  return blctekAuthServerRequsest(config);
+  return localAuthServerRequest(config);
 }
 
 /**
@@ -53,5 +53,5 @@ export function modifyVehicleRow(vehicleForm) {
       driverPhone: vehicleForm.driverPhone
     }
   };
-  return blctekAuthServerRequsest(config);
+  return localAuthServerRequest(config);
 }

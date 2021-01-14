@@ -173,6 +173,7 @@
   import {
     uploadVehicle,
     uploadMachine,
+    uploadImage
   } from "../../network/uploadRequest";
 
   export default {
@@ -424,23 +425,30 @@
         formData.append('vehicleModel',this.formItem1.vehicleModel);
         formData.append('driverName',this.formItem1.driverName);
         formData.append('driverPhone',this.formItem1.driverPhone);
-        uploadVehicle(formData).then(res=>{ // request成功
-          console.log('上传成功->',res);
-          this.$notify({
-            title: '成功',
-            message: res.msg+'成功',
-            type: 'success',
-            offset: 100
+        uploadImage(formData).then(res=>{
+          console.log(res);
+          formData.append('imagePath',res);
+          uploadVehicle(formData).then(res=>{ // request成功
+            console.log('上传成功->',res);
+            this.$notify({
+              title: '成功',
+              message: res.msg+'成功',
+              type: 'success',
+              offset: 100
+            });
+          }).catch(error=>{ // request失败
+            console.log('上传失败->',error);
+            this.$notify({
+              title: '失败',
+              message: '您的车辆信息上传失败，请联系管理员',
+              type: 'error',
+              offset: 100
+            });
           });
-        }).catch(error=>{ // request失败
-          console.log('上传失败->',error);
-          this.$notify({
-            title: '失败',
-            message: '您的车辆信息上传失败，请联系管理员',
-            type: 'error',
-            offset: 100
-          });
+        }).catch(error=>{
+
         });
+
       },
       /* 上传文件函数
       *  params参数是el-upload里的fileList

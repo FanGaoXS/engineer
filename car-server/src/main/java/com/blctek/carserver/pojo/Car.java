@@ -34,6 +34,11 @@ public class Car {
      */
     private String chipId;
 
+    /**
+     * 车辆图片路径
+     */
+    private String imagePath;
+
     private Driver driver;
 
 }

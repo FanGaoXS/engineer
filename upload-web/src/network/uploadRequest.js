@@ -1,6 +1,7 @@
 import {
   localAuthServerRequest,
-  blctekAuthServerRequest
+  blctekAuthServerRequest,
+  localImageServerRequest
 } from "./request";
 
 // 上传车辆信息
@@ -20,7 +21,7 @@ export function uploadVehicle(formData) {
     },
     data:formData
   }
-  return blctekAuthServerRequest(config);
+  return localAuthServerRequest(config);
 }
 
 // 上传机械
@@ -40,5 +41,21 @@ export function uploadMachine(formData) {
     },
     data:formData
   }
-  return blctekAuthServerRequest(config);
+  return localAuthServerRequest(config);
+}
+
+//上传图片
+export function uploadImage(formData) {
+  console.log('准备上传的图片->',formData.get('file'));
+  let uploadFormData = new FormData();
+  uploadFormData.append('file',formData.get('file'));
+  let config= {
+    url: 'img/imgInsert',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    data: uploadFormData
+  }
+  return localImageServerRequest(config);
 }

@@ -15,6 +15,7 @@
         <result column="type" property="type"/>
         <result column="chipId" property="carId"/>
         <result column="driverId" property="driverId"/>
+        <result property="imagePath" column="imagePath"/>
         <association property="driver" javaType="com.blctek.carserver.pojo.Driver">
             <id column="driverId" property="driverId"/>
             <result column="driverName" property="driverName"/>
@@ -25,9 +26,9 @@
             keyProperty="carId" useGeneratedKeys="true">
         INSERT INTO
             car
-            (type,driverId,chipId)
+            (type,driverId,chipId,imagePath)
         VALUES
-            (#{type},#{driverId},#{chipId})
+            (#{type},#{driverId},#{chipId},#{imagePath})
     </insert>
     <update id="updateCar" parameterType="com.blctek.carserver.pojo.Car">
         UPDATE
@@ -41,6 +42,9 @@
             </if>
             <if test=" chipId!=null and chipId!='' ">
                 chipId=#{chipId},
+            </if>
+            <if test=" imagePath!=null and imagePath!='' ">
+                imagePath=#{imagePath},
             </if>
         </trim>
         WHERE

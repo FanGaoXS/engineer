@@ -3,8 +3,13 @@ package com.blctek.authserver.service;
 import com.blctek.carserver.pojo.Driver;
 import com.blctek.carserver.pojo.Machine;
 import com.blctek.carserver.pojo.Vehicle;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,19 +27,43 @@ public class CarHttpService {
     //car服务器
     public static String CAR_BASE_URL = "http://localhost:8092";
 
+    //image服务器
+    public static String IMG_BASE_URL = "http://localhost:8093";
+
+    public String imageUpload(MultipartFile file){
+        String url = IMG_BASE_URL + "/img/imgInsert";
+        System.out.println(file.getOriginalFilename());
+
+        //post请求的data
+        MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
+        formData.add("file",file);
+
+        //http请求头
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set("Content-Type", "multipart/form-data");
+        httpHeaders.set("Accept","text/plain");
+
+        //将请求头和请求头整合成请求实体
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(formData, httpHeaders);
+
+        return new RestTemplate().postForObject(url, requestEntity, String.class);
+    }
+
     public Boolean vehicleInsert(String chipId,
                                  String plateType,
                                  String vehicleModel,
                                  String plateNumber,
                                  String driverName,
-                                 String driverPhone){
+                                 String driverPhone,
+                                 String imagePath){
         String url = CAR_BASE_URL + "/vehicle/addVehicle/" +
                 chipId + "/" +
                 plateType + "/" +
                 vehicleModel + "/" +
                 plateNumber + "/" +
                 driverName + "/" +
-                driverPhone ;
+                driverPhone + "/" +
+                imagePath;
         return new RestTemplate().getForObject(url, Boolean.class);
 
     }
@@ -72,14 +101,16 @@ public class CarHttpService {
                                  String machineNumber,
                                  String engineNumber,
                                  String driverName,
-                                 String driverPhone){
+                                 String driverPhone,
+                                 String imagePath){
         String url = CAR_BASE_URL + "/machine/addMachine/" +
                 chipId + "/" +
                 machineModel + "/" +
                 machineNumber + "/" +
                 engineNumber + "/" +
                 driverName + "/" +
-                driverPhone ;
+                driverPhone + "/" +
+                imagePath;
         return new RestTemplate().getForObject(url, Boolean.class);
     }
 

@@ -2,7 +2,6 @@ package com.blctek.authserver.controller;
 
 import com.blctek.authserver.service.LdapHttpService;
 import com.blctek.ldapserver.pojo.Developer;
-import com.blctek.authserver.utils.HttpUtils;
 import com.blctek.authserver.utils.JWTUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

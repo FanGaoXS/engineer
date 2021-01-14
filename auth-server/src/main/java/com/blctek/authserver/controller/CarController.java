@@ -87,7 +87,7 @@ public class CarController {
                                          @RequestParam("plateNumber") String plateNumber,
                                          @RequestParam("driverName") String driverName,
                                          @RequestParam("driverPhone") String driverPhone,
-                                         @RequestParam("file") MultipartFile file){
+                                         @RequestParam("imagePath") String imagePath){
         log.info("新增车辆");
         log.info("设备编号->[{}]",chipId);
         log.info("车牌类型->[{}]",plateType);
@@ -95,13 +95,13 @@ public class CarController {
         log.info("车牌号->[{}]",plateNumber);
         log.info("司机姓名->[{}]",driverName);
         log.info("司机电话号码->[{}]",driverPhone);
-        log.info("文件大小->[{}]",file.getSize());
-        Boolean result = carHttpService.vehicleInsert(chipId, plateType, vehicleModel, plateNumber, driverName, driverPhone);
-        ResponseEntity<String> responseEntity = devHttpService.devInsert(chipId, plateNumber);
+        log.info("图片路径->[{}]",imagePath);
+        Boolean result = carHttpService.vehicleInsert(chipId, plateType, vehicleModel, plateNumber, driverName, driverPhone,imagePath);
         HashMap<String, Object> resMap = new HashMap<>();
         resMap.put("msg","新增车辆信息");
         resMap.put("status",result);
-        resMap.put("statusCode",responseEntity.getStatusCode());
+        /*ResponseEntity<String> responseEntity = devHttpService.devInsert(chipId, plateNumber);
+        resMap.put("statusCode",responseEntity.getStatusCode());*/
         return resMap;
     }
 
@@ -112,7 +112,7 @@ public class CarController {
                                          @RequestParam("engineNumber") String engineNumber,
                                          @RequestParam("driverName") String driverName,
                                          @RequestParam("driverPhone") String driverPhone,
-                                         @RequestParam("file") MultipartFile file){
+                                         @RequestParam("imagePath") String imagePath){
         log.info("想要新增机械");
         log.info("芯片编号->[{}]",chipId);
         log.info("机械类型->[{}]",machineModel);
@@ -120,8 +120,7 @@ public class CarController {
         log.info("机械发动机编号->[{}]",engineNumber);
         log.info("驾驶员姓名->[{}]",driverName);
         log.info("驾驶员手机号码->[{}]",driverPhone);
-
-        Boolean result = carHttpService.machineInsert(chipId, machineModel, machineNumber, engineNumber, driverName, driverPhone);
+        Boolean result = carHttpService.machineInsert(chipId, machineModel, machineNumber, engineNumber, driverName, driverPhone,imagePath);
         HashMap<String, Object> resMap = new HashMap<>();
         resMap.put("msg","新增机械信息");
         resMap.put("status",result);

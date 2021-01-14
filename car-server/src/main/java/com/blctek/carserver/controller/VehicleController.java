@@ -3,19 +3,13 @@ package com.blctek.carserver.controller;
 import com.blctek.carserver.mapper.VehicleMapper;
 import com.blctek.carserver.pojo.Car;
 import com.blctek.carserver.pojo.Driver;
-import com.blctek.carserver.pojo.Machine;
 import com.blctek.carserver.pojo.Vehicle;
 import com.blctek.carserver.service.VehicleService;
-import com.blctek.carserver.utils.HttpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -45,20 +39,21 @@ public class VehicleController {
      * @param driverPhone   驾驶员电话号码
      * @return              responseMap（状态码、数据、提示信息）
      */
-    @GetMapping("/addVehicle/"
-            + "{chipId}/"
-            + "{plateType}/"
-            + "{vehicleModel}/"
-            + "{plateNumber}/"
-            + "{driverName}/"
-            + "{driverPhone}")
+    @GetMapping("/addVehicle/" +
+            "{chipId}/" +
+            "{plateType}/" +
+            "{vehicleModel}/" +
+            "{plateNumber}/" +
+            "{driverName}/" +
+            "{driverPhone}/" +
+            "{imagePath}")
     public Boolean addVehicle(@PathVariable("chipId") String chipId,
                               @PathVariable("plateType") String plateType,
                               @PathVariable("vehicleModel") String vehicleModel,
                               @PathVariable("plateNumber") String plateNumber,
                               @PathVariable("driverName") String driverName,
-                              @PathVariable("driverPhone") String driverPhone/*,
-                              @RequestParam("file") MultipartFile file*/){
+                              @PathVariable("driverPhone") String driverPhone,
+                              @PathVariable("imagePath") String imagePath){
         log.info("想要新增车辆信息：");
         log.info("芯片编号->[{}]",chipId);
         log.info("车牌类型->[{}]",plateType);
@@ -66,6 +61,7 @@ public class VehicleController {
         log.info("车牌号->[{}]",plateNumber);
         log.info("驾驶员姓名->[{}]",driverName);
         log.info("驾驶员手机号码->[{}]",driverPhone);
+        log.info("车辆的图片地址->[{}]",imagePath);
         Vehicle vehicleByPlateNumber = vehicleMapper.selectVehicleByPlateNumber(plateNumber); //根据车牌号从数据中查询有无该记录
         if (vehicleByPlateNumber!=null) {   //不为空，说明数据库中已经存在，则覆盖（删除原记录再新插入）
             vehicleService.removeVehicle(vehicleByPlateNumber.getVehicleId(),vehicleByPlateNumber.getCar().getCarId(),vehicleByPlateNumber.getDriver().getDriverId());
@@ -73,6 +69,7 @@ public class VehicleController {
 
         Car car = new Car();
         car.setChipId(chipId);
+        car.setImagePath(imagePath);
 
         Driver driver = new Driver();
         driver.setDriverName(driverName);

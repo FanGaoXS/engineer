@@ -4,15 +4,11 @@ import com.blctek.carserver.pojo.Car;
 import com.blctek.carserver.pojo.Driver;
 import com.blctek.carserver.pojo.Machine;
 import com.blctek.carserver.service.MachineService;
-import com.blctek.carserver.utils.HttpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -45,13 +41,15 @@ public class MachineController {
             "{machineNumber}/" +
             "{engineNumber}/" +
             "{driverName}/" +
-            "{driverPhone}")
+            "{driverPhone}" +
+            "{imagePath}")
     public Boolean addMachine(@PathVariable("chipId") String chipId,
                               @PathVariable("machineModel") String machineModel,
                               @PathVariable("machineNumber") String machineNumber,
                               @PathVariable("engineNumber") String engineNumber,
                               @PathVariable("driverName") String driverName,
-                              @PathVariable("driverPhone") String driverPhone){
+                              @PathVariable("driverPhone") String driverPhone,
+                              @PathVariable("imagePath") String imagePath){
         log.info("想要上传机械信息");
         log.info("芯片编号->[{}]",chipId);
         log.info("机械类型->[{}]",machineModel);
@@ -59,9 +57,11 @@ public class MachineController {
         log.info("机械发动机编号->[{}]",engineNumber);
         log.info("驾驶员姓名->[{}]",driverName);
         log.info("驾驶员手机号码->[{}]",driverPhone);
+        log.info("机械图片的路径->[{}]",imagePath);
 
         Car car = new Car();
         car.setChipId(chipId);
+        car.setImagePath(imagePath);
 
         Driver driver = new Driver();
         driver.setDriverName(driverName);

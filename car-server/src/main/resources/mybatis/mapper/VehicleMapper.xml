@@ -38,6 +38,7 @@
             <result property="type" column="type"/>
             <result property="chipId" column="chipId"/>
             <result property="driverId" column="driverId"/>
+            <result property="imagePath" column="imagePath" />
         </association>
         <association property="driver" javaType="com.blctek.carserver.pojo.Driver">
             <id column="driverId" property="driverId"/>
