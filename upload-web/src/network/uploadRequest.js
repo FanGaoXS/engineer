@@ -1,7 +1,8 @@
 import {
   localAuthServerRequest,
   blctekAuthServerRequest,
-  localImageServerRequest
+  localImageServerRequest,
+  blctekImageServerRequest
 } from "./request";
 
 // 上传车辆信息
@@ -21,7 +22,7 @@ export function uploadVehicle(formData) {
     },
     data:formData
   }
-  return localAuthServerRequest(config);
+  return blctekImageServerRequest(config);
 }
 
 // 上传机械
@@ -41,7 +42,7 @@ export function uploadMachine(formData) {
     },
     data:formData
   }
-  return localAuthServerRequest(config);
+  return blctekImageServerRequest(config);
 }
 
 //上传图片
@@ -57,5 +58,5 @@ export function uploadImage(formData) {
     },
     data: uploadFormData
   }
-  return localImageServerRequest(config);
+  return blctekImageServerRequest(config);
 }

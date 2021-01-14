@@ -16,15 +16,18 @@ public class ImageConfigurer implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //获取文件的真实路径
-        String path = System.getProperty("user.dir")+"\\image-server\\src\\main\\resources\\static\\image\\";
+        //String path = System.getProperty("user.dir")+"\\image-server\\src\\main\\resources\\static\\image\\";
+        String winPath = System.getProperty("user.dir")+"\\image-server\\image\\";
+        String linuxPath = System.getProperty("user.dir")+"/image-server/image/";
         //获取操作系统的名字
         String os = System.getProperty("os.name");
         if (os.toLowerCase().startsWith("win")) {   //windows系统
             registry.addResourceHandler("/image/**").
-                    addResourceLocations("file:"+path);
+                    addResourceLocations("file:"+winPath);
         }else{//linux和mac系统 可以根据逻辑再做处理
             registry.addResourceHandler("/image/**").
-                    addResourceLocations("file:"+path);
+                    addResourceLocations("file:"+linuxPath);
+            System.out.println(linuxPath);
         }
 
     }

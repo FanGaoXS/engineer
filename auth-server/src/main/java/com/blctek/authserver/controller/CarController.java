@@ -100,8 +100,8 @@ public class CarController {
         HashMap<String, Object> resMap = new HashMap<>();
         resMap.put("msg","新增车辆信息");
         resMap.put("status",result);
-        /*ResponseEntity<String> responseEntity = devHttpService.devInsert(chipId, plateNumber);
-        resMap.put("statusCode",responseEntity.getStatusCode());*/
+        ResponseEntity<String> responseEntity = devHttpService.devInsert(chipId, plateNumber);
+        resMap.put("statusCode",responseEntity.getStatusCode());
         return resMap;
     }
 

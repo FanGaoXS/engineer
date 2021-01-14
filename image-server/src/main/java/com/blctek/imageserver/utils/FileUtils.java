@@ -37,8 +37,8 @@ public class FileUtils {
         //如果文件大小为空，返回null
         if (file.isEmpty()){ return null; }
         // 将想要保存的目录拼接到static目录下
-        File fileDir = new File("image-server/src/main/resources/static"+fileDirPath);
-
+        //File fileDir = new File("image-server/src/main/resources/static"+fileDirPath);
+        File fileDir = new File("image-server/"+fileDirPath);
         if (!fileDir.exists()){//如果该目录的路径不存在
             fileDir.mkdir();   //该目录不存在则创建该目录
         }

@@ -65,3 +65,21 @@ export function localImageServerRequest(config) {
   });
   return axiosInstance(config);
 }
+
+export function blctekImageServerRequest(config) {
+  let axiosInstance = Axios.create({
+    // baseURL: '//upload.wqkd.blctek.com/',
+    timeout: 5000
+  });
+  axiosInstance.interceptors.request.use(config=>{
+    return config;
+  },error => {
+    throw error;
+  });
+  axiosInstance.interceptors.response.use(res=>{
+    return res.data;
+  },error => {
+    throw error;
+  });
+  return axiosInstance(config);
+}
