@@ -101,6 +101,7 @@ public class CarController {
         resMap.put("msg","新增车辆信息");
         resMap.put("status",result);
         ResponseEntity<String> responseEntity = devHttpService.devInsert(chipId, plateNumber);
+        log.info("插入到轨迹服务器的statusCode->[{}]",responseEntity.getStatusCode());
         resMap.put("statusCode",responseEntity.getStatusCode());
         return resMap;
     }

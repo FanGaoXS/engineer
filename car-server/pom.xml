@@ -58,19 +58,19 @@
     <build>
         <plugins>
 
-            <plugin><!--将该项目打包成可执行的jar包，能够放在jre环境中运行-->
+            <!--<plugin>&lt;!&ndash;将该项目打包成可执行的jar包，能够放在jre环境中运行&ndash;&gt;
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+            </plugin>-->
 
-            <!--<plugin>&lt;!&ndash;将该项目打包成不可执行的jar依赖，这样就可以被auth-server项目所引入&ndash;&gt;
+            <plugin><!--将该项目打包成不可执行的jar依赖，这样就可以被auth-server项目所引入-->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
-            </plugin>-->
+            </plugin>
 
         </plugins>
     </build>
