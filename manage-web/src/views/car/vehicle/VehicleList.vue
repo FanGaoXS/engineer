@@ -68,7 +68,7 @@
             <el-input v-model="dialogForm.vehicleId" disabled/>
           </el-form-item>
           <el-form-item label="车牌号">
-            <el-input type="text" v-model="dialogForm.plateNumber" disabled/>
+            <el-input type="text" v-model="dialogForm.plateNumber"/>
           </el-form-item>
           <el-form-item label="车牌类型">
             <el-input type="text" v-model="dialogForm.plateType"/>

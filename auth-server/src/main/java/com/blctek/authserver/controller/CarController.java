@@ -68,12 +68,17 @@ public class CarController {
 
     @GetMapping("/modifyVehicle")
     public Map<String,Object> vehicleModify(Vehicle vehicle,
-                                            Driver driver){
+                                            Driver driver,
+                                            String chipId){
         log.info("修改车辆信息");
+        log.info("芯片编号->[{}]",chipId);
         log.info("车辆信息->[{}]",vehicle.toString());
         log.info("驾驶员信息->[{}]",driver.toString());
         Boolean result = carHttpService.vehicleUpdate(vehicle, driver);
         HashMap<String, Object> resMap = new HashMap<>();
+        ResponseEntity<String> responseEntity = devHttpService.devInsert(chipId, vehicle.getPlateNumber());
+        log.info("插入到轨迹服务器的statusCode->[{}]",responseEntity.getStatusCode());
+        resMap.put("statusCode",responseEntity.getStatusCode());
         resMap.put("msg","修改车辆信息");
         resMap.put("status",result);
         return resMap;
