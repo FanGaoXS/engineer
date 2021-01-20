@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
- * machine
+ * machine 机械信息表
  * @author 
  */
 @Data

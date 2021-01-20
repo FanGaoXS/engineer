@@ -4,6 +4,7 @@ import com.blctek.authserver.service.CarHttpService;
 import com.blctek.authserver.service.DevHttpService;
 import com.blctek.carserver.pojo.Driver;
 import com.blctek.carserver.pojo.Machine;
+import com.blctek.carserver.pojo.Model;
 import com.blctek.carserver.pojo.Vehicle;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -168,6 +169,46 @@ public class CarController {
         resMap.put("status",true);
         resMap.put("msg","查询所有机械信息");
         resMap.put("data",machineList);
+        return resMap;
+    }
+
+    @GetMapping("/insertModel")
+    public Map<String,Object> insertModel(Model model){
+        log.info("想要新增类型");
+        log.info("类型->[{}]",model.toString());
+        Boolean result = carHttpService.insertModel(model);
+        HashMap<String, Object> resMap = new HashMap<>();
+        resMap.put("status",result);
+        resMap.put("msg","新增类型");
+        return resMap;
+    }
+
+    @GetMapping("/modelList")
+    public Map<String,Object> modelList(){
+        log.info("想要查看所有类型");
+        HashMap<String, Object> resMap = new HashMap<>();
+        resMap.put("status",true);
+        resMap.put("data",carHttpService.modelList());
+        resMap.put("msg","查询所有类型");
+        return resMap;
+    }
+
+    @GetMapping("/modelListByBelong")
+    public Map<String,Object> modelListByBelong(String modelBelong){
+        log.info("想要查询属于[{}]的所有类型",modelBelong);
+        HashMap<String, Object> resMap = new HashMap<>();
+        resMap.put("status",true);
+        resMap.put("data",carHttpService.modelListByBelong(modelBelong));
+        resMap.put("msg","查询属于"+modelBelong+"的所有类型");
+        return resMap;
+    }
+
+    @GetMapping("/deleteModel")
+    public Map<String,Object> deleteModel(Integer id){
+        log.info("想要删除编号为[{}]的类型",id);
+        HashMap<String, Object> resMap = new HashMap<>();
+        resMap.put("status",carHttpService.deleteModel(id));
+        resMap.put("msg","删除编号为["+id+"]的类型");
         return resMap;
     }
 

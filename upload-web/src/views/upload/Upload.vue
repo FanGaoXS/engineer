@@ -33,12 +33,15 @@
         <!--车辆类型-->
         <el-form-item label="车型">
           <!--下拉选择框-->
-          <el-select v-model="formItem1.vehicleModel" placeholder="请选择">
-            <!--普通车辆选择组-->
-            <el-option-group v-for="group in vehicleOptionGroup" :key="group.label" :label="group.label" v-if="isVehicle">
-              <!--选项-->
-              <el-option v-for="item in group.options" :key="item" :label="item" :value="item"></el-option>
-            </el-option-group>
+          <el-select v-model="formItem1.vehicleModel" clearable placeholder="请选择">
+            <!--普通车辆选项-->
+            <el-option
+                    v-if="isVehicle"
+                    v-for="option in vehicleModelOptions.options"
+                    :key="option.modelName"
+                    :label="option.modelName"
+                    :value="option.modelName">
+            </el-option>
           </el-select>
         </el-form-item>
         <!--车牌号-->
@@ -169,12 +172,17 @@
 
 <script>
 
-  // 引入网络请求的函数
+  // 引入上传的网络请求的函数
   import {
     uploadVehicle,
     uploadMachine,
-    uploadImage
+    uploadImage,
   } from "../../network/uploadRequest";
+
+  import {
+    getModelByModelBelong
+  } from "../../network/pagesRequest";
+
 
   export default {
     name: "Upload",
@@ -221,31 +229,18 @@
         },
         fileList: [
         ],
-        vehicleOptionGroup:[
-          //热门车型
-          {
-            label: '常见车型',
-            // 热门车型里的options选项
-            options:[
-              '皮卡车',
-              '双桥车',
-            ]
-          },
-          //车型名
-          {
-            label: '车型名',
-            // 车型名里的options选项
-            options: [
-              '130轻卡',
-              '单桥车',
-              '罐车',
-              '皮卡车',
-              '洒水车',
-              '双桥车',
-              '四桥车',
-            ]
-          }
-        ],
+        vehicleModelOptions:{
+          label: '车型名',
+          options:[
+            /*'130轻卡',
+            '单桥车',
+            '罐车',
+            '皮卡车',
+            '洒水车',
+            '双桥车',
+            '四桥车',*/
+          ]
+        },
         machineOptionGroup:[
           //热门车型
           {
@@ -269,6 +264,14 @@
           }
         ],
       };
+    },
+    created() {
+      getModelByModelBelong('车辆').then(res=>{
+        // console.log(res.data);
+        this.vehicleModelOptions.options = res.data;
+      }).catch(error=>{
+        console.log(error);
+      })
     },
     computed: {
       // 从url中获取参数devId（设备编号）

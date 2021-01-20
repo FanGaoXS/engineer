@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
- * car
+ * car 所属工程用具表
  * @author 
  */
 @Data

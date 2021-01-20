@@ -2,6 +2,7 @@ package com.blctek.authserver.service;
 
 import com.blctek.carserver.pojo.Driver;
 import com.blctek.carserver.pojo.Machine;
+import com.blctek.carserver.pojo.Model;
 import com.blctek.carserver.pojo.Vehicle;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -91,10 +92,6 @@ public class CarHttpService {
         return new RestTemplate().getForObject(url ,Boolean.class);
     }
 
-    public List<Vehicle> vehicleList(){
-        String url = CAR_BASE_URL + "/vehicle/allVehicle";
-        return new RestTemplate().getForObject(url, List.class);
-    }
 
     public Boolean machineInsert(String chipId,
                                  String machineModel,
@@ -139,6 +136,40 @@ public class CarHttpService {
     public List<Machine> machineList() {
         String url = CAR_BASE_URL + "/machine/allMachine" ;
         return new RestTemplate().getForObject(url, List.class);
+    }
+
+    public List<Vehicle> vehicleList(){
+        String url = CAR_BASE_URL + "/vehicle/allVehicle";
+        return new RestTemplate().getForObject(url, List.class);
+    }
+
+    public List<Model> modelList(){
+        String url = CAR_BASE_URL + "/model/modelList";
+        return new RestTemplate().getForObject(url, List.class);
+    }
+
+    public List<Model> modelListByBelong(String modelBelong){
+        String url = CAR_BASE_URL + "/model/modelList/" + modelBelong;
+        return new RestTemplate().getForObject(url, List.class);
+    }
+
+    public Boolean insertModel(Model model){
+        String url = CAR_BASE_URL + "/model/insertModel?" +
+                "modelName={modelName}&" +
+                "modelDescription={modelDescription}&" +
+                "modelExampleImage={modelExampleImage}&" +
+                "modelBelong={modelBelong}";
+        HashMap<String , Object> reqMap = new HashMap<>();
+        reqMap.put("modelName",model.getModelName());
+        reqMap.put("modelDescription",model.getModelDescription());
+        reqMap.put("modelExampleImage",model.getModelExampleImage());
+        reqMap.put("modelBelong",model.getModelBelong());
+        return new RestTemplate().getForObject(url ,Boolean.class,reqMap);
+    }
+
+    public Boolean deleteModel(Integer id){
+        String url = CAR_BASE_URL + "/model/deleteModel/" + id ;
+        return new RestTemplate().getForObject(url,Boolean.class);
     }
 
 }

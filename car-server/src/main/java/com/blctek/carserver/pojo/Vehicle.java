@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
- * vehicle
+ * vehicle 车辆信息表
  * @author 
  */
 @Data
