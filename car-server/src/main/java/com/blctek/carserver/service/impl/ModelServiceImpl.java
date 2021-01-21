@@ -48,4 +48,13 @@ public class ModelServiceImpl implements ModelService {
         }
         return false;// 删除失败
     }
+
+    @Override
+    public Boolean updateModel(Model model) {
+        int i = modelMapper.updateModel(model);
+        if (i>0){
+            return true;
+        }
+        return false;
+    }
 }

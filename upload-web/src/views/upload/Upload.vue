@@ -36,8 +36,7 @@
           <el-select v-model="formItem1.vehicleModel" clearable placeholder="请选择">
             <!--普通车辆选项-->
             <el-option
-                    v-if="isVehicle"
-                    v-for="option in vehicleModelOptions.options"
+                    v-for="option in vehicleModelOption.options"
                     :key="option.modelName"
                     :label="option.modelName"
                     :value="option.modelName">
@@ -104,12 +103,15 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="机械类型">
-          <el-select v-model="formItem2.machineModel" placeholder="请选择">
-            <!--机械选择组-->
-            <el-option-group v-for="group in machineOptionGroup" :key="group.label" :label="group.label" v-if="!isVehicle">
-              <!--选项-->
-              <el-option v-for="item in group.options" :key="item" :label="item" :value="item"></el-option>
-            </el-option-group>
+          <!--下拉选择框-->
+          <el-select v-model="formItem2.machineModel" clearable placeholder="请选择">
+            <!--机械选项-->
+            <el-option
+                    v-for="option in machineModelOption.options"
+                    :key="option.modelName"
+                    :label="option.modelName"
+                    :value="option.modelName">
+            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="机械型号">
@@ -229,8 +231,8 @@
         },
         fileList: [
         ],
-        vehicleModelOptions:{
-          label: '车型名',
+        vehicleModelOption:{
+          label: '车辆类型',
           options:[
             /*'130轻卡',
             '单桥车',
@@ -241,37 +243,30 @@
             '四桥车',*/
           ]
         },
-        machineOptionGroup:[
-          //热门车型
-          {
-            label: '常见机械',
-            // 热门车型里的options选项
-            options:[
-              '挖机',
-              '压路机',
-            ]
-          },
-          //车型名
-          {
-            label: '机械名',
-            // 车型名里的options选项
-            options: [
-                '平地机',
-                '压路机',
-                '装载机',
-                '挖机'
-            ]
-          }
-        ],
+        machineModelOption:{
+          label: '机械类型',
+          options: [
+          /*  '平地机',
+            '压路机',
+            '装载机',
+            '挖机'*/
+          ]
+        }
       };
     },
     created() {
       getModelByModelBelong('车辆').then(res=>{
         // console.log(res.data);
-        this.vehicleModelOptions.options = res.data;
+        this.vehicleModelOption.options = res.data;
       }).catch(error=>{
         console.log(error);
-      })
+      });
+      getModelByModelBelong('机械').then(res=>{
+        console.log(res.data);
+        this.machineModelOption.options = res.data;
+      }).catch(error=>{
+        console.log(error);
+      });
     },
     computed: {
       // 从url中获取参数devId（设备编号）

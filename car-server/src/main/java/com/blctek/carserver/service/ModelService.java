@@ -38,4 +38,11 @@ public interface ModelService {
      * @return
      */
     Boolean deleteModel(Integer id);
+
+    /**
+     * 修改类型
+     * @param model
+     * @return
+     */
+    Boolean updateModel(Model model);
 }

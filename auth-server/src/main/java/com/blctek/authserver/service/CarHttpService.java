@@ -172,4 +172,20 @@ public class CarHttpService {
         return new RestTemplate().getForObject(url,Boolean.class);
     }
 
+    public Boolean updateModel(Model model){
+        String url = CAR_BASE_URL + "/model/updateModel?" +
+                "id={id}&" +
+                "modelName={modelName}&" +
+                "modelDescription={modelDescription}&" +
+                "modelExampleImage={modelExampleImage}&" +
+                "modelBelong={modelBelong}";
+        HashMap<String , Object> reqMap = new HashMap<>();
+        reqMap.put("id",model.getId());
+        reqMap.put("modelName",model.getModelName());
+        reqMap.put("modelDescription",model.getModelDescription());
+        reqMap.put("modelExampleImage",model.getModelExampleImage());
+        reqMap.put("modelBelong",model.getModelBelong());
+        return new RestTemplate().getForObject(url ,Boolean.class,reqMap);
+    }
+
 }

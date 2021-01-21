@@ -212,4 +212,13 @@ public class CarController {
         return resMap;
     }
 
+    @GetMapping("/updateModel")
+    public Map<String,Object> updateModel(Model model){
+        log.info("想要修改类型为->[{}]",model.toString());
+        HashMap<String, Object> resMap = new HashMap<>();
+        resMap.put("status",carHttpService.updateModel(model));
+        resMap.put("msg","修改所属["+model.getModelBelong()+"]的["+model.getModelName()+"]类型");
+        return resMap;
+    }
+
 }

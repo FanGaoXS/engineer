@@ -69,4 +69,16 @@ public class ModelController {
         log.info("删除类型编号为[{}]的类型失败",id);
         return false;
     }
+
+    @GetMapping("/updateModel")
+    public Boolean updateModel(Model model){
+        log.info("修改类型->[{}]",model.toString());
+        Boolean result = modelService.updateModel(model);
+        if (result) {
+            log.info("修改属于车辆的[{}]型号成功",model.getModelName());
+            return true;
+        }
+        log.info("修改属于车辆的[{}]型号失败",model.getModelName());
+        return false;
+    }
 }
