@@ -1,6 +1,9 @@
 server:
   port: 8090
+  tomcat:
+    max-http-form-post-size: 50MB
 spring:
   servlet:
     multipart:
-      max-file-size: 15MB
+      max-file-size: 50MB
+      max-request-size: 50MB
