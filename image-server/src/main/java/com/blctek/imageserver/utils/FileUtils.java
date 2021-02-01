@@ -56,7 +56,6 @@ public class FileUtils {
             //上传失败返回null
             return null;
         }
-
     }
 
     public static String getFileSize(MultipartFile file){

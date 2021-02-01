@@ -18,16 +18,18 @@ public class ImageConfigurer implements WebMvcConfigurer {
         //获取文件的真实路径
         //String path = System.getProperty("user.dir")+"\\image-server\\src\\main\\resources\\static\\image\\";
         String winPath = System.getProperty("user.dir")+"\\image-server\\image\\";
-        String linuxPath = System.getProperty("user.dir")+"/image-server/image/";
+//        String linuxPath = System.getProperty("user.dir")+"/image-server/image/";
+        String linuxPath = System.getProperty("user.dir")+"/image-server";
         //获取操作系统的名字
         String os = System.getProperty("os.name");
         if (os.toLowerCase().startsWith("win")) {   //windows系统
-            registry.addResourceHandler("/image/**").
-                    addResourceLocations("file:"+winPath);
+            registry.addResourceHandler("/image/**","/zip/**")
+                    .addResourceLocations("file:"+winPath);
         }else{//linux和mac系统 可以根据逻辑再做处理
-            registry.addResourceHandler("/image/**").
-                    addResourceLocations("file:"+linuxPath);
-            System.out.println(linuxPath);
+            // handlers表示会拦截的请求，比如会处理/image/**这种样式的请求
+            // locations表示会映射到的本地路径
+            registry.addResourceHandler("/image/**","/zip/**")
+                    .addResourceLocations("file:"+linuxPath+"/image/","file:"+linuxPath+"/zip/");
         }
 
     }
