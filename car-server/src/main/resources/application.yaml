@@ -11,6 +11,8 @@ spring:
     multipart:
       #限制上传文件的最大限制为15MB
       max-file-size: 15MB
+  application:
+    name: car-server
 
 mybatis:
   type-aliases-package: com.blctek.carserver.pojo

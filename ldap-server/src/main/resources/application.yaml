@@ -5,5 +5,7 @@ spring:
     base: dc=blctek,dc=com
     username: cn=admin,dc=blctek,dc=com
     password: 954278478
+  application:
+    name: ldap-server
 server:
   port: 8091

@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: assets-server
+  servlet:
+    multipart:
+      max-file-size: 15MB
+
+server:
+  port: 8093
+

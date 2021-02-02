@@ -6,7 +6,7 @@
           <template slot-scope="scope"><!--行内数据的可使用范围-->
             <el-form label-position="left" class="demo-table-expand">
               <el-form-item label="姓名">
-                <span>{{scope.row.cn}}</span>
+                <span>{{scope.row.com}}</span>
               </el-form-item>
               <el-form-item label="曾用名">
                 <span>{{scope.row.sn}}</span>
@@ -20,7 +20,7 @@
             </el-form>
           </template>
         </el-table-column>
-        <el-table-column label=姓名 prop="cn"/>
+        <el-table-column label=姓名 prop="com"/>
         <el-table-column label="用户名" prop="uid"/>
         <el-table-column label="密码" prop="password"/>
         <el-table-column label="操作">
