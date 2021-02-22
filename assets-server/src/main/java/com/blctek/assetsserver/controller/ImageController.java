@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -21,7 +23,7 @@ import java.util.UUID;
 public class ImageController {
 
     @PostMapping("/imgInsert")
-    public String imgInsert(@RequestParam("file")MultipartFile image){
+    public Map<String,Object> imgInsert(@RequestParam("file")MultipartFile image){
         log.info("图片的原名称->[{}]",image.getOriginalFilename());
         log.info("图片的格式->[{}]",image.getContentType());
         log.info("图片的大小->[{}]",FileUtils.getFileSize(image));
@@ -30,6 +32,10 @@ public class ImageController {
         String imageName = UUID.randomUUID().toString();
         String imagePath = FileUtils.uploadFile(image, "/image/car/", imageName);
         log.info("图片上传后的路径->[{}]",imagePath);
-        return imageName;
+
+        HashMap<String, Object> resMap = new HashMap<>();
+        resMap.put("data",imageName);
+        
+        return resMap;
     }
 }

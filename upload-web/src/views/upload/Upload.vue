@@ -188,9 +188,6 @@
 
   export default {
     name: "Upload",
-    components: {
-
-    },
     data() {
       return {
         // 限制上传图片的大小
@@ -260,13 +257,13 @@
         this.vehicleModelOption.options = res.data;
       }).catch(error=>{
         console.log(error);
-      });
+      })
       getModelByModelBelong('机械').then(res=>{
-        console.log(res.data);
+        // console.log(res.data);
         this.machineModelOption.options = res.data;
       }).catch(error=>{
         console.log(error);
-      });
+      })
     },
     computed: {
       // 从url中获取参数devId（设备编号）
@@ -414,39 +411,37 @@
           });
         });
       },
-      uploadVehicle(param){
-        let formData = new FormData();
-        formData.append('file',param.file);
-        formData.append('chipId',this.chipId);
-        formData.append('plateType',this.formItem1.plateType?'新能源':'汽油车');
-        formData.append('plateNumber',this.formItem1.plateNumber);
-        formData.append('vehicleModel',this.formItem1.vehicleModel);
-        formData.append('driverName',this.formItem1.driverName);
-        formData.append('driverPhone',this.formItem1.driverPhone);
-        uploadImage(formData).then(res=>{
-          console.log(res);
-          formData.append('imagePath',res);
-          uploadVehicle(formData).then(res=>{ // request成功
-            console.log('上传成功->',res);
-            this.$notify({
-              title: '成功',
-              message: res.msg+'成功',
-              type: 'success',
-              offset: 100
-            });
-          }).catch(error=>{ // request失败
-            console.log('上传失败->',error);
-            this.$notify({
-              title: '失败',
-              message: '您的车辆信息上传失败，请联系管理员',
-              type: 'error',
-              offset: 100
-            });
+      async uploadVehicle(param){
+
+        let fileFormData = new FormData();//创建文件表单对象
+        fileFormData.append('file',param.file);
+        const { data:imagePath } = await uploadImage(fileFormData) //返回上传图片成功后的imagePath
+
+        let vehicleFormData = new FormData(); //创建车辆信息表单对象
+        vehicleFormData.append('chipId',this.chipId);
+        vehicleFormData.append('plateType',this.formItem1.plateType?'新能源':'汽油车');
+        vehicleFormData.append('plateNumber',this.formItem1.plateNumber);
+        vehicleFormData.append('vehicleModel',this.formItem1.vehicleModel);
+        vehicleFormData.append('driverName',this.formItem1.driverName);
+        vehicleFormData.append('driverPhone',this.formItem1.driverPhone);
+        vehicleFormData.append('imagePath',imagePath)
+        uploadVehicle(vehicleFormData).then(res=>{ // request成功
+          // console.log('上传成功->',res);
+          this.$notify({
+            title: '成功',
+            message: res.msg+'成功',
+            type: 'success',
+            offset: 100
           });
-        }).catch(error=>{
-
+        }).catch(error=>{ // request失败
+          console.log('上传失败->',error);
+          this.$notify({
+            title: '失败',
+            message: '您的车辆信息上传失败，请联系管理员',
+            type: 'error',
+            offset: 100
+          });
         });
-
       },
       /* 上传文件函数
       *  params参数是el-upload里的fileList

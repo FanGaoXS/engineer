@@ -8,14 +8,9 @@ import com.blctek.carserver.pojo.Model;
 import com.blctek.carserver.pojo.Vehicle;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -53,11 +48,11 @@ public class CarController {
         HashMap<String, Object> resMap = new HashMap<>();
         resMap.put("data",speed);*/
         long contentLength = request.getContentLengthLong();
-        long endTime = new Date().getTime();
         HashMap<String, Object> dataMap = new HashMap<>();
         dataMap.put("contentLength",contentLength);
         log.info("contentLength->[{} Byte]",contentLength);
-        dataMap.put("endTime",endTime);
+        log.info("contentLength->[{} Kb]",contentLength/1024);
+        log.info("contentLength->[{} Mb]",contentLength/1024/1024);
         HashMap<String, Object> resMap = new HashMap<>();
         resMap.put("msg","客户端到服务端");
         resMap.put("data",dataMap);

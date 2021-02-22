@@ -1,6 +1,6 @@
 import {
-  localAuthServerRequest,
-  blctekAuthServerRequest
+  prodServer,
+  localServer
 } from "./request";
 
 /**
@@ -15,5 +15,5 @@ export function getModelByModelBelong(modelBelong) {
       modelBelong: modelBelong
     }
   };
-  return blctekAuthServerRequest(config);
+  return prodServer(config);
 }

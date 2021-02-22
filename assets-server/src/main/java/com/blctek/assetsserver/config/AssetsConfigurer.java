@@ -12,23 +12,22 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @Description:
  */
 @Configuration
-public class ImageConfigurer implements WebMvcConfigurer {
+public class AssetsConfigurer implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //获取文件的真实路径
-        //String path = System.getProperty("user.dir")+"\\image-server\\src\\main\\resources\\static\\image\\";
         String winPath = System.getProperty("user.dir")+"\\assets-server";
-//        String linuxPath = System.getProperty("user.dir")+"/image-server/image/";
         String linuxPath = System.getProperty("user.dir")+"/assets-server";
         //获取操作系统的名字
         String os = System.getProperty("os.name");
-        if (os.toLowerCase().startsWith("win")) {   //windows系统
+        if (os.toLowerCase().startsWith("win")) {//windows系统
             registry.addResourceHandler("/image/**","/zip/**")
-                    .addResourceLocations("file:"+winPath);
+                    .addResourceLocations("file:"+winPath+"/image/","file:"+winPath+"/zip/");
         }else{//linux和mac系统 可以根据逻辑再做处理
-            // handlers表示会拦截的请求，比如会处理/image/**这种样式的请求
+            // handlers表示会拦截的请求，比如会处理/image/**这种样式URL的请求
             // locations表示会映射到的本地路径
-            registry.addResourceHandler("/image/**","/zip/**")
+            // 将resourceHandler拦截到的URL请求映射到resourceLocations上的本地路径
+            registry.addResourceHandler("/image/**", "/zip/**")
                     .addResourceLocations("file:"+linuxPath+"/image/","file:"+linuxPath+"/zip/");
         }
 

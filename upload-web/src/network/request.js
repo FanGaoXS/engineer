@@ -2,84 +2,92 @@
 import Axios from "axios";
 
 /**
- * 本地鉴权服务器
+ * 本地服务器
  * @param config
  * @returns {AxiosPromise}
  */
-export function localAuthServerRequest(config) {
+export function localServer(config) {
+  //基础配置
   let axiosInstance = Axios.create({
-    baseURL: '//localhost:8090/',
+    baseURL: '//localhost:8090',
     timeout: 5000
-  });
+  })
+  //request拦截器
   axiosInstance.interceptors.request.use(config=>{
-    return config;
+    // console.log(config)
+    return config
   },error => {
-    throw error;
-  });
+    console.log('axios的request拦截器错误->',error)
+    throw error
+  })
+  //response拦截器
   axiosInstance.interceptors.response.use(res=>{
-    return res.data;
+    // console.log(res)
+    return res.data
   },error => {
-    throw error;
-  });
-  return axiosInstance(config);
+    console.log('axios的response拦截器错误->',error)
+    throw error
+  })
+  return axiosInstance(config)
 }
 
 /**
- * 远程鉴权服务器
+ * 远程服务器
  * @param config
  * @returns {AxiosPromise}
  */
-export function blctekAuthServerRequest(config) {
+export function blctekServer(config) {
+  //基础配置
   let axiosInstance = Axios.create({
-    // baseURL: '//auth-server.wqkd.blctek.com/',
+    baseURL: '//upload.wqkd.blctek.com',
     timeout: 5000
-  });
+  })
+  //request拦截器
   axiosInstance.interceptors.request.use(config=>{
-    return config;
+    // console.log(config)
+    return config
   },error => {
-    throw error;
-  });
+    console.log('axios的request拦截器错误->',error)
+    throw error
+  })
+  //response拦截器
   axiosInstance.interceptors.response.use(res=>{
-    return res.data;
+    // console.log(res)
+    return res.data
   },error => {
-    throw error;
-  });
-  return axiosInstance(config);
+    console.log('axios的response拦截器错误->',error)
+    throw error
+  })
+  return axiosInstance(config)
 }
 
-
-export function localImageServerRequest(config) {
+/**
+ * 生产服务器
+ * @param config
+ * @returns {AxiosPromise}
+ */
+export function prodServer(config) {
+  //基础配置
   let axiosInstance = Axios.create({
-    baseURL: '//localhost:8093/',
+    baseURL: '',
     timeout: 5000
-  });
+  })
+  //request拦截器
   axiosInstance.interceptors.request.use(config=>{
-    return config;
+    // console.log(config)
+    return config
   },error => {
-    throw error;
-  });
+    console.log('axios的request拦截器错误->',error)
+    throw error
+  })
+  //response拦截器
   axiosInstance.interceptors.response.use(res=>{
-    return res.data;
+    // console.log(res)
+    return res.data
   },error => {
-    throw error;
-  });
-  return axiosInstance(config);
+    console.log('axios的response拦截器错误->',error)
+    throw error
+  })
+  return axiosInstance(config)
 }
 
-export function blctekImageServerRequest(config) {
-  let axiosInstance = Axios.create({
-    // baseURL: '//upload.wqkd.blctek.com/',
-    timeout: 5000
-  });
-  axiosInstance.interceptors.request.use(config=>{
-    return config;
-  },error => {
-    throw error;
-  });
-  axiosInstance.interceptors.response.use(res=>{
-    return res.data;
-  },error => {
-    throw error;
-  });
-  return axiosInstance(config);
-}
