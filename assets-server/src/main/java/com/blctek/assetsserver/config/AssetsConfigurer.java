@@ -24,9 +24,11 @@ public class AssetsConfigurer implements WebMvcConfigurer {
             registry.addResourceHandler("/image/**","/zip/**")
                     .addResourceLocations("file:"+winPath+"/image/","file:"+winPath+"/zip/");
         }else{//linux和mac系统 可以根据逻辑再做处理
-            // handlers表示会拦截的请求，比如会处理/image/**这种样式URL的请求
-            // locations表示会映射到的本地路径
-            // 将resourceHandler拦截到的URL请求映射到resourceLocations上的本地路径
+            /*handlers表示会拦截的请求，比如会处理/image*//**这种样式URL的请求
+            locations表示会映射到的本地路径
+            将resourceHandler拦截到的URL请求映射到resourceLocations上的本地路径
+             比如以下语句就会拦截/image/**和/zip/**的url请求，然后映射到服务器本地的
+             /image/或/zip/文件路径下 */
             registry.addResourceHandler("/image/**", "/zip/**")
                     .addResourceLocations("file:"+linuxPath+"/image/","file:"+linuxPath+"/zip/");
         }
