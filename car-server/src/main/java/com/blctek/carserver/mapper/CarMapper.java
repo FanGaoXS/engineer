@@ -14,8 +14,8 @@ import java.util.List;
  * @Date: 2020/12/25/16:06
  * @Description: 对car表的crud
  */
-@Mapper
-@Repository
+@Mapper //mybatis的注解：声明他是一个mapper
+@Repository //spring的注解：声明他是一个bean（交给IOC容器）
 public interface CarMapper {
 
     /**
