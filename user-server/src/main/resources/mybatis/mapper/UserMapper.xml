@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blctek.userserver.mapper.UserMapper">
+    <insert id="insertOne" parameterType="com.blctek.userserver.pojo.User"
+            keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+            user
+            (uuid,username,password)
+        VALUES
+            (#{uuid},#{username},#{password})
+    </insert>
+    <delete id="deleteOne" parameterType="com.blctek.userserver.pojo.User">
+        DELETE FROM user WHERE id = #{id}
+    </delete>
+    <update id="updateOne" parameterType="com.blctek.userserver.pojo.User">
+        UPDATE
+            user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test=" uuid!=null and uuid!='' ">
+                uuid = #{uuid},
+            </if>
+            <if test=" username!=null and username!='' ">
+                username = #{username},
+            </if>
+            <if test=" password!=null and password!='' ">
+                password = #{password},
+            </if>
+        </trim>
+        WHERE
+            id = #{id}
+    </update>
+    <select id="selectList" resultMap="userMap">
+        SELECT
+            id,uuid,username,password
+        FROM
+            user
+    </select>
+    <select id="selectListByCondition" resultMap="userMap">
+        SELECT
+            id,uuid,username,password
+        FROM
+            user
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test=" id!=null and id!='' ">
+                AND id = #{id}
+            </if>
+            <if test=" uuid!=null and uuid!='' ">
+                AND uuid = #{uuid}
+            </if>
+            <if test=" username!=null and username!='' ">
+                AND username = #{username}
+            </if>
+            <if test=" password!=null and password!='' ">
+                AND password = #{password}
+            </if>
+        </trim>
+    </select>
+    <select id="selectOneByCondition" resultMap="userMap">
+        SELECT
+        id,uuid,username,password
+        FROM
+        user
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test=" id!=null and id!='' ">
+                AND id = #{id}
+            </if>
+            <if test=" uuid!=null and uuid!='' ">
+                AND uuid = #{uuid}
+            </if>
+            <if test=" username!=null and username!='' ">
+                AND username = #{username}
+            </if>
+            <if test=" password!=null and password!='' ">
+                AND password = #{password}
+            </if>
+        </trim>
+    </select>
+    <resultMap id="userMap" type="com.blctek.userserver.pojo.User">
+        <id column="id" property="id"/>
+        <result column="uuid" property="uuid"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+    </resultMap>
+</mapper>

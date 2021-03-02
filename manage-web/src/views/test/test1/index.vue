@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <h2>测试父子组件数据绑定</h2>
     <el-button @click="changeList">父组件按钮：添加list</el-button>
     <child
       :isShow.sync="isShow"

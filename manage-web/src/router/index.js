@@ -202,6 +202,22 @@ export const constantRoutes = [
         name: 'Test1',
         component: () => import('@/views/test/test1/index'),
         meta: { title: '测试1'}
+      },
+      {
+        path: 'page2',
+        name: 'Page2',
+        component: () => import('@/views/test/page2/index'),
+        meta: { title: '页面2'}
+      },
+      {
+        path: 'page3/:name/:age/:object',
+        name: 'Page3',
+        hidden: true,
+        component: () => import('@/views/test/page3/index'),
+        meta: {
+          title: '页面3',
+          activeMenu: '/test/page2'
+        }
       }
     ]
   },*/

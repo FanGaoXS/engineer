@@ -1,5 +1,8 @@
 package com.blctek.userserver.response;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -13,6 +16,8 @@ import java.io.Serializable;
  *               data：返回数据
  *               timeStamp：返回时间戳
  */
+@AllArgsConstructor
+@Data
 public class ResultResponse implements Serializable {
     /**
      * 序列化
@@ -22,7 +27,12 @@ public class ResultResponse implements Serializable {
     /**
      * 响应状态（true为成功，false为失败）
      */
-    private boolean status;
+    private Boolean status;
+
+    /**
+     * 自定义响应状态码
+     */
+    private Integer code;
 
     /**
      * 响应的消息
@@ -42,48 +52,11 @@ public class ResultResponse implements Serializable {
     public ResultResponse() {
         //status默认为true
         this.status = true;
+        //status默认为2000
+        this.code = 20000;
         //data默认为null
         this.data = null;
         //timeStamp
         this.timeStamp = System.currentTimeMillis();
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
-    }
-
-
-    public boolean getStatus() {
-        return status;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public Long getTimeStamp() {
-        return timeStamp;
-    }
-
-    @Override
-    public String toString() {
-        return "ResultResponse{" +
-                "status=" + status +
-                ", msg='" + msg + '\'' +
-                ", data=" + data +
-                ", timeStamp=" + timeStamp +
-                '}';
     }
 }

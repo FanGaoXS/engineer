@@ -53,3 +53,20 @@
   ```
 
 ## 3、用户退出logout
+
+- request header:
+
+  ```js
+  X-Token: admin-token
+  ```
+
+- response:
+
+  ```json
+  {
+      "code":20000,
+      "data":"success"
+  }
+  ```
+
+  

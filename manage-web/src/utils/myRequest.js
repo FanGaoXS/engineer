@@ -13,7 +13,7 @@ export const IMAGE_BASE_URL = process.env["VUE_APP_BASE_URL"];
 export function blctekRequest(config) {
   // 创建axios实例对象，配置baseUrl和timeout
   let axiosInstance = axios.create({
-    baseURL: process.env["VUE_APP_BASE_URL"],
+    baseURL: process.env.VUE_APP_BASE_URL,
     timeout: 5000
   });
   // axios的request拦截器
