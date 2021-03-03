@@ -1,6 +1,6 @@
 package com.blctek.userserver.controller;
 
-import com.blctek.userserver.response.ResultResponse;
+import com.blctek.commonserver.response.ResultResponse;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @Auther: 吴青珂
  * @Date: 2021/03/02/13:46
- * @Description: 用户表的pojo
+ * @Description: 与数据库交互的对象（与表头一一对应）
  */
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,6 +36,21 @@ public class User implements Serializable {
      * 密码
      */
     private String password;
+
+    /**
+     * 姓名
+     */
+    private String name;
+
+    /**
+     * 头像地址
+     */
+    private String avatar;
+
+    /**
+     * 联系方式
+     */
+    private String phone;
 
     private static final long serialVersionUID = 1L;
 }

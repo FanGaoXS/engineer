@@ -52,13 +52,9 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
 
-        /*const { data } = response*/
-        const data = {
-          name: 'Super Admin',
-          avatar: "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
-        }
+        const { data } = response
 
-        if (!data) {
+        if (!data) { //没有data
           return reject('认证失败，请重新登录！')
         }
 

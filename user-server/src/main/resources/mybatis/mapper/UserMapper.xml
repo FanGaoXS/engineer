@@ -7,9 +7,9 @@
             keyProperty="id" useGeneratedKeys="true">
         INSERT INTO
             user
-            (uuid,username,password)
+            (uuid,username,password,name,avatar,phone)
         VALUES
-            (#{uuid},#{username},#{password})
+            (#{uuid},#{username},#{password},#{name},#{avatar},#{phone})
     </insert>
     <delete id="deleteOne" parameterType="com.blctek.userserver.pojo.User">
         DELETE FROM user WHERE id = #{id}
@@ -27,6 +27,15 @@
             <if test=" password!=null and password!='' ">
                 password = #{password},
             </if>
+            <if test=" name!=null and name!='' ">
+                name = #{name},
+            </if>
+            <if test=" avatar!=null and avatar!='' ">
+                avatar = #{avatar},
+            </if>
+            <if test=" phone!=null and phone!='' ">
+                phone = #{phone},
+            </if>
         </trim>
         WHERE
             id = #{id}
@@ -39,7 +48,7 @@
     </select>
     <select id="selectListByCondition" resultMap="userMap">
         SELECT
-            id,uuid,username,password
+            *
         FROM
             user
         <trim prefix="WHERE" prefixOverrides="AND">
@@ -55,13 +64,22 @@
             <if test=" password!=null and password!='' ">
                 AND password = #{password}
             </if>
+            <if test=" name!=null and name!='' ">
+                AND name = #{name}
+            </if>
+            <if test=" avatar!=null and avatar!='' ">
+                AND avatar = #{avatar}
+            </if>
+            <if test=" phone!=null and phone!='' ">
+                AND phone = #{phone}
+            </if>
         </trim>
     </select>
     <select id="selectOneByCondition" resultMap="userMap">
         SELECT
-        id,uuid,username,password
+            *
         FROM
-        user
+            user
         <trim prefix="WHERE" prefixOverrides="AND">
             <if test=" id!=null and id!='' ">
                 AND id = #{id}
@@ -75,6 +93,15 @@
             <if test=" password!=null and password!='' ">
                 AND password = #{password}
             </if>
+            <if test=" name!=null and name!='' ">
+                AND name = #{name}
+            </if>
+            <if test=" avatar!=null and avatar!='' ">
+                AND avatar = #{avatar}
+            </if>
+            <if test=" phone!=null and phone!='' ">
+                AND phone = #{phone}
+            </if>
         </trim>
     </select>
     <resultMap id="userMap" type="com.blctek.userserver.pojo.User">
@@ -82,5 +109,8 @@
         <result column="uuid" property="uuid"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
+        <result column="name" property="name"/>
+        <result column="avatar" property="avatar"/>
+        <result column="phone" property="phone"/>
     </resultMap>
 </mapper>

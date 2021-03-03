@@ -11,22 +11,21 @@ import java.io.Serializable;
  *
  * @Auther: 吴青珂
  * @Date: 2021/03/02/13:05
- * @Description:
+ * @Description: 与前端视图直接交互的对象（登录页面）
  */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class VoUser implements Serializable {
+public class VoLogin implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 用户名
-     */
     private String username;
 
-    /**
-     * 密码
-     */
     private String password;
+
+    /**
+     * 保持的期限（单位天）
+     */
+    private Integer validityDay;
 }

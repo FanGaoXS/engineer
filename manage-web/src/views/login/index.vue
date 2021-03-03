@@ -44,8 +44,8 @@
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
       <div class="tips">
-        <!--<span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>-->
+        <!--<span style="margin-right:20px;">用户名: admin</span>
+        <span> 密码: admin</span>-->
       </div>
 
     </el-form>
@@ -53,21 +53,24 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
+import {
+  validUsername,
+  validPassword
+} from '@/utils/validate'
 
 export default {
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error('请输入正确的用户名：5到16位（字母，数字，下划线，减号'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+      if (!validPassword(value)) {
+        callback(new Error('请输入正确的密码：至少5位'))
       } else {
         callback()
       }
@@ -75,7 +78,7 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '111111'
+        password: 'admin'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -116,7 +119,7 @@ export default {
             this.loading = false
           })
         } else {
-          console.log('error submit!!')
+          console.log('用户名或者密码不符合规则！')
           return false
         }
       })
