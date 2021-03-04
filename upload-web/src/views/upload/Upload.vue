@@ -253,16 +253,16 @@
     },
     created() {
       getModelByModelBelong('车辆').then(res=>{
-        // console.log(res.data);
+        // console.logger(res.data);
         this.vehicleModelOption.options = res.data;
       }).catch(error=>{
-        console.log(error);
+        console.logger(error);
       })
       getModelByModelBelong('机械').then(res=>{
-        // console.log(res.data);
+        // console.logger(res.data);
         this.machineModelOption.options = res.data;
       }).catch(error=>{
-        console.log(error);
+        console.logger(error);
       })
     },
     computed: {
@@ -273,10 +273,10 @@
     },
     methods: {
       handleRemove(file, fileList) {
-        console.log(file, fileList);
+        console.logger(file, fileList);
       },
       handlePreview(file) {
-        console.log(file);
+        console.logger(file);
       },
       /*  重置表单
       * */
@@ -297,7 +297,7 @@
       /*  输入框输入完成后的回调函数
       * */
       getPlateNumber(inputValue){
-        console.log('输入的车牌号是->'+inputValue);
+        console.logger('输入的车牌号是->'+inputValue);
         this.formItem1.plateNumber=inputValue;
       },
       /*  比较上传的文件的大小函数（限制文件大小）
@@ -307,12 +307,12 @@
         // 文件大小（MB）
         let fileSize = file.size / 1024 / 1024 ;
         if (file.size>0&&file.size<=1024*1024){ //如果文件大小 0<size<=1M
-          console.log('准备上传文件大小->',(file.size/1024).toFixed(2)+'Kb'); // 以Kb显示
+          console.logger('准备上传文件大小->',(file.size/1024).toFixed(2)+'Kb'); // 以Kb显示
         } else if (file.size>1024*1024) {
-          console.log('准备上传文件大小->',(file.size/1024/1024).toFixed(2)+'M');// 以M显示
+          console.logger('准备上传文件大小->',(file.size/1024/1024).toFixed(2)+'M');// 以M显示
         }
         // 文件大小是否小于15M
-        console.log('是否小于'+limitFileSize+'M->',fileSize<limitFileSize);
+        console.logger('是否小于'+limitFileSize+'M->',fileSize<limitFileSize);
         /* 返回文件大小是否小于15M，是返回true，否则返回false。
          */
         return fileSize<limitFileSize ;
@@ -394,7 +394,7 @@
         formData.append('driverName',this.formItem2.driverName);
         formData.append('driverPhone',this.formItem2.driverPhone);
         uploadMachine(formData).then(res=>{ // request成功
-          console.log('上传成功->',res);
+          console.logger('上传成功->',res);
           this.$notify({
             title: '成功',
             message: res.msg+'成功',
@@ -402,7 +402,7 @@
             offset: 100
           });
         }).catch(error=>{ // request失败
-          console.log('上传失败->',error);
+          console.logger('上传失败->',error);
           this.$notify({
             title: '失败',
             message: '您的机械信息上传失败，请联系管理员',
@@ -426,7 +426,7 @@
         vehicleFormData.append('driverPhone',this.formItem1.driverPhone);
         vehicleFormData.append('imagePath',imagePath)
         uploadVehicle(vehicleFormData).then(res=>{ // request成功
-          // console.log('上传成功->',res);
+          // console.logger('上传成功->',res);
           this.$notify({
             title: '成功',
             message: res.msg+'成功',
@@ -434,7 +434,7 @@
             offset: 100
           });
         }).catch(error=>{ // request失败
-          console.log('上传失败->',error);
+          console.logger('上传失败->',error);
           this.$notify({
             title: '失败',
             message: '您的车辆信息上传失败，请联系管理员',

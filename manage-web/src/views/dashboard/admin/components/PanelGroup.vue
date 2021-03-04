@@ -70,8 +70,8 @@ export default {
   },
   methods: {
     fetchData(carList) {
-      // console.log('---PanelGroup---')
-      // console.log(carList)
+      // console.logger('---PanelGroup---')
+      // console.logger(carList)
       // 从父组件获得的carList然后赋值给该组件
       this.totalDriverNumber = carList.length;
       for (const car of carList) {

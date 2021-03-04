@@ -42,7 +42,7 @@
     </update>
     <select id="selectList" resultMap="userMap">
         SELECT
-            id,uuid,username,password
+            *
         FROM
             user
     </select>

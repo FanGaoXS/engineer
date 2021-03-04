@@ -159,7 +159,7 @@
       },
       // 处理修改（清空临时表，打开对话框，将该行数据填充）
       handleUpdate(row){
-        // console.log(row);
+        // console.logger(row);
         this.dialogFormVisible = true;
         this.dialogType = 'update';
         this.resetTemp();
@@ -167,8 +167,8 @@
       },
       // 处理删除
       handleDelete(row,index) {
-        /*console.log(row);
-        console.log(index);*/
+        /*console.logger(row);
+        console.logger(index);*/
         this.$confirm('此操作将永久删除记录, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -180,7 +180,7 @@
       //  新增类型
       insertModel(){
         insertModel(this.tempForm).then(res=>{
-          // console.log(res.data)
+          // console.logger(res.data)
           // this.list.push(this.tempForm);
           this.fetchData();
           this.dialogFormVisible = false;
@@ -190,7 +190,7 @@
           })
           this.dialogFormVisible = false;
         }).catch(error=>{
-          console.log(error);
+          console.logger(error);
           this.$notify({
             type: 'error',
             message: '新增类型失败，请联系管理员：'+error
@@ -199,19 +199,19 @@
       },
       //  修改类型
       updateModel(){
-        console.log(this.tempForm);
+        console.logger(this.tempForm);
         updateModel(this.tempForm).then(res=>{
-          // console.log(res.data)
+          // console.logger(res.data)
           this.dialogFormVisible = false;
           let index = this.list.findIndex(v=> v.id === this.tempForm.id )
-          // console.log(index);
+          // console.logger(index);
           this.list.splice(index,1,this.tempForm);
           this.$notify({
             type: 'success',
             message: '修改类型成功！'
           })
         }).catch(error=>{
-          console.log(error);
+          console.logger(error);
           this.$notify({
             type: 'error',
             message: '修改类型失败，请联系管理员：'+error
@@ -221,14 +221,14 @@
       // 删除类型
       deleteModel(id,index){
         deleteModel(id).then(res=>{
-          // console.log(res.data)
+          // console.logger(res.data)
           this.$notify({
             type: 'success',
             message: '删除类型成功'
           })
           this.list.splice(index,1);
         }).catch(error=>{
-          console.log(error);
+          console.logger(error);
           this.$notify({
             type: 'success',
             message: '删除类型失败，请联系管理员：'+error

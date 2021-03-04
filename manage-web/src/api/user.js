@@ -6,7 +6,8 @@ export function login(data) {
     method: 'POST',
     data:{
       username: data.username,
-      password: data.password
+      password: data.password,
+      validityDay: data.validityDay
     }
   })
 }

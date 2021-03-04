@@ -23,7 +23,7 @@ public class HelloController {
     @RequestMapping("/")
     public ResultResponse hello(){
         ResultResponse resultResponse = new ResultResponse();
-        resultResponse.setMsg("这是user-server服务器");
+        resultResponse.setMessage("这是user-server服务器");
         return resultResponse;
     }
 }

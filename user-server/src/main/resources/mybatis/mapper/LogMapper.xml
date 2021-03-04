@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blctek.userserver.mapper.LoggerMapper">
+    <insert id="insertOne" parameterType="com.blctek.userserver.pojo.Logger"
+            keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+            logger
+            (name,time,executor,ip,client)
+        VALUES
+            (#{name},#{time},#{executor},#{ip},#{client})
+    </insert>
+    <delete id="deleteOne" parameterType="com.blctek.userserver.pojo.Logger">
+        DELETE FROM logger WHERE id = #{id}
+    </delete>
+    <update id="updateOne" parameterType="com.blctek.userserver.pojo.Logger">
+        UPDATE
+            logger
+        <trim prefix="SET" suffixOverrides=",">
+            <if test=" name!=null and name!='' ">
+                name = #{name},
+            </if>
+            <if test=" time!=null and time!='' ">
+                time = #{time},
+            </if>
+            <if test=" executor!=null and executor!='' ">
+                executor = #{executor},
+            </if>
+            <if test=" ip!=null and ip!='' ">
+                ip = #{ip},
+            </if>
+            <if test=" client!=null and client!='' ">
+                client = #{client},
+            </if>
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+    <select id="selectList" resultMap="loggerMap">
+        SELECT
+            *
+        FROM
+            logger
+    </select>
+    <select id="selectListByCondition" resultMap="loggerMap">
+        SELECT
+            *
+        FROM
+            logger
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test=" id!=null and id!='' ">
+                AND id = #{id}
+            </if>
+            <if test=" name!=null and name!='' ">
+                AND name = #{name}
+            </if>
+            <if test=" time!=null and time!='' ">
+                AND time = #{time}
+            </if>
+            <if test=" executor!=null and executor!='' ">
+                AND executor = #{executor}
+            </if>
+            <if test=" ip!=null and ip!='' ">
+                AND ip = #{ip}
+            </if>
+            <if test=" client!=null and client!='' ">
+                AND client = #{client}
+            </if>
+        </trim>
+    </select>
+    <select id="selectOneByCondition" resultMap="loggerMap">
+        SELECT
+            *
+        FROM
+            logger
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test=" id!=null and id!='' ">
+                AND id = #{id}
+            </if>
+            <if test=" name!=null and name!='' ">
+                AND name = #{name}
+            </if>
+            <if test=" time!=null and time!='' ">
+                AND time = #{time}
+            </if>
+            <if test=" executor!=null and executor!='' ">
+                AND executor = #{executor}
+            </if>
+            <if test=" ip!=null and ip!='' ">
+                AND ip = #{ip}
+            </if>
+            <if test=" client!=null and client!='' ">
+                AND client = #{client}
+            </if>
+        </trim>
+    </select>
+    <resultMap id="loggerMap" type="com.blctek.userserver.pojo.Logger">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="time" property="time"/>
+        <result column="executor" property="executor"/>
+        <result column="ip" property="ip"/>
+        <result column="client" property="client"/>
+    </resultMap>
+</mapper>

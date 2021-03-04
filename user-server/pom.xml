@@ -18,10 +18,15 @@
     </properties>
     <dependencies>
 
-        <dependency>
+        <dependency><!--springboot-aop-->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <dependency><!--公用模块-->
             <groupId>com.blctek</groupId>
             <artifactId>common-server</artifactId>
-            <version>0.1.4</version>
+            <version>0.1.7</version>
         </dependency>
 
         <dependency><!--springboot-web-->

@@ -65,7 +65,7 @@
         this.map = AMap; // 加载成功后将异步加载的高德原生js赋给this.map
         this.fetchData(); //  填充数据
       }, e => {
-        console.log('高德地图api加载失败',e)
+        console.logger('高德地图api加载失败',e)
       })
 
     },
@@ -91,7 +91,7 @@
           }
           mileage = mileage/1000 //单位米->公里
           fuel = (mileage/100)*7.5 //单位升/百公里
-          // console.log(plateNumber,workDays,mileage.toFixed(2),fuel.toFixed(2))
+          // console.logger(plateNumber,workDays,mileage.toFixed(2),fuel.toFixed(2))
           carList.push({plateNumber, workDays, mileage, fuel})
         }
         let mileageOptions = [];

@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @Auther: 吴青珂
  * @Date: 2021/03/01/16:33
  * @Description: 自定义响应结构：
- *               msg：返回信息
+ *               message：返回信息
  *               data：返回数据
  *               timeStamp：返回时间戳
  */
@@ -31,7 +31,7 @@ public class ResultResponse implements Serializable {
     /**
      * 响应的消息
      */
-    private String msg;
+    private String message;
 
     /**
      * 响应的具体数据对象

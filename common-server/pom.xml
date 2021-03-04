@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.blctek</groupId>
     <artifactId>common-server</artifactId>
-    <version>0.1.4</version>
+    <version>0.1.7</version>
     <name>common-server</name>
     <description>server的公用模块</description>
     <properties>

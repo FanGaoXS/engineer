@@ -37,7 +37,7 @@ public class JWTUtils {
      * @return token    JWT令牌
      */
     public static String createToken(Map<String,String> payloadMap,Integer validityDay){
-        if (validityDay==null){
+        if (validityDay == null){
             validityDay = 7; //如果用户没有自定义有效期，则指定有效期为7
         }
         //1、创建JWT的builder构造器

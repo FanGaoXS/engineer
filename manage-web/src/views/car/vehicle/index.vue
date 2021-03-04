@@ -254,15 +254,15 @@ export default {
   methods: {
 
     handleUpdate(row){
-      /*console.log('handleUpdate',row)
-      console.log('handleUpdate',index)*/
+      /*console.logger('handleUpdate',row)
+      console.logger('handleUpdate',index)*/
       this.dialogFormVisible = true;
       this.tempForm = Object.assign({}, row)
     },
 
     handleDelete(row,index){
-      /*console.log('handleDelete',row)
-      console.log('handleDelete',index)*/
+      /*console.logger('handleDelete',row)
+      console.logger('handleDelete',index)*/
       this.$confirm('此操作将永久删除记录, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -273,15 +273,15 @@ export default {
     },
 
     updateVehicle(){
-      // console.log('updateVehicle',this.tempForm);
+      // console.logger('updateVehicle',this.tempForm);
       /*
       array.findIndex(v=> v.id === array1.id);
       这个函数就是查询数组对应的下标：返回值是 如果array.id=array1.id相等的然后该对象在array数组里的下标值
       */
       let index = this.list.findIndex(v=> v.vehicleId === this.tempForm.vehicleId)
-      // console.log(index);
+      // console.logger(index);
       updateVehicle(this.tempForm).then(res=>{
-        // console.log(res.status);
+        // console.logger(res.status);
         this.dialogFormVisible = false;
         this.list.splice(index,1,this.tempForm); //替换掉原数组的对象
         this.$notify({
@@ -289,7 +289,7 @@ export default {
           message: '修改车辆信息成功！'
         })
       }).catch(error=>{
-        console.log(error)
+        console.logger(error)
         this.$notify({
           type: 'error',
           message: '修改车辆信息失败请联系管理员'+error
@@ -303,14 +303,14 @@ export default {
         message: '暂不支持删除车辆信息！'
       })
       /*deleteVehicle(row).then(res=>{
-        // console.log(res);
+        // console.logger(res);
         this.$notify({
           type: 'success',
           message: '删除车辆信息成功！'
         })
         this.list.splice(index,1);
       }).catch(error=> {
-        console.log(error);
+        console.logger(error);
         this.$notify({
           type: 'error',
           message: '删除车辆信息失败请联系管理员'+error

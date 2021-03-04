@@ -49,8 +49,8 @@ export default {
   },
   watch: {
     options(newValue,oldValue){
-      /*console.log(oldValue)
-      console.log(newValue)*/
+      /*console.logger(oldValue)
+      console.logger(newValue)*/
       let xAxisDataList = []
       let seriesDataList = [];
       for (const item of newValue) {
@@ -67,8 +67,8 @@ export default {
       })
     },
     title(newValue,oldValue){
-      /*console.log(oldValue)
-      console.log(newValue)*/
+      /*console.logger(oldValue)
+      console.logger(newValue)*/
       this.chart.setOption({
         title: {
           text: newValue.text,
@@ -80,8 +80,8 @@ export default {
   methods: {
     fetchData(options,title){
       // 从父组件里接收到的值然后赋值给data发生变化，从而watcher生效然后setOptions数据到echart上
-      /*console.log(options)
-      console.log(title)*/
+      /*console.logger(options)
+      console.logger(title)*/
       this.options = options
       this.title = title
     },

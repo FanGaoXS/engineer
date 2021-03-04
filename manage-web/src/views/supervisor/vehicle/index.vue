@@ -97,10 +97,10 @@ export default {
     // 因为这个页面需要利用高德官方组件GeometryUtil.distanceOfLine()来计算里程
     AMapLoader().then(AMap => {
       this.map = AMap; // 加载成功后将异步加载的高德原生js赋给this.map
-      // console.log('高德地图api加载成功');
+      // console.logger('高德地图api加载成功');
       this.fetchData(); //组件初始化完成后取得数据并且填充
     }, e => {
-      console.log('高德地图api加载失败',e)
+      console.logger('高德地图api加载失败',e)
     })
   },
   methods: {
@@ -108,19 +108,19 @@ export default {
       let tempList = [];
       this.listLoading = true;
       const { data:vehicleList } = await getVehicleList(); //同步获得车辆列表
-      // console.log('vehicleList',vehicleList);
+      // console.logger('vehicleList',vehicleList);
       for (let i = 0; i < vehicleList.length; i++) {
         let plateNumber = vehicleList[i].plateNumber
         let driverName = vehicleList[i].driver.driverName
         let driverPhone = vehicleList[i].driver.driverPhone
         const { data:workList } = await getWorkListByPlateNumber(plateNumber) //根据车牌号同步获取该车工作了多少天
-        // console.log(plateNumber+'workList',workList);
+        // console.logger(plateNumber+'workList',workList);
         let totalMileage = 0;
         let totalWorkDays = workList.length;
         for (let j = 0; j < workList.length; j++) {
           let date = workList[j]
           const { data:pointList } = await getPointListByPlateNumberAndDate(plateNumber,date); //根据车牌号和日期同步获取该车当日的坐标点集合
-          // console.log(plateNumber,date,'pointList',pointList);
+          // console.logger(plateNumber,date,'pointList',pointList);
           let lineArray = []
           for (let k = 0; k < pointList.length; k++) {
             let point = pointList[k];

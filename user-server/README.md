@@ -57,7 +57,7 @@
 - request header:
 
   ```js
-  X-Token: admin-token
+  Manage-Token: admin-token
   ```
 
 - response:

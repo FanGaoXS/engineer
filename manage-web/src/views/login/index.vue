@@ -44,8 +44,11 @@
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
       <div class="tips">
-        <!--<span style="margin-right:20px;">用户名: admin</span>
-        <span> 密码: admin</span>-->
+        <el-radio-group v-model="loginForm.validityDay" size="small">
+          <el-radio-button label="30">30天免登录</el-radio-button>
+          <el-radio-button label="180">180天免登录</el-radio-button>
+          <el-radio-button label="360">360天免登录</el-radio-button>
+        </el-radio-group>
       </div>
 
     </el-form>
@@ -78,7 +81,8 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: 'admin'
+        password: 'admin',
+        validityDay: 7
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -119,7 +123,7 @@ export default {
             this.loading = false
           })
         } else {
-          console.log('用户名或者密码不符合规则！')
+          console.logger('用户名或者密码不符合规则！')
           return false
         }
       })
@@ -199,6 +203,7 @@ $light_gray:#eee;
     font-size: 14px;
     color: #fff;
     margin-bottom: 10px;
+    text-align: center;
 
     span {
       &:first-of-type {

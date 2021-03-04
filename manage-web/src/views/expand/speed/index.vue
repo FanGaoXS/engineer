@@ -125,7 +125,7 @@
 
 
       downloadButton(){
-        console.log('开始测试下载速度->>>>');
+        console.logger('开始测试下载速度->>>>');
         this.isDownload = true;
         this.isError = false;
         this.count = 0;
@@ -156,14 +156,14 @@
         let that = this;
         image.onload = function () { //图片加载完时会执行的回调函数
           let endTime = new Date().getTime(); //完成下载的时的时间
-          /*console.log('startTime',startTime);
-          console.log('endTime',endTime);*/
-          // console.log('延迟',endTime-startTime,'ms'); //误差为6ms
+          /*console.logger('startTime',startTime);
+          console.logger('endTime',endTime);*/
+          // console.logger('延迟',endTime-startTime,'ms'); //误差为6ms
           let diffSeconds = (endTime - startTime)/1000; //差时间转为秒
           let speedBps = (imageSize/diffSeconds)*8; //每秒下载多少B的资源
           let speedKBps = speedBps / 1024;  //每秒下载多少KB（千B）的资源
           let speedMbps = speedKBps / 1024; //每秒下载多少MB（兆B）的资源
-          console.log('['+that.count/10+']'+'下载速率',speedMbps,'Mbps');
+          console.logger('['+that.count/10+']'+'下载速率',speedMbps,'Mbps');
           //将该次测速得到的速率追加到速率速组里
           that.speedArray.push(speedMbps);
           // delete image; //下载完成后删除该图片资源
@@ -181,7 +181,7 @@
        *   初始化变量
        */
       uploadButton(){
-        console.log('开始测试上行速度->>>>');
+        console.logger('开始测试上行速度->>>>');
         this.isDownload = true;
         this.isError = false;
         this.count = 0;
@@ -212,7 +212,7 @@
        */
       upload(){
         let startTime = new Date().getTime();
-        // console.log('startTime->',startTime);
+        // console.logger('startTime->',startTime);
         let text =`A`;   //一个字母大小为1字节Byte
         let totalText ;
         for (let i = 0; i < 1024 * 1024 * 2; i++) {
@@ -225,14 +225,14 @@
           // let endTime = res.data.endTime;
           let contentLength = res.data.contentLength;
           let diffTime = endTime-startTime;
-          /*console.log('startTime->',startTime)
-          console.log('endTime->',endTime);
-          console.log('contentLength->',contentLength);
-          console.log('diffTime->',diffTime);*/
+          /*console.logger('startTime->',startTime)
+          console.logger('endTime->',endTime);
+          console.logger('contentLength->',contentLength);
+          console.logger('diffTime->',diffTime);*/
           let speedBps = (contentLength*8)/(diffTime/1000);
           let speedKbps = speedBps / 1024 ;
           let speedMbps = speedKbps / 1024 ;
-          console.log('['+this.count/20+']'+'上行速率',speedMbps,'Mbps（仅供参考）');
+          console.logger('['+this.count/20+']'+'上行速率',speedMbps,'Mbps（仅供参考）');
           //将该次测速得到的速率追加到速率速组里
           this.speedArray.push(speedMbps);
           if (this.count<this.maxCount){//如果没有到达最大次数，则依然执行
@@ -243,7 +243,7 @@
         }).catch(err=>{
           this.isError=true;
           this.flag = false;
-          console.log(err);
+          console.logger(err);
         })
 
       },

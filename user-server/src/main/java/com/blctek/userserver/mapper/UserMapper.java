@@ -22,21 +22,21 @@ public interface UserMapper {
      * @param user 用户对象
      * @return 增加成功的记录数
      */
-    int insertOne(User user);
+    Integer insertOne(User user);
 
     /**
      * 删除用户
      * @param user 用户对象
      * @return 删除成功的记录数
      */
-    int deleteOne(User user);
+    Integer deleteOne(User user);
 
     /**
      * 修改用户
      * @param user 用户对象
      * @return 修改成功的记录数
      */
-    int updateOne(User user);
+    Integer updateOne(User user);
 
     /**
      * 查询所有user集合

@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     fetchData(list) {
-      // console.log(list)
+      // console.logger(list)
       // 从父组件里获取到的数据然后只取前面5个
       this.list = list.splice(0,5);
     }

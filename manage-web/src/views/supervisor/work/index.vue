@@ -124,15 +124,15 @@ export default {
     // 因为这个页面需要利用高德官方组件GeometryUtil.distanceOfLine()来计算里程
     AMapLoader().then(AMap => {
       this.map = AMap; // 加载成功后将异步加载的高德原生js赋给this.map
-      // console.log('高德地图api加载成功');
+      // console.logger('高德地图api加载成功');
       this.fetchData(); //获取到数据并且填充
     }, e => {
-      console.log('高德地图api加载失败',e)
+      console.logger('高德地图api加载失败',e)
     })
   },
   methods: {
     handleCurrentChange(currentPage){
-      // console.log(currentPage)
+      // console.logger(currentPage)
       this.listQuery.currentPage = currentPage
       let startNumber = (currentPage-1)*this.listQuery.pageSize
       let endNumber = currentPage*this.listQuery.pageSize
@@ -140,13 +140,13 @@ export default {
     },
     async fetchData() {
       this.listLoading = true
-      // console.log(this.$route.params);
+      // console.logger(this.$route.params);
       let plateNumber = this.$route.params.plateNumber;
       const { data:workList } = await getWorkListByPlateNumber(plateNumber)
-      // console.log(workList)
+      // console.logger(workList)
       for (const date of workList) {
         const { data:pointList } = await getPointListByPlateNumberAndDate(plateNumber,date)
-        // console.log(pointList)
+        // console.logger(pointList)
         let lineArray = []
         for (const point of pointList) {
           lineArray.push([point.longitude_amap,point.latitude_amap]); //将坐标点的经纬度赋值按顺序添加到临时数组中

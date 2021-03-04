@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @Auther: 吴青珂
  * @Date: 2021/03/02/13:46
- * @Description: 与数据库交互的对象（与表头一一对应）
+ * @Description: 与数据库user表交互的用户对象（与表头一一对应）
  */
 @NoArgsConstructor
 @AllArgsConstructor

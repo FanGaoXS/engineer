@@ -33,12 +33,12 @@ const mutations = {
 
 const actions = {
   // 用户登录
-  login({ commit }, userInfo) {
-    const { username, password } = userInfo
+  login({ commit }, loginInfo) {
+    const { username, password, validityDay } = loginInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
+      login({ username: username.trim(), password: password, validityDay: validityDay}).then(response => {
         const { data } = response
-        commit('SET_TOKEN', data.token)
+        commit('SET_TOKEN', data.token) //将token放入store的state中
         setToken(data.token) //将token存入cookies
         resolve()
       }).catch(error => {
@@ -47,21 +47,18 @@ const actions = {
     })
   },
 
-  // 获得用户信息
+  // 获得用户信息（用户每一次上次的时候都需要提交token并且验证）
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
-
         const { data } = response
-
         if (!data) { //没有data
           return reject('认证失败，请重新登录！')
         }
-
         const { name, avatar } = data
-
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
+        commit('SET_NAME', name) //将name放入store的state中
+        commit('SET_AVATAR', avatar) //将avatar放入store的state中
+        console.log(state.name,'登录')
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -75,7 +72,8 @@ const actions = {
       logout(state.token).then(() => {
         removeToken()   // 移除cookies中的token（第一步必须这么做！！！）
         resetRouter()   // 重置路由
-        commit('RESET_STATE')
+        console.log(state.name,'退出')
+        commit('RESET_STATE') //重置store的state
         resolve()
       }).catch(error => {
         reject(error)

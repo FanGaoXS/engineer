@@ -208,8 +208,8 @@ export default {
       let date = this.$route.params.date;
       const { data:pointList } = await getPointListByPlateNumberAndDate(plateNumber,date)
       for (let i = 0; i < pointList.length; i++) {
-        /*console.log(pointList[i].longitude_amap);  //经度
-        console.log(pointList[i].latitude_amap);   //纬度*/
+        /*console.logger(pointList[i].longitude_amap);  //经度
+        console.logger(pointList[i].latitude_amap);   //纬度*/
         //将坐标点的经纬度以[经度，纬度]的形式放到path数组里（高德地图规范）
         this.path.push([pointList[i].longitude_amap,pointList[i].latitude_amap]);
       }
