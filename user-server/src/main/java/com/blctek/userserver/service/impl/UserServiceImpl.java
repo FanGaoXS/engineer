@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -25,7 +27,8 @@ public class UserServiceImpl implements UserService {
         user.setUsername(username);
         user.setPassword(password);
         try {
-            return userMapper.selectOneByCondition(user);
+            List<User> userList = userMapper.selectList(user);
+            return userList.get(0);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -37,7 +40,8 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUuid(uuid);
         try{
-            return userMapper.selectOneByCondition(user);
+            List<User> userList = userMapper.selectList(user);
+            return userList.get(0);
         } catch (Exception e){
             e.printStackTrace();
             return null;

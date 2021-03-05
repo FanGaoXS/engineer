@@ -18,14 +18,14 @@ import java.util.List;
 public interface UserMapper {
 
     /**
-     * 增加用户
+     * 增加一条记录
      * @param user 用户对象
      * @return 增加成功的记录数
      */
     Integer insertOne(User user);
 
     /**
-     * 删除用户
+     * 删除一条记录
      * @param user 用户对象
      * @return 删除成功的记录数
      */
@@ -39,22 +39,16 @@ public interface UserMapper {
     Integer updateOne(User user);
 
     /**
-     * 查询所有user集合
+     * 查询所有user集合（可分页，可多条件，可单条件）
      * @return user集合
      */
-    List<User> selectList();
+    List<User> selectList(User user);
 
     /**
-     * 条件查询一个
-     * @param user 用户对象
-     * @return user
+     * 查询记录数（可条件查询）
+     * @param user  用户对象
+     * @return  记录数
      */
-    User selectOneByCondition(User user);
+    Long count(User user);
 
-    /**
-     * 条件查询很多个
-     * @param user 用户对象
-     * @return user集合
-     */
-    List<User> selectListByCondition(User user);
 }

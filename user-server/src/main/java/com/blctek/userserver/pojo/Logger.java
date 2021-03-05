@@ -50,5 +50,15 @@ public class Logger implements Serializable {
      */
     private String client;
 
+    /**
+     * 当前页（分页查询）
+     */
+    private Integer currentPage;
+
+    /**
+     * 每页记录数（分页查询）
+     */
+    private Integer pageSize;
+
     private static final long serialVersionUID = 1L;
 }

@@ -39,22 +39,15 @@ public interface LoggerMapper {
     Integer updateOne(Logger logger);
 
     /**
-     * 查询所有日志
+     * 查询日志（可分页，可单条件查询，可多条件）
      * @return  日志集合
      */
-    List<Logger> selectList();
+    List<Logger> selectList(Logger logger);
 
     /**
-     * 根据条件查询日志集合
-     * @param logger   日志对象
-     * @return  日志集合
+     * 查询记录数（可单条件查询，可多条件）
+     * @param logger    日志对象
+     * @return 记录数
      */
-    List<Logger> selectListByCondition(Logger logger);
-
-    /**
-     * 根据条件查询一条日志
-     * @param logger   日志对象
-     * @return  一条日志
-     */
-    Logger selectOneByCondition(Logger logger);
+    Long count(Logger logger);
 }

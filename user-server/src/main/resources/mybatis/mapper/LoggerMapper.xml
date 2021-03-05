@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blctek.userserver.mapper.LoggerMapper">
+
+    <!--select的条件sql（全有）-->
+    <sql id="selectCondition">
+        <if test=" id!=null and id!='' ">
+            AND id = #{id}
+        </if>
+        <if test=" name!=null and name!='' ">
+            AND name = #{name}
+        </if>
+        <if test=" time!=null and time!='' ">
+            AND time = #{time}
+        </if>
+        <if test=" executor!=null and executor!='' ">
+            AND executor = #{executor}
+        </if>
+        <if test=" ip!=null and ip!='' ">
+            AND ip = #{ip}
+        </if>
+        <if test=" client!=null and client!='' ">
+            AND client = #{client}
+        </if>
+    </sql>
+
+    <!--update的条件sql（除了自增主键id）-->
+    <sql id="updateCondition">
+        <if test=" name!=null and name!='' ">
+            name = #{name},
+        </if>
+        <if test=" time!=null and time!='' ">
+            time = #{time},
+        </if>
+        <if test=" executor!=null and executor!='' ">
+            executor = #{executor},
+        </if>
+        <if test=" ip!=null and ip!='' ">
+            ip = #{ip},
+        </if>
+        <if test=" client!=null and client!='' ">
+            client = #{client},
+        </if>
+    </sql>
+
+    <!--分页的条件sql-->
+    <sql id="limitCondition">
+        <if test=" currentPage!=null and currentPage!='' and pageSize!=null and pageSize!='' ">
+            <bind name="startIndex" value="pageSize*(currentPage-1)"/>
+            <bind name="endIndex" value="pageSize*currentPage"/>
+            #{startIndex},#{endIndex}
+        </if>
+    </sql>
+
+    <resultMap id="loggerMap" type="com.blctek.userserver.pojo.Logger">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="time" property="time"/>
+        <result column="executor" property="executor"/>
+        <result column="ip" property="ip"/>
+        <result column="client" property="client"/>
+    </resultMap>
+
+    <insert id="insertOne"
+            parameterType="com.blctek.userserver.pojo.Logger"
+            keyProperty="id"
+            useGeneratedKeys="true">
+        INSERT INTO
+            logger
+            (name,time,executor,ip,client)
+        VALUES
+            (#{name},#{time},#{executor},#{ip},#{client})
+    </insert>
+
+    <delete id="deleteOne"
+            parameterType="com.blctek.userserver.pojo.Logger">
+        DELETE FROM logger WHERE id = #{id}
+    </delete>
+
+    <update id="updateOne"
+            parameterType="com.blctek.userserver.pojo.Logger">
+        UPDATE
+            logger
+        <trim prefix="SET" suffixOverrides=",">
+            <include refid="updateCondition"></include>
+        </trim>
+        WHERE
+            id = #{id}
+    </update>
+
+    <select id="selectList"
+            resultMap="loggerMap"
+            parameterType="com.blctek.userserver.pojo.Logger">
+        SELECT
+            *
+        FROM
+            logger
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="selectCondition"></include>
+        </trim>
+        <trim prefix="LIMIT">
+            <include refid="limitCondition"></include>
+        </trim>
+    </select>
+
+    <select id="count"
+            parameterType="com.blctek.userserver.pojo.Logger"
+            resultType="long">
+        SELECT
+            count(id)
+        FROM
+            logger
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="selectCondition"></include>
+        </trim>
+    </select>
+
+</mapper>

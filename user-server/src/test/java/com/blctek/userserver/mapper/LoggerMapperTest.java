@@ -7,14 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Date;
 import java.util.List;
+
+import static org.junit.Assert.*;
 
 /**
  * Created with IntelliJ IDEA.
  *
  * @Auther: 吴青珂
- * @Date: 2021/03/04/16:07
+ * @Date: 2021/03/05/17:52
  * @Description:
  */
 @SpringBootTest
@@ -23,55 +24,38 @@ public class LoggerMapperTest {
 
     @Autowired
     private LoggerMapper loggerMapper;
+    @Autowired
+    private Logger logger;
 
     @Test
     public void insertOne() {
-        Logger logger = new Logger();
-        logger.setName("退出");
-        logger.setExecutor("吴青珂");
-        logger.setTime(new Date());
-        loggerMapper.insertOne(logger);
     }
 
     @Test
     public void deleteOne() {
-        Logger logger = new Logger();
-        logger.setId(3);
-        loggerMapper.deleteOne(logger);
     }
 
     @Test
     public void updateOne() {
-        Logger logger = new Logger();
-        logger.setId(3);
-        logger.setName("登录");
-        logger.setExecutor("wqk");
-        loggerMapper.updateOne(logger);
     }
 
     @Test
     public void selectList() {
-        List<Logger> loggerList = loggerMapper.selectList();
-        loggerList.forEach(logger -> {
-            System.out.println(logger);
-        });
+        logger.setExecutor("管理员");
+        logger.setCurrentPage(1);
+        logger.setPageSize(3);
+        List<Logger> loggerList = loggerMapper.selectList(logger);
+        for (Logger logger1 : loggerList) {
+            System.out.println("logger1 = " + logger1);
+        }
     }
 
     @Test
-    public void selectListByCondition() {
-        Logger logger = new Logger();
-        logger.setName("登录");
-        List<Logger> loggerList = loggerMapper.selectListByCondition(logger);
-        loggerList.forEach(logger1 -> {
-            System.out.println(logger1);
-        });
-    }
+    public void count() {
 
-    @Test
-    public void selectOneByCondition() {
-        Logger logger = new Logger();
-        logger.setName("退出");
-        Logger logger1 = loggerMapper.selectOneByCondition(logger);
-        System.out.println(logger1);
+        logger.setExecutor("管理员");
+        Long count = loggerMapper.count(logger);
+        System.out.println(count);
+
     }
 }
