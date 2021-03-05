@@ -19,7 +19,7 @@ import java.util.HashMap;
  *
  * @Auther: 吴青珂
  * @Date: 2021/03/02/12:07
- * @Description: vue-admin-template前端框架的认证模块
+ * @Description: 前端框架的认证模块
  */
 @RestController
 @RequestMapping("/user")
@@ -32,7 +32,8 @@ public class AuthController {
 
     /**
      * 登录认证操作：用户输入用户名和密码验证成功就下发基于jwt的token
-     * @param voLogin
+     * @param clientName    请求头里获取客户端名称
+     * @param voLogin   登录表单对象
      * @return
      */
     @PostMapping("/login")
@@ -41,8 +42,8 @@ public class AuthController {
         User dbUser = userService.verify(voLogin.getUsername(), voLogin.getPassword()); //根据用户名和密码去数据中查找
         ResultResponse resultResponse = new ResultResponse();
         if (dbUser!=null){ //用户存在
-            log.info("用户[{}]认证成功，此次登录时效[{}]天，从[{}]客户端登录",
-                    voLogin.getUsername(),voLogin.getValidityDay(),clientName);
+            /*log.info("用户[{}]认证成功，此次登录时效[{}]天，从[{}]客户端登录",
+                    voLogin.getUsername(),voLogin.getValidityDay(),clientName);*/
             HashMap<String, String> payloadMap = new HashMap<>();
             payloadMap.put("uuid",dbUser.getUuid());//将用户唯一标识uuid存进JWT的payload中
             payloadMap.put("name",dbUser.getName());//将用户的姓名存进JWT的payload中
@@ -50,11 +51,13 @@ public class AuthController {
             String token = JWTUtils.createToken(payloadMap,voLogin.getValidityDay()); //利用payload和有效期生成token
             resultResponse.setData(new VoToken(token));
             resultResponse.setMessage("用户名和密码认证成功");
+            //用户存在data返回含有uuid、name、username的token
         } else { //用户不存在
-            log.info("用户名[{}]认证失败，从[{}]客户端登录",
-                    voLogin.getUsername(),clientName);
+            /*log.info("用户名[{}]认证失败，从[{}]客户端登录",
+                    voLogin.getUsername(),clientName);*/
             resultResponse.setCode(20001);
             resultResponse.setMessage("用户名和密码认证失败，用户不存在");
+            //用户不存在data返回null
         }
         return resultResponse;
     }
@@ -67,14 +70,11 @@ public class AuthController {
     @PostMapping("/logout")
     public ResultResponse logout(@RequestHeader("X-Client")String clientName,
                                  @RequestHeader("X-Token")VoToken voToken){
-        DecodedJWT decodedJWT = JWTUtils.getTokenInfo(voToken.getToken());
-        String username = decodedJWT.getClaim("username").asString(); //从payload中取出name
-        log.info("用户[{}]从[{}]客户端退出",
-                username,clientName);
+        // 利用用户的token进行相关服务端退出操作
         ResultResponse resultResponse = new ResultResponse();
         resultResponse.setMessage("用户成功退出");
         resultResponse.setCode(20000);
-        resultResponse.setData(username);
+        //data返回null
         return resultResponse;
     }
 
@@ -101,8 +101,8 @@ public class AuthController {
             String username = decodedJWT.getClaim("username").asString(); //从payload中取出username
             User dbUser = userService.selectUserByUuid(uuid); //根据uuid查询用户是否存在
             if (dbUser!=null){ //token有效且用户存在
-                log.info("用户[{}]存在，TA提交的token是[{}]",
-                        username,token);
+                /*log.info("用户[{}]存在，TA提交的token是[{}]",
+                        username,token);*/
                 resultResponse.setMessage("token有效且用户存在");
                 resultResponse.setCode(20000);
                 VoUserInfo voUserInfo = new VoUserInfo();
@@ -111,8 +111,8 @@ public class AuthController {
                 voUserInfo.setAvatar(dbUser.getAvatar());
                 resultResponse.setData(voUserInfo);
             } else { //token有效但用户不存在
-                log.info("用户[{}]不存在，TA提交的token是[{}]",
-                        username,token);
+                /*log.info("用户[{}]不存在，TA提交的token是[{}]",
+                        username,token);*/
                 resultResponse.setMessage("token有效但用户不存在");
                 resultResponse.setCode(20001);
             }
@@ -123,6 +123,4 @@ public class AuthController {
         }
         return resultResponse;
     }
-
-
 }

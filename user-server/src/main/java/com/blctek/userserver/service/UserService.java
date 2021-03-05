@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
  *
  * @Auther: 吴青珂
  * @Date: 2021/03/02/16:51
- * @Description:
+ * @Description: user表的业务
  */
 @Service
 public interface UserService {
