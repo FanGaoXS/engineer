@@ -45,7 +45,7 @@
             type="primary"
             size="small"
             icon="el-icon-position"
-            @click="routerAhead(scope.row)"
+            @click="routerToMap(scope.row)"
             :disabled="scope.row.mileage===0" >
             轨迹详情
           </el-button>
@@ -159,7 +159,7 @@ export default {
       this.workList =this.tempList.slice(0,this.listQuery.pageSize) //组件初始化时
     },
     // 路由前进
-    routerAhead(row){
+    routerToMap(row){
       if (row.mileage===0) return;
       this.$router.push({
         name: 'Map', //跳转到名为Map的路由去

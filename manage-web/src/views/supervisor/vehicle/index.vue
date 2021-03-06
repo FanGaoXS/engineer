@@ -52,7 +52,7 @@
             type="primary"
             size="medium"
             icon="el-icon-time"
-            @click="routerAhead(scope.row)">
+            @click="routerToWork(scope.row)">
             查看工时
           </el-button>
         </template>
@@ -146,7 +146,7 @@ export default {
       this.listLoading = false;
     },
     // 路由前进
-    routerAhead(row){
+    routerToWork(row){
       if (row.totalMileage===0) return
       this.$router.push({
         name: 'Work',
