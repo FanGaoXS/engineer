@@ -1,7 +1,5 @@
 package com.blctek.commonserver.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
 import java.io.Serializable;
 
@@ -15,8 +13,6 @@ import java.io.Serializable;
  *               data：返回数据
  *               timeStamp：返回时间戳
  */
-@AllArgsConstructor
-@Data
 public class ResultResponse implements Serializable {
     /**
      * 序列化
@@ -50,5 +46,44 @@ public class ResultResponse implements Serializable {
         this.data = null;
         //timeStamp
         this.timeStamp = System.currentTimeMillis();
+    }
+
+    public ResultResponse(Integer code, String message, Object data, Long timeStamp) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
+        this.timeStamp = timeStamp;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    public Long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Long timeStamp) {
+        this.timeStamp = timeStamp;
     }
 }

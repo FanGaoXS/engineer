@@ -45,6 +45,13 @@ public interface LoggerMapper {
     List<Logger> selectList(Logger logger);
 
     /**
+     * 查询一条日志记录（可多条件，可单条件）
+     * @param logger    日志对象
+     * @return  一条日志对象
+     */
+    Logger selectOne(Logger logger);
+
+    /**
      * 查询记录数（可单条件查询，可多条件）
      * @param logger    日志对象
      * @return 记录数

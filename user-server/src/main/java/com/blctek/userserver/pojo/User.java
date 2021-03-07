@@ -1,5 +1,6 @@
 package com.blctek.userserver.pojo;
 
+import com.blctek.commonserver.pojo.BasePojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,8 +18,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Component
-public class User implements Serializable {
+public class User extends BasePojo {
     /**
      * 用户自增主键
      */
@@ -54,15 +54,4 @@ public class User implements Serializable {
      */
     private String phone;
 
-    /**
-     * 当前页（分页查询）
-     */
-    private Integer currentPage;
-
-    /**
-     * 每页记录数（分页查询）
-     */
-    private Integer pageSize;
-
-    private static final long serialVersionUID = 1L;
 }

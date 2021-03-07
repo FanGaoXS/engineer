@@ -28,7 +28,7 @@ import java.util.HashMap;
 public class AuthController {
 
     @Autowired
-    private UserService userService;
+    private UserService userService;//用户表的业务
 
     /**
      * 登录认证操作：用户输入用户名和密码验证成功就下发基于jwt的token
@@ -39,11 +39,11 @@ public class AuthController {
     @PostMapping("/login")
     public ResultResponse login(@RequestHeader("X-Client")String clientName,
                                 @RequestBody VoLogin voLogin){
+        System.out.println(voLogin);
         User dbUser = userService.verify(voLogin.getUsername(), voLogin.getPassword()); //根据用户名和密码去数据中查找
+        System.out.println(dbUser);
         ResultResponse resultResponse = new ResultResponse();
         if (dbUser!=null){ //用户存在
-            /*log.info("用户[{}]认证成功，此次登录时效[{}]天，从[{}]客户端登录",
-                    voLogin.getUsername(),voLogin.getValidityDay(),clientName);*/
             HashMap<String, String> payloadMap = new HashMap<>();
             payloadMap.put("uuid",dbUser.getUuid());//将用户唯一标识uuid存进JWT的payload中
             payloadMap.put("name",dbUser.getName());//将用户的姓名存进JWT的payload中
@@ -53,8 +53,6 @@ public class AuthController {
             resultResponse.setMessage("用户名和密码认证成功");
             //用户存在data返回含有uuid、name、username的token
         } else { //用户不存在
-            /*log.info("用户名[{}]认证失败，从[{}]客户端登录",
-                    voLogin.getUsername(),clientName);*/
             resultResponse.setCode(20001);
             resultResponse.setMessage("用户名和密码认证失败，用户不存在");
             //用户不存在data返回null
@@ -98,21 +96,14 @@ public class AuthController {
         try { //验证token
             DecodedJWT decodedJWT = JWTUtils.getTokenInfo(token);
             String uuid = decodedJWT.getClaim("uuid").asString(); //从payload中取出uuid
-            String username = decodedJWT.getClaim("username").asString(); //从payload中取出username
+            //String username = decodedJWT.getClaim("username").asString(); //从payload中取出username
             User dbUser = userService.selectUserByUuid(uuid); //根据uuid查询用户是否存在
             if (dbUser!=null){ //token有效且用户存在
-                /*log.info("用户[{}]存在，TA提交的token是[{}]",
-                        username,token);*/
                 resultResponse.setMessage("token有效且用户存在");
                 resultResponse.setCode(20000);
-                VoUserInfo voUserInfo = new VoUserInfo();
-                voUserInfo.setName(dbUser.getName());
-                voUserInfo.setPhone(dbUser.getPhone());
-                voUserInfo.setAvatar(dbUser.getAvatar());
+                VoUserInfo voUserInfo = new VoUserInfo(dbUser);//将查询出来的用户对象赋值给视图用户对象（会将需要的属性赋值）
                 resultResponse.setData(voUserInfo);
             } else { //token有效但用户不存在
-                /*log.info("用户[{}]不存在，TA提交的token是[{}]",
-                        username,token);*/
                 resultResponse.setMessage("token有效但用户不存在");
                 resultResponse.setCode(20001);
             }

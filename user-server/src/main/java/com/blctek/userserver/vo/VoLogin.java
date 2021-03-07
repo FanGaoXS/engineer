@@ -3,6 +3,7 @@ package com.blctek.userserver.vo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
@@ -25,7 +26,7 @@ public class VoLogin implements Serializable {
     private String password;
 
     /**
-     * 保持的期限（单位天）
+     * token有效期（单位：天）
      */
     private Integer validityDay;
 }

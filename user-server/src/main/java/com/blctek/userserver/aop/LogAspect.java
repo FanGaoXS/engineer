@@ -32,8 +32,6 @@ public class LogAspect {
 
     @Autowired
     private LoggerService loggerService;
-    @Autowired
-    private Logger logger;
 
     //匹配com.blctek.userserver.controller包下AuthController类里的log*（通配符）方法
     @Pointcut("execution(public * com.blctek.userserver.controller.AuthController.log*(..))")
@@ -74,7 +72,25 @@ public class LogAspect {
         //获取当前的请求的ip地址
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();//从解析器里获得request请求
         String ipAddress = request.getRemoteAddr();//从request请求中获得ip地址
-        if (methodName.equals("login")&&(data!=null)){ //如果是登录操作并且成功登录（data有数据说明成功登录）
+        switch (methodName){
+            case "login"://切点方法是login
+                if (data!=null){//返回有data（说明成功登录）
+                    VoToken voToken = (VoToken) data; //从返回值里获取token
+                    String token = voToken.getToken();
+                    DecodedJWT decodedJWT = JWTUtils.getTokenInfo(token);
+                    String name = decodedJWT.getClaim("name").asString();//从token获取name操作者的姓名
+                    insertLogger(methodChineseName,time,name,ipAddress,clientName);
+                }
+                break;
+            case "logout"://切点方法是logout
+                VoToken voToken = (VoToken) args[1]; //从传参列表的第二个参数获取token
+                String token = voToken.getToken();
+                DecodedJWT decodedJWT = JWTUtils.getTokenInfo(token);
+                String name = decodedJWT.getClaim("name").asString(); //从token中获取name操作者姓名
+                insertLogger(methodChineseName,time,name,ipAddress,clientName);
+                break;
+        }
+        /*if (methodName.equals("login")&&(data!=null)){ //如果是登录操作并且成功登录（data有数据说明成功登录）
             VoToken voToken = (VoToken) data; //从返回值里获取token
             String token = voToken.getToken();
             DecodedJWT decodedJWT = JWTUtils.getTokenInfo(token);
@@ -86,13 +102,14 @@ public class LogAspect {
             DecodedJWT decodedJWT = JWTUtils.getTokenInfo(token);
             String name = decodedJWT.getClaim("name").asString(); //从token中获取name
             insertLogger(methodChineseName,time,name,ipAddress,clientName);
-        }
+        }*/
     }
 
     //操作名、操作时间、执行人、ip、来源客户端
-    public void insertLogger(String name,Date time,String executor,String ip,String client){
+    private void insertLogger(String name,Date time,String executor,String ip,String client){
         log.info("用户[{}]从[{}]客户端成功[{}]，时间是[{}]，ip地址是[{}]",
                 executor,client,name,time.toLocaleString(),ip);
+        Logger logger = new Logger();
         logger.setName(name);
         logger.setTime(time);
         logger.setExecutor(executor);

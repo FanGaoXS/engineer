@@ -3,6 +3,7 @@ package com.blctek.userserver.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.blctek.commonserver.pojo.BasePojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,8 +19,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Component
-public class Logger implements Serializable {
+public class Logger extends BasePojo {
     /**
      * 日志表的自增主键
      */
@@ -50,15 +50,4 @@ public class Logger implements Serializable {
      */
     private String client;
 
-    /**
-     * 当前页（分页查询）
-     */
-    private Integer currentPage;
-
-    /**
-     * 每页记录数（分页查询）
-     */
-    private Integer pageSize;
-
-    private static final long serialVersionUID = 1L;
 }

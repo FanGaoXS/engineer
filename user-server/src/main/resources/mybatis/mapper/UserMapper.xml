@@ -108,6 +108,18 @@
             <include refid="limitCondition"></include>
         </trim>
     </select>
+    <!--查询一条（可单条件，可多条件）-->
+    <select id="selectOne"
+            parameterType="com.blctek.userserver.pojo.User"
+            resultMap="userMap">
+        SELECT
+            *
+        FROM
+            user
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="selectCondition"></include>
+        </trim>
+    </select>
     <!--查询记录数（可单条件，可多条件）-->
     <select id="count"
             parameterType="com.blctek.userserver.pojo.User"

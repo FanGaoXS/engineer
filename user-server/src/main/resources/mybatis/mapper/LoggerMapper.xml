@@ -105,6 +105,19 @@
         </trim>
     </select>
 
+    <!--查询一条（可单条件，可多条件）-->
+    <select id="selectOne"
+            parameterType="com.blctek.userserver.pojo.Logger"
+            resultMap="loggerMap">
+        SELECT
+            *
+        FROM
+            logger
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="selectCondition"></include>
+        </trim>
+    </select>
+
     <select id="count"
             parameterType="com.blctek.userserver.pojo.Logger"
             resultType="long">

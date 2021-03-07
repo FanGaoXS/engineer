@@ -44,6 +44,8 @@ public class LoggerMapperTest {
         logger.setExecutor("管理员");
         logger.setCurrentPage(1);
         logger.setPageSize(3);
+        System.out.println(logger.getPageSize());
+        System.out.println(logger.getCurrentPage());
         List<Logger> loggerList = loggerMapper.selectList(logger);
         for (Logger logger1 : loggerList) {
             System.out.println("logger1 = " + logger1);

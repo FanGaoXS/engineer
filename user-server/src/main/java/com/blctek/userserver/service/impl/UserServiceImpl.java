@@ -19,33 +19,23 @@ import java.util.List;
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
+
     @Autowired
     private UserMapper userMapper;
+
     @Override
     public User verify(String username, String password) {
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
-        try {
-            List<User> userList = userMapper.selectList(user);
-            return userList.get(0);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return userMapper.selectOne(user);
     }
 
     @Override
     public User selectUserByUuid(String uuid) {
         User user = new User();
         user.setUuid(uuid);
-        try{
-            List<User> userList = userMapper.selectList(user);
-            return userList.get(0);
-        } catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
+        return userMapper.selectOne(user);
     }
 
 }

@@ -40,9 +40,17 @@ public interface UserMapper {
 
     /**
      * 查询所有user集合（可分页，可多条件，可单条件）
+     * @param user 用户对象
      * @return user集合
      */
     List<User> selectList(User user);
+
+    /**
+     * 查询一条user记录（可多条件，可单条件）
+     * @param user
+     * @return  一条用户对象
+     */
+    User selectOne(User user);
 
     /**
      * 查询记录数（可条件查询）

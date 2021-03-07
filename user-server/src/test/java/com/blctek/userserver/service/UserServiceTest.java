@@ -22,13 +22,14 @@ public class UserServiceTest {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private User user;
     @Test
     public void verify() {
-        User user = userService.verify("test", "test1");
-        if (user==null){
-            System.out.println("用户不存在");
-        }
-        System.out.println("用户存在");
+        String username = "wuqingke";
+        String password = "wuqingke";
+        User user = userService.verify(username, password);
         System.out.println(user);
     }
+
 }
