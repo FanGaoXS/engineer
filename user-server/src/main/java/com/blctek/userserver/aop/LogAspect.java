@@ -90,19 +90,6 @@ public class LogAspect {
                 insertLogger(methodChineseName,time,name,ipAddress,clientName);
                 break;
         }
-        /*if (methodName.equals("login")&&(data!=null)){ //如果是登录操作并且成功登录（data有数据说明成功登录）
-            VoToken voToken = (VoToken) data; //从返回值里获取token
-            String token = voToken.getToken();
-            DecodedJWT decodedJWT = JWTUtils.getTokenInfo(token);
-            String name = decodedJWT.getClaim("name").asString(); //从token中获取name
-            insertLogger(methodChineseName,time,name,ipAddress,clientName);
-        } else if (methodName.equals("logout")) { //如果是退出操作
-            VoToken voToken = (VoToken) args[1]; //从传参列表的第二个参数获取token
-            String token = voToken.getToken();
-            DecodedJWT decodedJWT = JWTUtils.getTokenInfo(token);
-            String name = decodedJWT.getClaim("name").asString(); //从token中获取name
-            insertLogger(methodChineseName,time,name,ipAddress,clientName);
-        }*/
     }
 
     //操作名、操作时间、执行人、ip、来源客户端

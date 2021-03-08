@@ -22,7 +22,7 @@ import java.util.HashMap;
  * @Description: 前端框架的认证模块
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/auth")
 @CrossOrigin("*")
 @Slf4j
 public class AuthController {
@@ -31,6 +31,7 @@ public class AuthController {
     private UserService userService;//用户表的业务
 
     /**
+     * /auth/login
      * 登录认证操作：用户输入用户名和密码验证成功就下发基于jwt的token
      * @param clientName    请求头里获取客户端名称
      * @param voLogin   登录表单对象
@@ -39,9 +40,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResultResponse login(@RequestHeader("X-Client")String clientName,
                                 @RequestBody VoLogin voLogin){
-        System.out.println(voLogin);
         User dbUser = userService.verify(voLogin.getUsername(), voLogin.getPassword()); //根据用户名和密码去数据中查找
-        System.out.println(dbUser);
         ResultResponse resultResponse = new ResultResponse();
         if (dbUser!=null){ //用户存在
             HashMap<String, String> payloadMap = new HashMap<>();
@@ -61,6 +60,7 @@ public class AuthController {
     }
 
     /**
+     * /auth/logout
      * 从请求的headers里获取key为X-Token的token
      * @param voToken token
      * @return
@@ -77,6 +77,7 @@ public class AuthController {
     }
 
     /**
+     * /auth/info
      * 获取认证用户的基本信息（用于每一次上线进行验证，强调每一次！）：
      * 1、先验证token避免过期，失效，伪造
      * 2、token有效再从token的pyload中取出uuid

@@ -26,4 +26,5 @@ public class HelloController {
         resultResponse.setMessage("这是user-server服务器");
         return resultResponse;
     }
+
 }

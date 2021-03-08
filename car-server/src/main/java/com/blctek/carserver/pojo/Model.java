@@ -2,6 +2,7 @@ package com.blctek.carserver.pojo;
 
 import java.io.Serializable;
 
+import com.blctek.commonserver.pojo.BasePojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,8 +15,7 @@ import org.springframework.stereotype.Component;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Component
-public class Model implements Serializable{
+public class Model extends BasePojo {
     /**
      * 类型自增主键
      */
@@ -41,5 +41,4 @@ public class Model implements Serializable{
      */
     private String modelBelong;
 
-    private static final long serialVersionUID = 1L;
 }

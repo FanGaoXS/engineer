@@ -10,9 +10,9 @@
     </parent>
     <groupId>cn.blctek</groupId>
     <artifactId>user-server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0</version>
     <name>user-server</name>
-    <description>Demo project for Spring Boot</description>
+    <description>用户表后端</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>
@@ -26,7 +26,7 @@
         <dependency><!--公用模块-->
             <groupId>com.blctek</groupId>
             <artifactId>common-server</artifactId>
-            <version>0.2.3</version>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency><!--springboot-web-->

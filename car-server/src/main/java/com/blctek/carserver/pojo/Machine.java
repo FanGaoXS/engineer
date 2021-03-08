@@ -2,6 +2,7 @@ package com.blctek.carserver.pojo;
 
 import java.io.Serializable;
 
+import com.blctek.commonserver.pojo.BasePojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,12 +15,11 @@ import org.springframework.stereotype.Component;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Component
-public class Machine {
+public class Machine extends BasePojo {
     /**
      * 机械编号
      */
-    private Integer machineId;
+    private Integer id;
 
     /**
      * 对应的工程车辆编号

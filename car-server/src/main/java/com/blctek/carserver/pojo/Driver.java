@@ -2,6 +2,7 @@ package com.blctek.carserver.pojo;
 
 import java.io.Serializable;
 
+import com.blctek.commonserver.pojo.BasePojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,12 +15,11 @@ import org.springframework.stereotype.Component;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Component
-public class Driver {
+public class Driver extends BasePojo {
     /**
      * 驾驶员编号
      */
-    private Integer driverId;
+    private Integer id;
 
     /**
      * 驾驶员姓名

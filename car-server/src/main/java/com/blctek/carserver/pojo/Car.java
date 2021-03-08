@@ -1,9 +1,11 @@
 package com.blctek.carserver.pojo;
 
+import com.blctek.commonserver.pojo.BasePojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 /**
  * car 所属工程用具表
@@ -12,12 +14,11 @@ import org.springframework.stereotype.Component;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Component
-public class Car {
+public class Car extends BasePojo {
     /**
      * 工程车辆编号
      */
-    private Integer carId;
+    private Integer id;
 
     /**
      * 类型（车辆或者机械）
@@ -39,6 +40,14 @@ public class Car {
      */
     private String imagePath;
 
+    /**
+     * 录入时间
+     */
+    private Date inputTime;
+
+    /**
+     * 附属的驾驶员对象
+     */
     private Driver driver;
 
 }
