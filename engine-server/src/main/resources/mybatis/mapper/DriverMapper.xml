@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blctek.engineserver.mapper.DriverMapper">
+    <!--select的条件sql（全有）-->
+    <sql id="selectCondition">
+        <if test=" id!=null and id!='' ">
+            AND id = #{id}
+        </if>
+        <if test=" uuid!=null and uuid!='' ">
+            AND uuid = #{uuid}
+        </if>
+        <if test=" name!=null and name!='' ">
+            AND name = #{name}
+        </if>
+        <if test=" phone!=null and phone!='' ">
+            AND phone = #{phone}
+        </if>
+    </sql>
+    <!--update的条件sql（除了自增主键id）-->
+    <sql id="updateCondition">
+        <if test=" uuid!=null and uuid!='' ">
+            uuid = #{uuid},
+        </if>
+        <if test=" name!=null and name!='' ">
+            name = #{name},
+        </if>
+        <if test=" phone!=null and phone!='' ">
+            phone = #{phone},
+        </if>
+    </sql>
+    <!--分页的条件sql（当前页，每页记录数）-->
+    <sql id="limitCondition">
+        <if test=" currentPage!=null and currentPage!='' and pageSize!=null and pageSize!='' ">
+            <bind name="startIndex" value="pageSize*(currentPage-1)"/>
+            <bind name="endIndex" value="pageSize*currentPage"/>
+            #{startIndex},#{endIndex}
+        </if>
+    </sql>
+    <!--返回的结果集-->
+    <resultMap id="DriverMap" type="com.blctek.engineserver.pojo.Driver">
+        <id column="id" property="id"/>
+        <result column="uuid" property="uuid"/>
+        <result column="name" property="name"/>
+        <result column="phone" property="phone"/>
+    </resultMap>
+    <!--新增一条记录-->
+    <insert id="insertOne"
+            keyProperty="id"
+            useGeneratedKeys="true"
+            parameterType="com.blctek.engineserver.pojo.Driver">
+        INSERT INTO
+            driver
+            (uuid,name,phone)
+        VALUES
+            (#{uuid},#{name},#{phone})
+    </insert>
+    <!--删除一条记录-->
+    <delete id="deleteOne"
+            parameterType="com.blctek.engineserver.pojo.Driver">
+        DELETE FROM
+            driver
+        WHERE
+            id = #{id}
+    </delete>
+    <!--修改一条记录（根据id主键）-->
+    <update id="updateOne"
+            parameterType="com.blctek.engineserver.pojo.Driver">
+        UPDATE
+            driver
+        <trim prefix="SET" suffixOverrides=",">
+            <include refid="updateCondition"></include>
+        </trim>
+        WHERE
+            id = #{id}
+    </update>
+    <!--查询所有（可分页，可单条件，可多条件）-->
+    <select id="selectList"
+            parameterType="com.blctek.engineserver.pojo.Driver"
+            resultMap="DriverMap">
+        SELECT
+            *
+        FROM
+            driver
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="selectCondition"></include>
+        </trim>
+        <trim prefix="LIMIT">
+            <include refid="limitCondition"></include>
+        </trim>
+    </select>
+    <!--查询一条（可单条件，可多条件）-->
+    <select id="selectOne"
+            parameterType="com.blctek.engineserver.pojo.Driver"
+            resultMap="DriverMap">
+        SELECT
+            *
+        FROM
+            driver
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="selectCondition"></include>
+        </trim>
+    </select>
+    <!--根据主键id（效率高）查询记录数（可单条件，可多条件）-->
+    <select id="count"
+            parameterType="com.blctek.engineserver.pojo.Driver"
+            resultType="long">
+        SELECT
+            count(id)
+        FROM
+            driver
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="selectCondition"></include>
+        </trim>
+    </select>
+</mapper>

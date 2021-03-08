@@ -24,8 +24,6 @@ public class LoggerMapperTest {
 
     @Autowired
     private LoggerMapper loggerMapper;
-    @Autowired
-    private Logger logger;
 
     @Test
     public void insertOne() {
@@ -41,6 +39,7 @@ public class LoggerMapperTest {
 
     @Test
     public void selectList() {
+        Logger logger = new Logger();
         logger.setExecutor("管理员");
         logger.setCurrentPage(1);
         logger.setPageSize(3);
@@ -54,7 +53,7 @@ public class LoggerMapperTest {
 
     @Test
     public void count() {
-
+        Logger logger = new Logger();
         logger.setExecutor("管理员");
         Long count = loggerMapper.count(logger);
         System.out.println(count);
