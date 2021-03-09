@@ -3,40 +3,40 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.blctek.engineserver.mapper.EngineerMapper">
-    <!--select的条件sql（全有）-->
+    <!--select的条件sql（全字段对应）：表首字母.字段名-->
     <sql id="selectCondition">
         <if test=" id!=null and id!='' ">
-            AND id = #{id}
+            AND e.id = #{id}
         </if>
         <if test=" uuid!=null and uuid!='' ">
-            AND uuid = #{uuid}
+            AND e.uuid = #{uuid}
         </if>
         <if test=" type!=null and type!='' ">
-            AND type = #{type}
+            AND e.type = #{type}
         </if>
         <if test=" deviceId!=null and deviceId!='' ">
-            AND deviceId = #{deviceId}
+            AND e.deviceId = #{deviceId}
         </if>
         <if test=" driverId!=null and driverId!='' ">
-            AND driverId = #{driverId}
+            AND e.driverId = #{driverId}
         </if>
         <if test=" inputTime!=null and inputTime!='' ">
-            AND inputTime = #{inputTime}
+            AND e.inputTime = #{inputTime}
         </if>
         <if test=" modelId!=null and modelId!='' ">
-            AND modelId = #{modelId}
+            AND e.modelId = #{modelId}
         </if>
         <if test=" vehicleNumber!=null and vehicleNumber!='' ">
-            AND vehicleNumber = #{vehicleNumber}
+            AND e.vehicleNumber = #{vehicleNumber}
         </if>
         <if test=" plateType!=null and plateType!='' ">
-            AND plateType = #{plateType}
+            AND e.plateType = #{plateType}
         </if>
         <if test=" machineNumber!=null and machineNumber!='' ">
-            AND machineNumber = #{machineNumber}
+            AND e.machineNumber = #{machineNumber}
         </if>
         <if test=" engineNumber!=null and engineNumber!='' ">
-            AND engineNumber = #{engineNumber}
+            AND e.engineNumber = #{engineNumber}
         </if>
     </sql>
     <!--update的条件sql（除了自增主键id）-->
@@ -75,30 +75,51 @@
     <!--分页的条件sql（当前页，每页记录数）-->
     <sql id="limitCondition">
         <if test=" currentPage!=null and currentPage!='' and pageSize!=null and pageSize!='' ">
-            <bind name="startIndex" value="pageSize*(currentPage-1)"/>
-            <bind name="endIndex" value="pageSize*currentPage"/>
-            #{startIndex},#{endIndex}
+            <bind name="offset" value="pageSize*(currentPage-1)"/>
+            <bind name="rows" value="pageSize"/>
+            #{offset},#{rows}
         </if>
+    </sql>
+    <!--表中字段对应的别称sql（表名第一个字母.字段名）-->
+    <sql id="engineerAs">
+        e.id            AS eId,
+        e.uuid          AS eUuid,
+        e.type          AS eType,
+        e.deviceId      AS eDeviceId,
+        e.driverId      AS eDriverId,
+        e.inputTime     AS eInputTime,
+        e.modelId       AS eModelId,
+        e.vehicleNumber AS eVehicleNumber,
+        e.plateType     AS ePlateType,
+        e.machineNumber AS eMachineNumber,
+        e.engineNumber  AS eEngineNumber
     </sql>
     <!--返回的结果集-->
     <resultMap id="EngineerMap" type="com.blctek.engineserver.pojo.Engineer">
-        <id column="id" property="id"/>
-        <result column="uuid" property="uuid"/>
-        <result column="type" property="type"/>
-        <result column="deviceId" property="deviceId"/>
-        <result column="driverId" property="driverId"/>
-        <result column="inputTime" property="inputTime"/>
-        <result column="modelId" property="modelId"/>
-        <result column="vehicleNumber" property="vehicleNumber"/>
-        <result column="plateType" property="plateType"/>
-        <result column="machineNumber" property="machineNumber"/>
-        <result column="engineNumber" property="engineNumber"/>
-        <!--<association property="driver" javaType="com.blctek.engineserver.pojo.Driver">
-            <id column="id" property="id"/>
+        <id column="eId" property="id"/>
+        <result column="eUuid" property="uuid"/>
+        <result column="eType" property="type"/>
+        <result column="eDeviceId" property="deviceId"/>
+        <result column="eDriverId" property="driverId"/>
+        <result column="eInputTime" property="inputTime"/>
+        <result column="eModelId" property="modelId"/>
+        <result column="eVehicleNumber" property="vehicleNumber"/>
+        <result column="ePlateType" property="plateType"/>
+        <result column="eMachineNumber" property="machineNumber"/>
+        <result column="eEngineNumber" property="engineNumber"/>
+        <association property="driver" javaType="com.blctek.engineserver.pojo.Driver">
+            <id column="dId" property="id"/>
+            <result column="dUuid" property="uuid"/>
+            <result column="dName" property="name"/>
+            <result column="dPhone" property="phone"/>
         </association>
         <association property="model" javaType="com.blctek.engineserver.pojo.Model">
-            <id column="id" property="id"/>
-        </association>-->
+            <id column="mId" property="id"/>
+            <result column="mUuid" property="uuid"/>
+            <result column="mType" property="type"/>
+            <result column="mName" property="name"/>
+            <result column="mDescription" property="description"/>
+        </association>
     </resultMap>
     <!--新增一条记录-->
     <insert id="insertOne"
@@ -135,13 +156,18 @@
             parameterType="com.blctek.engineserver.pojo.Engineer"
             resultMap="EngineerMap">
         SELECT
-            e.*,d.*,m.*
+            <include refid="engineerAs"></include>,
+            <include refid="com.blctek.engineserver.mapper.DriverMapper.driverAs"></include>,
+            <include refid="com.blctek.engineserver.mapper.ModelMapper.modelAs"></include>
         FROM
-            engineer e join driver d on e.driverId = d.id
-            join model m on e.modelId = m.id
+            engineer e
+        join driver d on e.driverId = d.id
+        join model m on e.modelId = m.id
         <trim prefix="WHERE" prefixOverrides="AND">
             <include refid="selectCondition"></include>
         </trim>
+        ORDER BY
+            e.id
         <trim prefix="LIMIT">
             <include refid="limitCondition"></include>
         </trim>
@@ -151,21 +177,26 @@
             parameterType="com.blctek.engineserver.pojo.Engineer"
             resultMap="EngineerMap">
         SELECT
-            *
+            <include refid="engineerAs"></include>,
+            <include refid="com.blctek.engineserver.mapper.DriverMapper.driverAs"></include>,
+            <include refid="com.blctek.engineserver.mapper.ModelMapper.modelAs"></include>
         FROM
-            engineer
+            engineer e join driver d on e.driverId = d.id
+            join model m on e.modelId = m.id
         <trim prefix="WHERE" prefixOverrides="AND">
             <include refid="selectCondition"></include>
         </trim>
+        ORDER BY
+            e.id
     </select>
     <!--根据主键id（效率高）查询记录数（可单条件，可多条件）-->
     <select id="count"
             parameterType="com.blctek.engineserver.pojo.Engineer"
             resultType="long">
         SELECT
-            count(id)
+            count(e.id)
         FROM
-            engineer
+            engineer e
         <trim prefix="WHERE" prefixOverrides="AND">
             <include refid="selectCondition"></include>
         </trim>

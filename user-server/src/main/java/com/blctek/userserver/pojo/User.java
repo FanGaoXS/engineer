@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,7 +16,6 @@ import java.io.Serializable;
  * @Date: 2021/03/02/13:46
  * @Description: 与数据库user表交互的用户对象（与表头一一对应）
  */
-@NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class User extends BasePojo {
@@ -54,4 +54,8 @@ public class User extends BasePojo {
      */
     private String phone;
 
+    public User() {
+        //空构造的时候设置uuid
+        this.uuid = UUID.randomUUID().toString();
+    }
 }

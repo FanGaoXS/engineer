@@ -6,16 +6,16 @@
     <!--select的条件sql（全有）-->
     <sql id="selectCondition">
         <if test=" id!=null and id!='' ">
-            AND id = #{id}
+            AND d.id = #{id}
         </if>
         <if test=" uuid!=null and uuid!='' ">
-            AND uuid = #{uuid}
+            AND d.uuid = #{uuid}
         </if>
         <if test=" name!=null and name!='' ">
-            AND name = #{name}
+            AND d.name = #{name}
         </if>
         <if test=" phone!=null and phone!='' ">
-            AND phone = #{phone}
+            AND d.phone = #{phone}
         </if>
     </sql>
     <!--update的条件sql（除了自增主键id）-->
@@ -33,17 +33,24 @@
     <!--分页的条件sql（当前页，每页记录数）-->
     <sql id="limitCondition">
         <if test=" currentPage!=null and currentPage!='' and pageSize!=null and pageSize!='' ">
-            <bind name="startIndex" value="pageSize*(currentPage-1)"/>
-            <bind name="endIndex" value="pageSize*currentPage"/>
-            #{startIndex},#{endIndex}
+            <bind name="offset" value="pageSize*(currentPage-1)"/>
+            <bind name="rows" value="pageSize"/>
+            #{offset},#{rows}
         </if>
+    </sql>
+    <!--表中字段对应的别称（表名第一个字母.字段名）-->
+    <sql id="driverAs">
+        d.id            AS dId,
+        d.uuid          AS dUuid,
+        d.name          AS dName,
+        d.phone         AS dPhone
     </sql>
     <!--返回的结果集-->
     <resultMap id="DriverMap" type="com.blctek.engineserver.pojo.Driver">
-        <id column="id" property="id"/>
-        <result column="uuid" property="uuid"/>
-        <result column="name" property="name"/>
-        <result column="phone" property="phone"/>
+        <id column="dId" property="id"/>
+        <result column="dUuid" property="uuid"/>
+        <result column="dName" property="name"/>
+        <result column="dPhone" property="phone"/>
     </resultMap>
     <!--新增一条记录-->
     <insert id="insertOne"
@@ -80,12 +87,14 @@
             parameterType="com.blctek.engineserver.pojo.Driver"
             resultMap="DriverMap">
         SELECT
-            *
+            <include refid="driverAs"></include>
         FROM
-            driver
+            driver d
         <trim prefix="WHERE" prefixOverrides="AND">
             <include refid="selectCondition"></include>
         </trim>
+        ORDER BY
+            d.id
         <trim prefix="LIMIT">
             <include refid="limitCondition"></include>
         </trim>
@@ -95,9 +104,9 @@
             parameterType="com.blctek.engineserver.pojo.Driver"
             resultMap="DriverMap">
         SELECT
-            *
+            <include refid="driverAs"></include>
         FROM
-            driver
+            driver d
         <trim prefix="WHERE" prefixOverrides="AND">
             <include refid="selectCondition"></include>
         </trim>
@@ -107,9 +116,9 @@
             parameterType="com.blctek.engineserver.pojo.Driver"
             resultType="long">
         SELECT
-            count(id)
+            count(d.id)
         FROM
-            driver
+            driver d
         <trim prefix="WHERE" prefixOverrides="AND">
             <include refid="selectCondition"></include>
         </trim>

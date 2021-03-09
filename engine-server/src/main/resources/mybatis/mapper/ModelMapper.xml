@@ -6,19 +6,19 @@
     <!--select的条件sql（全有）-->
     <sql id="selectCondition">
         <if test=" id!=null and id!='' ">
-            AND id = #{id}
+            AND m.id = #{id}
         </if>
         <if test=" uuid!=null and uuid!='' ">
-            AND uuid = #{uuid}
+            AND m.uuid = #{uuid}
         </if>
         <if test=" name!=null and name!='' ">
-            AND name = #{name}
+            AND m.name = #{name}
         </if>
         <if test=" type!=null and type!='' ">
-            AND type = #{type}
+            AND m.type = #{type}
         </if>
         <if test=" description!=null and description!='' ">
-            AND description = #{description}
+            AND m.description = #{description}
         </if>
     </sql>
     <!--update的条件sql（除了自增主键id）-->
@@ -39,15 +39,25 @@
     <!--分页的条件sql（当前页，每页记录数）-->
     <sql id="limitCondition">
         <if test=" currentPage!=null and currentPage!='' and pageSize!=null and pageSize!='' ">
-            <bind name="startIndex" value="pageSize*(currentPage-1)"/>
-            <bind name="endIndex" value="pageSize*currentPage"/>
-            #{startIndex},#{endIndex}
+            <bind name="offset" value="pageSize*(currentPage-1)"/>
+            <bind name="rows" value="pageSize"/>
+            #{offset},#{rows}
         </if>
+    </sql>
+    <sql id="modelAs">
+        m.id            AS mId,
+        m.uuid          AS mUuid,
+        m.type          AS mType,
+        m.name          AS mName,
+        m.description   AS mDescription
     </sql>
     <!--返回的结果集-->
     <resultMap id="ModelMap" type="com.blctek.engineserver.pojo.Model">
-        <id column="id" property="id"/>
-        <result column="" property=""/>
+        <id column="mId" property="id"/>
+        <result column="mUuid" property="uuid"/>
+        <result column="mType" property="type"/>
+        <result column="mName" property="name"/>
+        <result column="mDescription" property="description"/>
     </resultMap>
     <!--新增一条记录-->
     <insert id="insertOne"
@@ -84,12 +94,14 @@
             parameterType="com.blctek.engineserver.pojo.Model"
             resultMap="ModelMap">
         SELECT
-            *
+            <include refid="modelAs"></include>
         FROM
-            model
+            model m
         <trim prefix="WHERE" prefixOverrides="AND">
             <include refid="selectCondition"></include>
         </trim>
+        ORDER BY
+            m.id
         <trim prefix="LIMIT">
             <include refid="limitCondition"></include>
         </trim>
@@ -99,9 +111,9 @@
             parameterType="com.blctek.engineserver.pojo.Model"
             resultMap="ModelMap">
         SELECT
-            *
+            <include refid="modelAs"></include>
         FROM
-            model
+            model m
         <trim prefix="WHERE" prefixOverrides="AND">
             <include refid="selectCondition"></include>
         </trim>
@@ -111,9 +123,9 @@
             parameterType="com.blctek.engineserver.pojo.Model"
             resultType="long">
         SELECT
-            count(id)
+            count(m.id)
         FROM
-            model
+            model m
         <trim prefix="WHERE" prefixOverrides="AND">
             <include refid="selectCondition"></include>
         </trim>

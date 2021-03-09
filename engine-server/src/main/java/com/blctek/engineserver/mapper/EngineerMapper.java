@@ -42,7 +42,7 @@ public interface EngineerMapper {
     Integer updateOne(Engineer engineer);
 
     /**
-     * 查询所有集合（可分页，可多条件，可单条件）
+     * 查询所有集合（可分页，可多条件，可单条件）（全连接）
      *
      * @param engineer 工程用具对象
      * @return engineer集合

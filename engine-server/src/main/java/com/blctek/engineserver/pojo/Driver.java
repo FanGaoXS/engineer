@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 /**
  * driver   驾驶员表
  */
@@ -32,4 +34,5 @@ public class Driver extends BasePojo {
      * 驾驶员联系方式
      */
     private String phone;
+
 }

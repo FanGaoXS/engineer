@@ -1,6 +1,7 @@
 package com.blctek.engineserver.pojo;
 
 import java.util.Date;
+import java.util.UUID;
 
 import com.blctek.commonserver.pojo.BasePojo;
 import lombok.AllArgsConstructor;
