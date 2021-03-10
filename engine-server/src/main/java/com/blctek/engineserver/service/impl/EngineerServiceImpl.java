@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -29,49 +30,61 @@ public class EngineerServiceImpl implements EngineerService {
     private EngineerMapper engineerMapper;
     @Autowired
     private DriverMapper driverMapper;
+
     @Override
-    public Engineer insertVehicleAndDriver(Engineer engineer, Driver driver) {
+    public Boolean insertEngineerAndDriver(Driver driver,Engineer engineer) {
         try {
-            driver.setUuid(UUID.randomUUID().toString());//设置driver的uuid
-            driverMapper.insertOne(driver);//向driver表中插入（如果插入成功能够得到id）
-
-            engineer.setUuid(UUID.randomUUID().toString());//设置engineer的uuid
-            engineer.setType("车辆");//设置类型为车辆
-            engineer.setDriverId(driver.getId());//得到刚刚插入成功的driver对象的id
-            engineer.setInputTime(new Date());//设置时间
-            engineer.setMachineNumber(null);
-            engineer.setEngineNumber(null);
+            driverMapper.insertOne(driver); //向driver表中插入
+            Integer driverId = driver.getId();//插入成功会得到driverId
+            engineer.setDriverId(driverId);//将刚刚成功插入的driverId
             engineerMapper.insertOne(engineer);//向engineer表中插入
-
-            engineer.setDriver(driver);//将成功插入的driver对象附着到engineer对象上并返回
-            return engineer;
-        } catch (DataAccessException e){    //插入失败
+            //engineer.setDriver(driver);//将刚刚成功插入的driver对象附着到engineer对象上
+            //return engineer;
+            return true;//成功
+        } catch (DataAccessException e){//插入失败
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//事务回滚
             e.printStackTrace();
-            return null;//否则返回null
+            return false;//失败
         }
     }
 
     @Override
-    public Engineer insertMachineAndDriver(Engineer engineer, Driver driver) {
+    public Boolean deleteEngineer(Integer id) {
         try {
-            driver.setUuid(UUID.randomUUID().toString());//设置driver的uuid
-            driverMapper.insertOne(driver);//向driver表中插入（如果插入成功能够得到id）
-
-            engineer.setUuid(UUID.randomUUID().toString());//设置engineer的uuid
-            engineer.setType("机械");//设置类型为车辆
-            engineer.setDriverId(driver.getId());//得到刚刚插入成功的driver对象的id
-            engineer.setInputTime(new Date());//设置时间
-            engineer.setVehicleNumber(null);
-            engineer.setPlateType(null);
-            engineerMapper.insertOne(engineer);//向engineer表中插入
-
-            engineer.setDriver(driver);//将成功插入的driver对象附着到engineer对象上并返回
-            return engineer;
-        } catch (DataAccessException e){    //插入失败
+            Engineer engineer = new Engineer();
+            engineer.setId(id);
+            System.out.println(engineerMapper.deleteOne(engineer));
+            return engineerMapper.deleteOne(engineer)>0;//如果成功删除的记录数大于0则说明删除成功
+        } catch (DataAccessException e){
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//事务回滚
             e.printStackTrace();
-            return null;//否则返回null
+            return false;//失败
         }
+    }
+
+    @Override
+    public Boolean updateEngineer(Engineer engineer) {
+        try {
+            return engineerMapper.updateOne(engineer) > 0;//如果成功修改的记录数大于0则说明修改成功
+        } catch (DataAccessException e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//事务回滚
+            e.printStackTrace();
+            return false;//失败
+        }
+    }
+
+    @Override
+    public List<Engineer> selectList(Engineer engineer) {
+        return engineerMapper.selectList(engineer);
+    }
+
+    @Override
+    public Engineer selectOne(Engineer engineer) {
+        return engineerMapper.selectOne(engineer);
+    }
+
+    @Override
+    public Long selectTotalSize(Engineer engineer) {
+        return engineerMapper.count(engineer);
     }
 }

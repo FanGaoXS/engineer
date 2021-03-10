@@ -20,7 +20,7 @@
         <if test=" driverId!=null and driverId!='' ">
             AND e.driverId = #{driverId}
         </if>
-        <if test=" inputTime!=null and inputTime!='' ">
+        <if test=" inputTime!=null ">
             AND e.inputTime = #{inputTime}
         </if>
         <if test=" modelId!=null and modelId!='' ">
@@ -53,7 +53,7 @@
         <if test=" driverId!=null and driverId!='' ">
             driverId = #{driverId},
         </if>
-        <if test=" inputTime!=null and inputTime!='' ">
+        <if test=" inputTime!=null ">
             inputTime = #{inputTime},
         </if>
         <if test=" modelId!=null and modelId!='' ">

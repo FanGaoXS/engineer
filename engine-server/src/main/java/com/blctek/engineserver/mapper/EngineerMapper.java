@@ -2,6 +2,7 @@ package com.blctek.engineserver.mapper;
 
 import com.blctek.engineserver.pojo.Engineer;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

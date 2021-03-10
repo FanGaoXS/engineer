@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Engineer extends BasePojo {
+public class Engineer extends BasePojo{
     /**
      * 自增主键
      */

@@ -1,6 +1,11 @@
 package com.blctek.commonserver.response;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
 /**
@@ -13,6 +18,8 @@ import java.io.Serializable;
  *               data：返回数据
  *               timeStamp：返回时间戳
  */
+@Data
+@Accessors(chain = true)
 public class ResultResponse implements Serializable {
     /**
      * 序列化
@@ -37,7 +44,7 @@ public class ResultResponse implements Serializable {
     /**
      * 响应的时间戳
      */
-    private Long timeStamp;
+    private Long timestamp;
 
     public ResultResponse() {
         //status默认为2000
@@ -45,45 +52,7 @@ public class ResultResponse implements Serializable {
         //data默认为null
         this.data = null;
         //timeStamp
-        this.timeStamp = System.currentTimeMillis();
+        this.timestamp = System.currentTimeMillis();
     }
 
-    public ResultResponse(Integer code, String message, Object data, Long timeStamp) {
-        this.code = code;
-        this.message = message;
-        this.data = data;
-        this.timeStamp = timeStamp;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
-    }
-
-    public Long getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(Long timeStamp) {
-        this.timeStamp = timeStamp;
-    }
 }
