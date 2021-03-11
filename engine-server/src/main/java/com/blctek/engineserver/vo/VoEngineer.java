@@ -33,6 +33,7 @@ public class VoEngineer implements Serializable {
 
     private Date inputTime;
 
+
     private String vehicleNumber;
 
     private String plateType;

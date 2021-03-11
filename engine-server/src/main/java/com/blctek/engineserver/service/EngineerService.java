@@ -40,18 +40,30 @@ public interface EngineerService {
     Boolean updateEngineer(Engineer engineer);
 
     /**
-     * （机械或车辆）来查询（且可以分页）
-     * @param engineer  工程用具对象（可包含条件或分页）
-     * @return  工程用具列表
+     * 根据类型（机械或车辆）查询工程用具列表（可分页）
+     * @param type                  类型（机械或车辆）
+     * @param currentPage           当前页
+     * @param pageSize              每页记录数
+     * @return                      工程用具集合
      */
-    List<Engineer> selectList(Engineer engineer);
+    List<Engineer> selectListByType(String type,
+                                    Integer currentPage,
+                                    Integer pageSize);
 
     /**
-     * 查询一条工程用具记录
-     * @param engineer  工程用具对象（可条件）
-     * @return  工程用具
+     * 根据车牌号来查询数据库中是否存在该车辆
+     * @param vehicleNumber         车牌号
+     * @return                      存在返回该车辆的编号，否则返回null
      */
-    Engineer selectOne(Engineer engineer);
+    Integer isExistVehicle(String vehicleNumber);
+
+    /**
+     * 根据机械的引擎编号查询数据库中是否存在该机械
+     * @param engineNumber          引擎编号
+     * @return                      存在返回该机械的编号，否则返回null
+     */
+    Integer isExistMachine(String engineNumber);
+
     /**
      * 查询列表的记录数
      * @param engineer  工程用具对象（可包含条件或分页）

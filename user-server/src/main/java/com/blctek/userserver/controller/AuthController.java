@@ -33,13 +33,11 @@ public class AuthController {
     /**
      * /auth/login
      * 登录认证操作：用户输入用户名和密码验证成功就下发基于jwt的token
-     * @param clientName    请求头里获取客户端名称
      * @param voLogin   登录表单对象
      * @return
      */
     @PostMapping("/login")
-    public ResultResponse login(@RequestHeader("X-Client")String clientName,
-                                @RequestBody VoLogin voLogin){
+    public ResultResponse login(@RequestBody VoLogin voLogin){
         User dbUser = userService.verify(voLogin.getUsername(), voLogin.getPassword()); //根据用户名和密码去数据中查找
         ResultResponse resultResponse = new ResultResponse();
         if (dbUser!=null){ //用户存在
@@ -66,8 +64,7 @@ public class AuthController {
      * @return
      */
     @PostMapping("/logout")
-    public ResultResponse logout(@RequestHeader("X-Client")String clientName,
-                                 @RequestHeader("X-Token")VoToken voToken){
+    public ResultResponse logout(@RequestHeader("X-Token")VoToken voToken){
         // 利用用户的token进行相关服务端退出操作
         ResultResponse resultResponse = new ResultResponse();
         resultResponse.setMessage("用户成功退出");

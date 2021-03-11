@@ -42,9 +42,9 @@ public class LogAspect {
      * 先从joinPoint切点里获取切点类名、切点方法名和切点传入参数列表，从returnValue里获取返回值
      * 并且得到返回值里的data对象，然后再根据切点方法名（login或logout）获取操作是登录还是退出
      * 登录时并且data不为空（说明成功登录）再获取data中的token，再解析token得到执行者的name
-     * 退出时获取传参列表的第二个是token，再解析token得到执行者的name，最后再根据methodName得到
+     * 退出时获取传参列表的第一个是token，再解析token得到执行者的name，最后再根据methodName得到
      * 对应的中文操作名，该操作执行的时间、该操作的执行人、执行该操作的ip、以及执行该操作的客户端
-     * 切点传入参数列表第一个统一都是执行该操作的客户端名称
+     * 并且从headers里获取X-Client的客户端名称
      * @param joinPoint     切点
      * @param returnValue   正常返回的返回值
      */
@@ -65,13 +65,12 @@ public class LogAspect {
 
         //从英文方法名对应到中文操作名
         String methodChineseName = methodMap.get(methodName);
-        //从传参列表的第一个参数里取到客户端名称
-        String clientName = (String) args[0];
         //利用Date对象生成当前时间
         Date time = new Date();
         //获取当前的请求的ip地址
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();//从解析器里获得request请求
         String ipAddress = request.getRemoteAddr();//从request请求中获得ip地址
+        String clientName = request.getHeader("X-Client");//从请求头里获取X-Client
         switch (methodName){
             case "login"://切点方法是login
                 if (data!=null){//返回有data（说明成功登录）
@@ -83,7 +82,7 @@ public class LogAspect {
                 }
                 break;
             case "logout"://切点方法是logout
-                VoToken voToken = (VoToken) args[1]; //从传参列表的第二个参数获取token
+                VoToken voToken = (VoToken) args[0]; //从传参列表的第一个参数获取token
                 String token = voToken.getToken();
                 DecodedJWT decodedJWT = JWTUtils.getTokenInfo(token);
                 String name = decodedJWT.getClaim("name").asString(); //从token中获取name操作者姓名
@@ -94,6 +93,9 @@ public class LogAspect {
 
     //操作名、操作时间、执行人、ip、来源客户端
     private void insertLogger(String name,Date time,String executor,String ip,String client){
+        if (client==null){//如果client为null则从未知客户端操作
+            client = "未知";
+        }
         log.info("用户[{}]从[{}]客户端成功[{}]，时间是[{}]，ip地址是[{}]",
                 executor,client,name,time.toLocaleString(),ip);
         Logger logger = new Logger();

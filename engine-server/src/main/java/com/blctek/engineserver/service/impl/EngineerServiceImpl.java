@@ -74,14 +74,28 @@ public class EngineerServiceImpl implements EngineerService {
     }
 
     @Override
-    public List<Engineer> selectList(Engineer engineer) {
+    public List<Engineer> selectListByType(String type, Integer currentPage, Integer pageSize) {
+        Engineer engineer = new Engineer();
+        engineer.setType(type);
+        engineer.setCurrentPage(currentPage);
+        engineer.setPageSize(pageSize);
         return engineerMapper.selectList(engineer);
     }
 
     @Override
-    public Engineer selectOne(Engineer engineer) {
-        return engineerMapper.selectOne(engineer);
+    public Integer isExistVehicle(String vehicleNumber) {
+        Engineer engineer = new Engineer();
+        engineer.setVehicleNumber(vehicleNumber);
+        return engineerMapper.selectOne(engineer).getId();
     }
+
+    @Override
+    public Integer isExistMachine(String engineNumber) {
+        Engineer engineer = new Engineer();
+        engineer.setVehicleNumber(engineNumber);
+        return engineerMapper.selectOne(engineer).getId();
+    }
+
 
     @Override
     public Long selectTotalSize(Engineer engineer) {

@@ -181,7 +181,8 @@
             <include refid="com.blctek.engineserver.mapper.DriverMapper.driverAs"></include>,
             <include refid="com.blctek.engineserver.mapper.ModelMapper.modelAs"></include>
         FROM
-            engineer e join driver d on e.driverId = d.id
+            engineer e
+            join driver d on e.driverId = d.id
             join model m on e.modelId = m.id
         <trim prefix="WHERE" prefixOverrides="AND">
             <include refid="selectCondition"></include>
