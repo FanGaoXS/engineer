@@ -37,7 +37,7 @@ public interface EngineerService {
      * @param engineer              工程用具对象
      * @return                      true成功，false失败
      */
-    Boolean updateEngineer(Engineer engineer);
+    Boolean updateEngineerAndDriver(Driver driver,Engineer engineer);
 
     /**
      * 根据类型（机械或车辆）查询工程用具列表（可分页）
@@ -53,16 +53,23 @@ public interface EngineerService {
     /**
      * 根据车牌号来查询数据库中是否存在该车辆
      * @param vehicleNumber         车牌号
-     * @return                      存在返回该车辆的编号，否则返回null
+     * @return                      存在返回该车辆，否则返回null
      */
-    Integer isExistVehicle(String vehicleNumber);
+    Engineer selectVehicleByVehicleNumber(String vehicleNumber);
 
     /**
      * 根据机械的引擎编号查询数据库中是否存在该机械
      * @param engineNumber          引擎编号
-     * @return                      存在返回该机械的编号，否则返回null
+     * @return                      存在返回该机械，否则返回null
      */
-    Integer isExistMachine(String engineNumber);
+    Engineer selectMachineByEngineerNumber(String engineNumber);
+
+    /**
+     * 根据工程用具编号查询是否存在该工程用具
+     * @param id                    工程用具编号
+     * @return                      存在返回工程用具对象，否则返回null
+     */
+    Engineer selectEngineerById(Integer id);
 
     /**
      * 查询列表的记录数

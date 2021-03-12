@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
  *
  * @Auther: 吴青珂
  * @Date: 2021/03/11/18:09
- * @Description:
+ * @Description: 向局域网的服务器发起请求
  */
 @Service
 public class DevServiceImpl implements DevService {
@@ -22,13 +22,12 @@ public class DevServiceImpl implements DevService {
     public HttpStatus insertDev(String deviceId,String number) {
         RestTemplate restTemplate = new RestTemplate();
         String url = DEV_BASE_URL + "/v1/vn/" + deviceId; // http请求的url
-
         HttpHeaders headers = new HttpHeaders();    //http请求的头
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);//设置http请求头为json
-
-        HttpEntity<String> entity = new HttpEntity<>(number, headers); //将headers和body封装成完整的http请求
-
-        ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, entity, String.class);//发起http的put请求，并且返回请求体
+        //将headers和body封装成完整的http请求
+        HttpEntity<String> entity = new HttpEntity<>(number, headers);
+        //发起http的put请求，并且返回请求体
+        ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, entity, String.class);
         return responseEntity.getStatusCode();//从请求体从获得状态码
     }
 }

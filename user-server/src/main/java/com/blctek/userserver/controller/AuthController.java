@@ -3,6 +3,7 @@ package com.blctek.userserver.controller;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.blctek.commonserver.response.ResultResponse;
 import com.blctek.commonserver.utils.JWTUtils;
+import com.blctek.userserver.anno.AuthLog;
 import com.blctek.userserver.pojo.User;
 import com.blctek.userserver.service.UserService;
 import com.blctek.userserver.vo.VoToken;
@@ -36,6 +37,7 @@ public class AuthController {
      * @param voLogin   登录表单对象
      * @return
      */
+    @AuthLog("登录")
     @PostMapping("/login")
     public ResultResponse login(@RequestBody VoLogin voLogin){
         User dbUser = userService.verify(voLogin.getUsername(), voLogin.getPassword()); //根据用户名和密码去数据中查找
@@ -44,15 +46,16 @@ public class AuthController {
             HashMap<String, String> payloadMap = new HashMap<>();
             payloadMap.put("uuid",dbUser.getUuid());//将用户唯一标识uuid存进JWT的payload中
             payloadMap.put("name",dbUser.getName());//将用户的姓名存进JWT的payload中
+            payloadMap.put("role","developer");//将角色存进JWT的payload中
             payloadMap.put("username",dbUser.getUsername());//将用户的用户名存进JWT的payload中
             String token = JWTUtils.createToken(payloadMap,voLogin.getValidityDay()); //利用payload和有效期生成token
             resultResponse.setData(new VoToken(token));
             resultResponse.setMessage("用户名和密码认证成功");
-            //用户存在data返回含有uuid、name、username的token
+            //用户存在data为含有uuid、name、username、role的token
         } else { //用户不存在
             resultResponse.setCode(20001);
             resultResponse.setMessage("用户名和密码认证失败，用户不存在");
-            //用户不存在data返回null
+            //用户不存在data为null
         }
         return resultResponse;
     }
@@ -63,14 +66,15 @@ public class AuthController {
      * @param voToken token
      * @return
      */
+    @AuthLog("退出")
     @PostMapping("/logout")
     public ResultResponse logout(@RequestHeader("X-Token")VoToken voToken){
+        String token = voToken.getToken();
         // 利用用户的token进行相关服务端退出操作
-        ResultResponse resultResponse = new ResultResponse();
-        resultResponse.setMessage("用户成功退出");
-        resultResponse.setCode(20000);
-        //data返回null
-        return resultResponse;
+        return new ResultResponse()
+                .setData(new VoToken(token))//data返回token
+                .setMessage("用户成功退出")
+                .setCode(20000);
     }
 
     /**

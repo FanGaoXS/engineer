@@ -26,6 +26,7 @@ import java.util.UUID;
 @Service
 @Transactional
 public class EngineerServiceImpl implements EngineerService {
+
     @Autowired
     private EngineerMapper engineerMapper;
     @Autowired
@@ -53,7 +54,6 @@ public class EngineerServiceImpl implements EngineerService {
         try {
             Engineer engineer = new Engineer();
             engineer.setId(id);
-            System.out.println(engineerMapper.deleteOne(engineer));
             return engineerMapper.deleteOne(engineer)>0;//如果成功删除的记录数大于0则说明删除成功
         } catch (DataAccessException e){
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//事务回滚
@@ -63,9 +63,11 @@ public class EngineerServiceImpl implements EngineerService {
     }
 
     @Override
-    public Boolean updateEngineer(Engineer engineer) {
+    public Boolean updateEngineerAndDriver(Driver driver,Engineer engineer) {
         try {
-            return engineerMapper.updateOne(engineer) > 0;//如果成功修改的记录数大于0则说明修改成功
+            engineerMapper.updateOne(engineer);
+            driverMapper.updateOne(driver);
+            return true;
         } catch (DataAccessException e){
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//事务回滚
             e.printStackTrace();
@@ -83,17 +85,24 @@ public class EngineerServiceImpl implements EngineerService {
     }
 
     @Override
-    public Integer isExistVehicle(String vehicleNumber) {
+    public Engineer selectVehicleByVehicleNumber(String vehicleNumber) {
         Engineer engineer = new Engineer();
         engineer.setVehicleNumber(vehicleNumber);
-        return engineerMapper.selectOne(engineer).getId();
+        return engineerMapper.selectOne(engineer);
     }
 
     @Override
-    public Integer isExistMachine(String engineNumber) {
+    public Engineer selectMachineByEngineerNumber(String engineNumber) {
         Engineer engineer = new Engineer();
         engineer.setVehicleNumber(engineNumber);
-        return engineerMapper.selectOne(engineer).getId();
+        return engineerMapper.selectOne(engineer);
+    }
+
+    @Override
+    public Engineer selectEngineerById(Integer id) {
+        Engineer engineer = new Engineer();
+        engineer.setId(id);
+        return engineerMapper.selectOne(engineer);
     }
 
 

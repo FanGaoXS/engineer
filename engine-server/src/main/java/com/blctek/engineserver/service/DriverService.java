@@ -30,13 +30,6 @@ public interface DriverService {
     Boolean updateDriver(Driver driver);
 
     /**
-     * 查询驾驶员列表（可单条件，可多条件，可分页）
-     * @param driver    驾驶员对象
-     * @return          true成功，false失败
-     */
-    List<Driver> selectList(Driver driver);
-
-    /**
      * 查询驾驶员列表的记录数（可单条件，可多条件）
      * @param driver    驾驶员对象
      * @return          记录数

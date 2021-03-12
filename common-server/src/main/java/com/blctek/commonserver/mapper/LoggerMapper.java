@@ -1,6 +1,6 @@
-package com.blctek.userserver.mapper;
+package com.blctek.commonserver.mapper;
 
-import com.blctek.userserver.pojo.Logger;
+import com.blctek.commonserver.pojo.Logger;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

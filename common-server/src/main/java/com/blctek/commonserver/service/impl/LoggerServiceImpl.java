@@ -1,8 +1,8 @@
-package com.blctek.userserver.service.impl;
+package com.blctek.commonserver.service.impl;
 
-import com.blctek.userserver.mapper.LoggerMapper;
-import com.blctek.userserver.pojo.Logger;
-import com.blctek.userserver.service.LoggerService;
+import com.blctek.commonserver.mapper.LoggerMapper;
+import com.blctek.commonserver.pojo.Logger;
+import com.blctek.commonserver.service.LoggerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

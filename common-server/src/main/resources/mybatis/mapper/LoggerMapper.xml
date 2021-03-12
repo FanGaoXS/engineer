@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.blctek.userserver.mapper.LoggerMapper">
+<mapper namespace="com.blctek.commonserver.mapper.LoggerMapper">
 
     <!--select的条件sql（全有）-->
     <sql id="selectCondition">
@@ -54,7 +54,7 @@
         </if>
     </sql>
 
-    <resultMap id="loggerMap" type="com.blctek.userserver.pojo.Logger">
+    <resultMap id="loggerMap" type="com.blctek.commonserver.pojo.Logger">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="time" property="time"/>
@@ -64,7 +64,7 @@
     </resultMap>
 
     <insert id="insertOne"
-            parameterType="com.blctek.userserver.pojo.Logger"
+            parameterType="com.blctek.commonserver.pojo.Logger"
             keyProperty="id"
             useGeneratedKeys="true">
         INSERT INTO
@@ -75,12 +75,12 @@
     </insert>
 
     <delete id="deleteOne"
-            parameterType="com.blctek.userserver.pojo.Logger">
+            parameterType="com.blctek.commonserver.pojo.Logger">
         DELETE FROM logger WHERE id = #{id}
     </delete>
 
     <update id="updateOne"
-            parameterType="com.blctek.userserver.pojo.Logger">
+            parameterType="com.blctek.commonserver.pojo.Logger">
         UPDATE
             logger
         <trim prefix="SET" suffixOverrides=",">
@@ -92,7 +92,7 @@
 
     <select id="selectList"
             resultMap="loggerMap"
-            parameterType="com.blctek.userserver.pojo.Logger">
+            parameterType="com.blctek.commonserver.pojo.Logger">
         SELECT
             *
         FROM
@@ -107,7 +107,7 @@
 
     <!--查询一条（可单条件，可多条件）-->
     <select id="selectOne"
-            parameterType="com.blctek.userserver.pojo.Logger"
+            parameterType="com.blctek.commonserver.pojo.Logger"
             resultMap="loggerMap">
         SELECT
             *
@@ -119,7 +119,7 @@
     </select>
 
     <select id="count"
-            parameterType="com.blctek.userserver.pojo.Logger"
+            parameterType="com.blctek.commonserver.pojo.Logger"
             resultType="long">
         SELECT
             count(id)

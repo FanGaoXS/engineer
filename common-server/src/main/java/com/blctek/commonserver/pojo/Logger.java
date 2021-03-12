@@ -1,13 +1,12 @@
-package com.blctek.userserver.pojo;
+package com.blctek.commonserver.pojo;
 
-import java.io.Serializable;
+
 import java.util.Date;
 
-import com.blctek.commonserver.pojo.BasePojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
+
 
 /**
  * Created with IntelliJ IDEA.

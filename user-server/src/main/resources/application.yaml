@@ -11,4 +11,4 @@ spring:
     password:
 
 mybatis:
-  mapper-locations: mybatis/mapper/*Mapper.xml
+  mapper-locations: classpath*:mybatis/mapper/*Mapper.xml

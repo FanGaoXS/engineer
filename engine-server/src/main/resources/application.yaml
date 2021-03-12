@@ -10,5 +10,6 @@ spring:
     username: root
     password:
 
+#使用classpath*可以扫描所有的资源路径（包括jar），使用classpath只扫描当前的资源路径
 mybatis:
-  mapper-locations: mybatis/mapper/*Mapper.xml
+  mapper-locations: classpath*:mybatis/mapper/*Mapper.xml
