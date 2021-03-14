@@ -21,7 +21,7 @@ import java.util.UUID;
  *
  * @Auther: 吴青珂
  * @Date: 2021/03/10/14:16
- * @Description:
+ * @Description:    controller层：对工程用具的新增、删除、修改、查询
  */
 @RestController
 @RequestMapping("/engineer")
@@ -32,7 +32,7 @@ public class EngineerController {
     @Autowired
     private DevService devService;
 
-    @CrudLog("新增车辆")
+    @CrudLog("新增车辆及其驾驶员信息")
     @PostMapping("/insertVehicle")
     public ResultResponse insertVehicle(@RequestBody VoEngineer voEngineer){
         System.out.println("voEngineer = " + voEngineer);
@@ -63,7 +63,7 @@ public class EngineerController {
                 .setData(result);//返回新增的结果
     }
 
-    @CrudLog("新增机械")
+    @CrudLog("新增机械及其驾驶员信息")
     @PostMapping("/insertMachine")
     public ResultResponse insertMachine(@RequestBody VoEngineer voEngineer){
         System.out.println("voEngineer = " + voEngineer);
@@ -114,7 +114,7 @@ public class EngineerController {
                 .setMessage("删除机械"+id);
     }
 
-    @CrudLog("修改车辆")
+    @CrudLog("修改车辆及其驾驶员信息")
     @PostMapping("/updateVehicle")
     public ResultResponse updateVehicle(@RequestBody VoEngineer voEngineer){
         //System.out.println("voEngineer = " + voEngineer);
@@ -138,7 +138,7 @@ public class EngineerController {
                 .setData(result);
     }
 
-    @CrudLog("修改机械")
+    @CrudLog("修改机械及其驾驶员信息")
     @PostMapping("/updateMachine")
     public ResultResponse updateMachine(@RequestBody VoEngineer voEngineer){
         System.out.println("voEngineer = " + voEngineer);

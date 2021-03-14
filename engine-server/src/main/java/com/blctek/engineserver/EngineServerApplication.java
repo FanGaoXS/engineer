@@ -5,11 +5,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages = {
-        "com.blctek.commonserver",
+        "com.blctek.commonserver",//需要用到其中的logger
         "com.blctek.engineserver"
 })
 @MapperScan({
-        "com.blctek.commonserver.mapper",
+        "com.blctek.commonserver.mapper",//需要用到其中的loggerMapper
         "com.blctek.engineserver.mapper"
 })
 public class EngineServerApplication {

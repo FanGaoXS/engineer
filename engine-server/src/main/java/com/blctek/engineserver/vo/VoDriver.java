@@ -29,6 +29,7 @@ public class VoDriver implements Serializable {
 
     private String phone;
 
+    //Driver可以直接通过构造转为VoDriver
     public VoDriver(Driver driver) {
         this.id = driver.getId();
         this.uuid = driver.getUuid();

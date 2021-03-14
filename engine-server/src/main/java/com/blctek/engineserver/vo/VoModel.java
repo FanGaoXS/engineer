@@ -31,6 +31,7 @@ public class VoModel implements Serializable {
 
     private String description;
 
+    //Model对象可以直接通过构造转为VoModel
     public VoModel(Model model) {
         this.id = model.getId();
         this.uuid = model.getUuid();

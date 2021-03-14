@@ -32,8 +32,8 @@ public class VoEngineerList implements Serializable {
     private List<VoEngineer> items;
 
     public void setItems(List<Engineer> engineerList){
-        items = new ArrayList<>();  //初始化items
+        this.items = new ArrayList<>();  //初始化items
         //将List<Engineer>对象迭代得到engineer然后将engineer转为VoEngineer然后在放到items集合中
-        engineerList.forEach(engineer -> items.add(new VoEngineer(engineer)));
+        engineerList.forEach(engineer -> this.items.add(new VoEngineer(engineer)));
     }
 }

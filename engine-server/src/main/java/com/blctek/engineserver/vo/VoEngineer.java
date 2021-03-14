@@ -46,6 +46,7 @@ public class VoEngineer implements Serializable {
 
     private VoModel model;
 
+    //engineer可以直接通过构造函数转为VoEngineer
     public VoEngineer(Engineer engineer) {
         this.id = engineer.getId();
         this.uuid = engineer.getUuid();

@@ -23,9 +23,13 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         List<String> pathList = new ArrayList<>();          //要拦截的请求集合
-        pathList.add("/engineer/**");
+        pathList.add("/engineer/**");                       //要拦截/engineer/下的所有请求
+        pathList.add("/driver/**");                         //要拦截/driver/下的所有请求
+        pathList.add("/model/**");                          //要拦截/model/下的所有请求
         List<String> excludePathList = new ArrayList<>();   //不过滤的请求集合
-        excludePathList.add("/engineer/selectListByType");  //不过滤所有查询的请求
+        excludePathList.add("/engineer/select*");           //不过滤/engineer/下的查询的请求
+        excludePathList.add("/driver/select*");             //不过滤/driver/下的所有查询的请求
+        excludePathList.add("/model/select*");              //不过滤/model/下的所有查询的请求
         registry.addInterceptor(crudInterceptor)
                 .addPathPatterns(pathList)
                 .excludePathPatterns(excludePathList);

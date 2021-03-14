@@ -6,6 +6,9 @@ import com.blctek.engineserver.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -20,15 +23,16 @@ public class DriverServiceImpl implements DriverService {
     private DriverMapper driverMapper;
 
     @Override
-    public Boolean deleteDriver(Integer id) {
-        Driver driver = new Driver();
-        driver.setId(id);
-        return driverMapper.deleteOne(driver)>0;//如果删除的记录数大于0说明删除成功
+    public Boolean updateDriver(Driver driver) {
+        return driverMapper.updateOne(driver)>0;
     }
 
     @Override
-    public Boolean updateDriver(Driver driver) {
-        return driverMapper.updateOne(driver)>0;
+    public List<Driver> selectList(Integer currentPage, Integer pageSize) {
+        Driver driver = new Driver();
+        driver.setPageSize(pageSize);
+        driver.setCurrentPage(currentPage);
+        return driverMapper.selectList(driver);
     }
 
     @Override

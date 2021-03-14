@@ -16,18 +16,20 @@ import java.util.List;
 public interface DriverService {
 
     /**
-     * 删除一条驾驶员信息
-     * @param id    驾驶员编号
-     * @return      true成功，false失败
-     */
-    Boolean deleteDriver(Integer id);
-
-    /**
      * 修改驾驶员信息
      * @param driver    驾驶员对象
      * @return          true成功，false失败
      */
     Boolean updateDriver(Driver driver);
+
+    /**
+     * 查询司机列表（分页）
+     * @param currentPage   当前页
+     * @param pageSize      每页记录数
+     * @return              司机列表集合
+     */
+    List<Driver> selectList(Integer currentPage,
+                            Integer pageSize);
 
     /**
      * 查询驾驶员列表的记录数（可单条件，可多条件）
