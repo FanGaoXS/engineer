@@ -99,7 +99,7 @@
 <script>
   import { getList } from '@/api/table'
   import {
-    getModelByBelong,
+    getModelByVehicle,
     insertModel,
     updateModel,
     deleteModel

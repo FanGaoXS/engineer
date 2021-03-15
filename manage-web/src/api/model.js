@@ -3,15 +3,36 @@ import {
 } from "@/utils/myRequest";
 
 /**
- * 根据所属工程用具类型获取对应的类型（车辆的或者机械的）
+ * 查询车辆的类型
  * @param modelBelong
  */
-export function getModelByBelong(modelBelong) {
+export function getModelByVehicle() {
+  let currentPage;
+  let pageSize;
   let config = {
-    url: '/car/modelListByBelong',
+    url: 'engine-server/model/selectListByVehicle',
     method: 'GET',
     params: {
-      modelBelong: modelBelong
+      currentPage,
+      pageSize
+    }
+  }
+  return blctekRequest(config);
+}
+
+/**
+ * 查询车辆的类型
+ * @param modelBelong
+ */
+export function getModelByMachine() {
+  let currentPage;
+  let pageSize;
+  let config = {
+    url: 'engine-server/model/selectListByMachine',
+    method: 'GET',
+    params: {
+      currentPage,
+      pageSize
     }
   }
   return blctekRequest(config);
@@ -24,7 +45,7 @@ export function getModelByBelong(modelBelong) {
  */
 export function insertModel(model) {
   let config = {
-    url: '/car/insertModel',
+    url: 'car/insertModel',
     method: 'GET',
     params: {
       id: model.id,
@@ -43,7 +64,7 @@ export function insertModel(model) {
  */
 export function deleteModel(id) {
   let config = {
-    url: '/car/deleteModel',
+    url: 'car/deleteModel',
     method: 'GET',
     params: {
       id:id

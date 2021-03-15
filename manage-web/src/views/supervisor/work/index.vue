@@ -23,7 +23,7 @@
       </el-table-column>
 
       <el-table-column label="车牌号" align="center" width="250">
-        {{ $route.params.plateNumber | plateNumberFilter }}
+        {{ $route.params.vehicleNumber | plateNumberFilter }}
       </el-table-column>
 
       <el-table-column label="日期" align="center" prop="date">
@@ -69,11 +69,9 @@
 
 <script>
 
-import { getList } from '@/api/table'
-
 import {
-  getWorkListByPlateNumber,
-  getPointListByPlateNumberAndDate
+  getWorkListByVehicleNumber,
+  getPointListByVehicleNumberAndDate
 } from "@/api/car";
 
 import {
@@ -140,20 +138,20 @@ export default {
     },
     async fetchData() {
       this.listLoading = true
-      // console.logger(this.$route.params);
-      let plateNumber = this.$route.params.plateNumber;
-      const { data:workList } = await getWorkListByPlateNumber(plateNumber)
-      // console.logger(workList)
+      // console.log(this.$route.params);
+      const vehicleNumber = this.$route.params.vehicleNumber;
+      const { data:workList } = await getWorkListByVehicleNumber(vehicleNumber)
+      // console.log(workList)
       for (const date of workList) {
-        const { data:pointList } = await getPointListByPlateNumberAndDate(plateNumber,date)
-        // console.logger(pointList)
+          const { data:pointList } = await getPointListByVehicleNumberAndDate(vehicleNumber,date)
+        // console.log(pointList)
         let lineArray = []
         for (const point of pointList) {
           lineArray.push([point.longitude_amap,point.latitude_amap]); //将坐标点的经纬度赋值按顺序添加到临时数组中
         }
         //将临时数组扔到高德原生js的路径长度计算工具（此函数是异步！！切记）
         let mileage = this.map.GeometryUtil.distanceOfLine(lineArray);
-        this.tempList.push({plateNumber, date, mileage});
+        this.tempList.push({vehicleNumber, date, mileage});
       }
       this.listLoading = false;
       this.workList =this.tempList.slice(0,this.listQuery.pageSize) //组件初始化时
@@ -164,7 +162,7 @@ export default {
       this.$router.push({
         name: 'Map', //跳转到名为Map的路由去
         params: {    //携带以下参数
-          plateNumber: row.plateNumber,
+          vehicleNumber: row.vehicleNumber,
           date: row.date,
           mileage: row.mileage
         }

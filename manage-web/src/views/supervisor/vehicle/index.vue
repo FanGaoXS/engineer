@@ -16,7 +16,7 @@
 
       <el-table-column label="车牌号" align="center" width="250">
         <template slot-scope="scope">
-          {{ scope.row.plateNumber | plateNumberFilter }}
+          {{ scope.row.vehicleNumber | plateNumberFilter }}
         </template>
       </el-table-column>
 
@@ -70,8 +70,8 @@ import {
 
 import {
   getVehicleList,
-  getWorkListByPlateNumber,
-  getPointListByPlateNumberAndDate
+  getWorkListByVehicleNumber,
+  getPointListByVehicleNumberAndDate
 } from "@/api/car";
 
 import AMapLoader from "@/utils/AMap";
@@ -107,19 +107,20 @@ export default {
     async fetchData() {
       let tempList = [];
       this.listLoading = true;
-      const { data:vehicleList } = await getVehicleList(); //同步获得车辆列表
+      const { data:list } = await getVehicleList(); //同步获得车辆列表
+      const vehicleList = list.items;
       // console.logger('vehicleList',vehicleList);
       for (let i = 0; i < vehicleList.length; i++) {
-        let plateNumber = vehicleList[i].plateNumber
-        let driverName = vehicleList[i].driver.driverName
-        let driverPhone = vehicleList[i].driver.driverPhone
-        const { data:workList } = await getWorkListByPlateNumber(plateNumber) //根据车牌号同步获取该车工作了多少天
+        let vehicleNumber = vehicleList[i].vehicleNumber
+        let driverName = vehicleList[i].driver.name
+        let driverPhone = vehicleList[i].driver.phone
+        const { data:workList } = await getWorkListByVehicleNumber(vehicleNumber) //根据车牌号同步获取该车工作了多少天
         // console.logger(plateNumber+'workList',workList);
         let totalMileage = 0;
         let totalWorkDays = workList.length;
         for (let j = 0; j < workList.length; j++) {
           let date = workList[j]
-          const { data:pointList } = await getPointListByPlateNumberAndDate(plateNumber,date); //根据车牌号和日期同步获取该车当日的坐标点集合
+          const { data:pointList } = await getPointListByVehicleNumberAndDate(vehicleNumber,date); //根据车牌号和日期同步获取该车当日的坐标点集合
           // console.logger(plateNumber,date,'pointList',pointList);
           let lineArray = []
           for (let k = 0; k < pointList.length; k++) {
@@ -129,7 +130,7 @@ export default {
           let mileage = this.map.GeometryUtil.distanceOfLine(lineArray); // 利用AMap的官方工具计算里程
           totalMileage+=mileage;
         }
-        tempList.push({driverName,driverPhone,plateNumber,totalWorkDays,totalMileage})
+        tempList.push({driverName,driverPhone,vehicleNumber,totalWorkDays,totalMileage})
         /*
         * 将数据一个一个一次通过数组的push方法动态放置进vue上的list
         * （list会一条一条记录的刷新）
@@ -151,7 +152,7 @@ export default {
       this.$router.push({
         name: 'Work',
         params: {
-          plateNumber: row.plateNumber,
+          vehicleNumber: row.vehicleNumber,
         }
       })
     }

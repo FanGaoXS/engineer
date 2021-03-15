@@ -23,7 +23,7 @@
 
       <el-table-column label="车牌号" align="center" width="250">
         <template slot-scope="scope">
-          {{ scope.row.plateNumber | plateNumberFilter }}
+          {{ scope.row.vehicleNumber | plateNumberFilter }}
         </template>
       </el-table-column>
 
@@ -32,9 +32,9 @@
           <!--图片预览，支持放大-->
           <el-image
             style="width: 100px;height: 50px"
-            :src="IMAGE_PREFIX_URL+scope.row.car.imagePath"
+            :src="IMAGE_PREFIX_URL+scope.row.uuid"
             fit="cover"
-            :preview-src-list="[IMAGE_PREFIX_URL+scope.row.car.imagePath]">
+            :preview-src-list="[IMAGE_PREFIX_URL+scope.row.uuid]">
           </el-image>
         </template>
       </el-table-column>
@@ -51,13 +51,13 @@
 
       <el-table-column label="车辆类型" align="center" width="150">
         <template slot-scope="scope">
-          {{ scope.row.vehicleModel }}
+          {{ scope.row.model.name }}
         </template>
       </el-table-column>
 
       <el-table-column label="所属工程用具" align="center" width="150">
         <template slot-scope="scope">
-          {{ scope.row.car.type }}
+          {{ scope.row.type }}
         </template>
       </el-table-column>
 
@@ -69,13 +69,13 @@
 
       <el-table-column label="驾驶员姓名" align="center" width="150">
         <template slot-scope="scope">
-          {{ scope.row.driver.driverName }}
+          {{ scope.row.driver.name }}
         </template>
       </el-table-column>
 
       <el-table-column label="驾驶员电话号码" align="center" width="200">
         <template slot-scope="scope">
-          {{ scope.row.driver.driverPhone }}
+          {{ scope.row.driver.phone }}
         </template>
       </el-table-column>
 
@@ -97,11 +97,11 @@
       <el-form :model="tempForm" label-width="150px">
 
         <el-form-item label="车辆编号" >
-          <el-input :value="tempForm.vehicleId" disabled></el-input>
+          <el-input :value="tempForm.id" disabled></el-input>
         </el-form-item>
 
         <el-form-item label="车牌号" >
-          <el-input v-model="tempForm.plateNumber"></el-input>
+          <el-input v-model="tempForm.vehicleNumber"></el-input>
         </el-form-item>
 
         <el-form-item label="车牌类型" >
@@ -110,38 +110,35 @@
         </el-form-item>
 
         <el-form-item label="车辆类型" >
-          <el-select v-model="tempForm.vehicleModel" placeholder="请选择">
+          <el-select v-model="tempForm.model.name" placeholder="请选择">
             <el-option
               v-for="item in options"
-              :key="item.modelName"
-              :label="item.modelName"
-              :value="item.modelName">
+              :key="item.name"
+              :label="item.name"
+              :value="item.name">
             </el-option>
           </el-select>
         </el-form-item>
 
-        <el-form-item label="所属工程用具编号" >
-          <el-input :value="tempForm.car.carId" disabled></el-input>
-        </el-form-item>
 
         <el-form-item label="车辆或机械" >
-          <el-input :value="tempForm.car.type" disabled></el-input>
+          <el-input :value="tempForm.type" disabled></el-input>
         </el-form-item>
 
         <el-form-item label="芯片编号" >
-          <el-input :value="tempForm.car.chipId" disabled></el-input>
+          <el-input :value="tempForm.deviceId" disabled></el-input>
         </el-form-item>
 
         <el-form-item label="驾驶员编号" >
-          <el-input :value="tempForm.driver.driverId" disabled></el-input>
+          <el-input :value="tempForm.driver.id" disabled></el-input>
         </el-form-item>
 
         <el-form-item label="驾驶员姓名" >
-          <el-input :value="tempForm.driver.driverName"></el-input>
+          <el-input :value="tempForm.driver.name"></el-input>
         </el-form-item>
 
         <el-form-item label="驾驶员联系方式" >
-          <el-input :value="tempForm.driver.driverPhone"></el-input>
+          <el-input :value="tempForm.driver.phone"></el-input>
         </el-form-item>
 
       </el-form>
@@ -171,7 +168,7 @@ import {
 } from "@/utils/myRequest";
 
 import {
-  getModelByBelong  //获取类型的网络请求
+  getModelByVehicle  //获取类型的网络请求
 } from "@/api/model";
 
 export default {
@@ -196,54 +193,14 @@ export default {
       dialogFormVisible: false,
       options:[
         {
-          modelName: ''
+          name: ''
         }
       ],
       tempForm: {
-        car:{},
+        model:{},
         driver:{}
-        /*
-        vehicleId: 77,
-        plateNumber: '川AS28T4',
-        plateType: '汽油车',
-        vehicleModel: '越野车',
-        carId: 96,
-        car: {
-          carId: 96,
-          type: '车辆',
-          driverId: 96,
-          chipId: 'C2196C0D',
-          imagePath: 'e53a7c40-8536-43b0-b700-a9bc36e4024d',
-          driver: null
         },
-        driver: {
-          driverId: 96,
-          driverName: '旦巴顿珠',
-          driverPhone: '17308917971'
-        }*/
-      },
-      list: [ //车辆对象数组
-        /*{
-          "vehicleId": 77,
-          "carId": 96,
-          "plateNumber": "川AS28T4",
-          "plateType": "汽油车",
-          "vehicleModel": "越野车",
-          "car": {
-            "carId": 96,
-            "type": "车辆",
-            "driverId": 96,
-            "chipId": "C2196C0D",
-            "imagePath": "e53a7c40-8536-43b0-b700-a9bc36e4024d",
-            "driver": null
-          },
-          "driver": {
-            "driverId": 96,
-            "driverName": "旦巴顿珠",
-            "driverPhone": "17308917971"
-          }
-        },*/
-      ],
+      list: [],
       listLoading: true,
       IMAGE_PREFIX_URL: IMAGE_BASE_URL+'/image/car/'
     }
@@ -273,15 +230,15 @@ export default {
     },
 
     updateVehicle(){
-      // console.logger('updateVehicle',this.tempForm);
+      console.log('updateVehicle',this.tempForm);
       /*
       array.findIndex(v=> v.id === array1.id);
       这个函数就是查询数组对应的下标：返回值是 如果array.id=array1.id相等的然后该对象在array数组里的下标值
       */
-      let index = this.list.findIndex(v=> v.vehicleId === this.tempForm.vehicleId)
-      // console.logger(index);
+      let index = this.list.findIndex(v=> v.id === this.tempForm.id)
+      // console.log(index);
       updateVehicle(this.tempForm).then(res=>{
-        // console.logger(res.status);
+        console.log(res);
         this.dialogFormVisible = false;
         this.list.splice(index,1,this.tempForm); //替换掉原数组的对象
         this.$notify({
@@ -289,7 +246,7 @@ export default {
           message: '修改车辆信息成功！'
         })
       }).catch(error=>{
-        console.logger(error)
+        console.log(error)
         this.$notify({
           type: 'error',
           message: '修改车辆信息失败请联系管理员'+error
@@ -320,10 +277,10 @@ export default {
 
     async fetchData() {
       this.listLoading = true
-      const { data:modelList } = await getModelByBelong('车辆') //同步获取类型列表
-      this.options = modelList;
+      const { data:modelList } = await getModelByVehicle() //同步获取类型列表
+      this.options = modelList.items
       const { data:vehicleList } = await getVehicleList() //同步获取车辆列表
-      this.list = vehicleList;
+      this.list = vehicleList.items
       this.listLoading = false;
     },
     // 路由前进

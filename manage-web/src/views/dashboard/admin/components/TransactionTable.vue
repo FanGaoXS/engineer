@@ -2,17 +2,17 @@
   <el-table :data="list" style="width: 100%;padding-top: 15px;">
     <el-table-column label="车牌号" width="250">
       <template slot-scope="scope">
-        {{ scope.row.plateNumber | plateNumberFilter}}
+        {{ scope.row.vehicleNumber | plateNumberFilter}}
       </template>
     </el-table-column>
     <el-table-column label="驾驶员姓名" width="100" align="center">
       <template slot-scope="scope">
-        {{ scope.row.driver.driverName  }}
+        {{ scope.row.driver.name  }}
       </template>
     </el-table-column>
     <el-table-column label="驾驶员联系方式" min-width="200" align="center">
       <template slot-scope="scope">
-        {{ scope.row.driver.driverPhone  }}
+        {{ scope.row.driver.phone  }}
       </template>
     </el-table-column>
   </el-table>

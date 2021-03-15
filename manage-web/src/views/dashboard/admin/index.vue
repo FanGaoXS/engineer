@@ -52,10 +52,12 @@
   import TransactionTable from "./components/TransactionTable";
   import AMapLoader from "@/utils/AMap";
   import {
-    getPointListByPlateNumberAndDate,
+    getPointListByVehicleNumberAndDate,
     getVehicleList,
-    getWorkListByPlateNumber
+    getWorkListByVehicleNumber
   } from "@/api/car";
+
+
 
   export default {
     name: "index",
@@ -71,18 +73,20 @@
     },
     methods: {
       async fetchData() {
-        let plateNumber;
-        let workDays;
-        let mileage = 0;
-        let fuel;
+        let vehicleNumber = ''
+        let workDays = 0
+        let mileage = 0
+        let fuel = 0
         let carList = []
-        const { data:vehicleList } = await getVehicleList()
+        const { data:list } = await getVehicleList()
+        const vehicleList = list.items;
+        // console.log(vehicleList)
         for (const vehicle of vehicleList) {
-          plateNumber = vehicle.plateNumber;
-          const { data:workList } = await getWorkListByPlateNumber(plateNumber)
+          vehicleNumber = vehicle.vehicleNumber;
+          const { data:workList } = await getWorkListByVehicleNumber(vehicleNumber)
           workDays = workList.length
           for (const date of workList) {
-            const { data:pointList } = await getPointListByPlateNumberAndDate(plateNumber,date)
+            const { data:pointList } = await getPointListByVehicleNumberAndDate(vehicleNumber,date)
             let lineArray = [];
             for (const point of pointList) {
               lineArray.push([point.longitude_amap,point.latitude_amap])
@@ -91,23 +95,23 @@
           }
           mileage = mileage/1000 //单位米->公里
           fuel = (mileage/100)*7.5 //单位升/百公里
-          // console.logger(plateNumber,workDays,mileage.toFixed(2),fuel.toFixed(2))
-          carList.push({plateNumber, workDays, mileage, fuel})
+          // console.logger(vehicleNumber,workDays,mileage.toFixed(2),fuel.toFixed(2))
+          carList.push({vehicleNumber, workDays, mileage, fuel})
         }
         let mileageOptions = [];
         let workDaysOptions = [];
         let fuelOptions = [];
         for (const car of carList) {
           mileageOptions.push({
-            xAxis:car.plateNumber,
+            xAxis:car.vehicleNumber,
             series:(car.mileage).toFixed(2)
           })
           workDaysOptions.push({
-            xAxis:car.plateNumber,
+            xAxis:car.vehicleNumber,
             series:car.workDays
           })
           fuelOptions.push({
-            xAxis:car.plateNumber,
+            xAxis:car.vehicleNumber,
             series:(car.fuel).toFixed(2)
           })
         }

@@ -29,13 +29,11 @@ import java.util.UUID;
 public class EngineerController {
     @Autowired
     private EngineerService engineerService;
-    @Autowired
-    private DevService devService;
 
     @CrudLog("新增车辆及其驾驶员信息")
     @PostMapping("/insertVehicle")
     public ResultResponse insertVehicle(@RequestBody VoEngineer voEngineer){
-        System.out.println("voEngineer = " + voEngineer);
+//        System.out.println("voEngineer = " + voEngineer);
         if (voEngineer.getVehicleNumber()!=null && (!voEngineer.getVehicleNumber().equals(""))){
             //车牌号不为空需要判断数据库中原本是否存在该车辆
             Engineer dbEngineer = engineerService.selectVehicleByVehicleNumber(voEngineer.getVehicleNumber());
@@ -66,7 +64,7 @@ public class EngineerController {
     @CrudLog("新增机械及其驾驶员信息")
     @PostMapping("/insertMachine")
     public ResultResponse insertMachine(@RequestBody VoEngineer voEngineer){
-        System.out.println("voEngineer = " + voEngineer);
+//        System.out.println("voEngineer = " + voEngineer);
         if (voEngineer.getEngineNumber()!=null && (!voEngineer.getEngineNumber().equals(""))){
             //车牌号不为空需要判断数据库中原本是否存在该车辆
             Engineer dbEngineer = engineerService.selectMachineByEngineerNumber(voEngineer.getEngineNumber());
@@ -97,7 +95,7 @@ public class EngineerController {
     @CrudLog("删除车辆")
     @GetMapping("/deleteVehicle")
     public ResultResponse deleteVehicle(@RequestParam("id")Integer id){
-        System.out.println("id = " + id);
+//        System.out.println("id = " + id);
         Boolean result = engineerService.deleteEngineer(id);
         return new ResultResponse()
                 .setData(result)
@@ -107,7 +105,7 @@ public class EngineerController {
     @CrudLog("删除机械")
     @GetMapping("/deleteMachine")
     public ResultResponse deleteMachine(@RequestParam("id")Integer id){
-        System.out.println("id = " + id);
+//        System.out.println("id = " + id);
         Boolean result = engineerService.deleteEngineer(id);
         return new ResultResponse()
                 .setData(result)
@@ -117,16 +115,16 @@ public class EngineerController {
     @CrudLog("修改车辆及其驾驶员信息")
     @PostMapping("/updateVehicle")
     public ResultResponse updateVehicle(@RequestBody VoEngineer voEngineer){
-        //System.out.println("voEngineer = " + voEngineer);
+        System.out.println("voEngineer = " + voEngineer);
         Boolean result = false;
         Engineer dbEngineer = engineerService.selectEngineerById(voEngineer.getId());//根据id查询是否存在该记录
         //修改前先查询数据库中是否存在该记录
         if (dbEngineer!=null){ //（如果存在则执行修改操作）：会修改engineer和driver表中的信息
             Engineer engineer = new Engineer();
             engineer.setId(voEngineer.getId());//engineer表的id字段
-            engineer.setModelId(voEngineer.getModel().getId());//engineer表的modelId字段（修改所属类型）
             engineer.setVehicleNumber(voEngineer.getVehicleNumber());//engineer表的vehicleNumber
             engineer.setPlateType(voEngineer.getPlateType());//engineer表的plateType
+            engineer.setModelId(voEngineer.getModel().getId());//engineer表的modelId字段（修改所属类型）
             Driver driver = new Driver();
             driver.setId(voEngineer.getDriver().getId());//driver表的id字段
             driver.setName(voEngineer.getDriver().getName());//driver表的name字段
@@ -141,7 +139,7 @@ public class EngineerController {
     @CrudLog("修改机械及其驾驶员信息")
     @PostMapping("/updateMachine")
     public ResultResponse updateMachine(@RequestBody VoEngineer voEngineer){
-        System.out.println("voEngineer = " + voEngineer);
+//        System.out.println("voEngineer = " + voEngineer);
         Boolean result = false;
         Engineer dbEngineer = engineerService.selectEngineerById(voEngineer.getId());//根据id查询是否存在该记录
         //修改前先查询数据库中是否存在该记录
@@ -166,7 +164,7 @@ public class EngineerController {
     public ResultResponse selectListByType(@RequestParam("type")String type,
                                            Integer currentPage,
                                            Integer pageSize){
-        System.out.println("type = " + type + ", currentPage = " + currentPage + ", pageSize = " + pageSize);
+//        System.out.println("type = " + type + ", currentPage = " + currentPage + ", pageSize = " + pageSize);
         List<Engineer> engineerList = engineerService.selectListByType(type, currentPage, pageSize);
         Engineer engineer = new Engineer();
         engineer.setType(type);

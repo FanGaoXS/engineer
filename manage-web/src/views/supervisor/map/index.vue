@@ -48,7 +48,7 @@
 
     <el-row :gutter="10" style="margin-top: 15px"><!--响应式第一行-->
       <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-        <el-input :value="plateNumber | plateNumberFilter" readonly>
+        <el-input :value="vehicleNumber | plateNumberFilter" readonly>
           <template slot="prepend">车牌号</template>
         </el-input>
       </el-col>
@@ -98,22 +98,20 @@
 
 <script>
 
-import { getList } from '@/api/table'
-
 import {
   plateNumberFilter,
   mileageFilter,
 } from "@/utils/globalFilters";
 
 import {
-  getPointListByPlateNumberAndDate
+  getPointListByVehicleNumberAndDate
 } from "@/api/car";
 
 export default {
   computed: {
     // 车牌号
-    plateNumber() {
-      return this.$route.params.plateNumber; //取从上个页面传递过来的params中的参数
+    vehicleNumber() {
+      return this.$route.params.vehicleNumber; //取从上个页面传递过来的params中的参数
     },
     // 平均海拔
     aveAltitude() {
@@ -204,9 +202,9 @@ export default {
   },
   methods: {
     async fetchData() {
-      let plateNumber = this.$route.params.plateNumber;
+      let vehicleNumber = this.$route.params.vehicleNumber;
       let date = this.$route.params.date;
-      const { data:pointList } = await getPointListByPlateNumberAndDate(plateNumber,date)
+      const { data:pointList } = await getPointListByVehicleNumberAndDate(vehicleNumber,date)
       for (let i = 0; i < pointList.length; i++) {
         /*console.logger(pointList[i].longitude_amap);  //经度
         console.logger(pointList[i].latitude_amap);   //纬度*/

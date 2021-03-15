@@ -1,31 +1,21 @@
-import {
-  localRequest,
-  blctekRequest
-} from "@/utils/myRequest";
+import request from '@/utils/request'
 
 /**
  *  修改车辆信息
  * @returns {AxiosPromise}
  */
 export function updateVehicle(row) {
-  /*console.log('updateVehicle------>')
-  console.log('row',row);*/
-  let config = {
-    url: '/car/modifyVehicle',
-    type: 'GET',
-    params: {
-      vehicleId: row.vehicleId,
-      plateNumber: row.plateNumber,
-      plateType: row.plateType,
-      vehicleModel: row.vehicleModel,
-      carId: row.car.carId,
-      chipId: row.car.chipId,
-      driverId: row.driver.driverId,
-      driverName: row.driver.driverName,
-      driverPhone: row.driver.driverPhone
+  console.log('updateVehicle------>row',row);
+  console.log(row.id)
+  console.log(row.plateType)
+  return request({
+    url: 'engine-server/engineer/updateVehicle',
+    method: 'POST',
+    data: {
+      id:row.id,
+      plateType: row.plateType
     }
-  }
-  return blctekRequest(config);
+  });
 }
 
 /**
@@ -39,14 +29,14 @@ export function deleteVehicle(row) {
   console.log('driverId',row.driver.driverId);*/
   let config = {
     url: '/car/removeVehicle',
-    type: 'GET',
+    method: 'GET',
     params: {
       vehicleId: row.vehicleId,
       carId: row.car.carId,
       driverId: row.driver.driverId,
     }
   }
-  return blctekRequest(config);
+  return request(config);
 }
 
 /**
@@ -54,40 +44,44 @@ export function deleteVehicle(row) {
  * @returns {AxiosPromise}
  */
 export function getVehicleList() {
+  const type = "车辆";
   let config = {
-    url: '/car/allVehicle',
-    type: 'GET'
+    url: 'engine-server/engineer/selectListByType',
+    method: 'GET',
+    params:{
+      type
+    }
   }
-  return blctekRequest(config);
+  return request(config);
 }
 
 /**
  * 根据车牌号获取工时（有哪些日期）
- * @param plateNumber
+ * @param vehicleNumber
  * @returns {AxiosPromise}
  */
-export function getWorkListByPlateNumber(plateNumber) {
-  // console.log(plateNumber);
+export function getWorkListByVehicleNumber(vehicleNumber) {
+  // console.log(vehicleNumber);
   let config = {
-    url: '/v0/loc/'+plateNumber,
-    type: 'GET'
+    url: 'polyline-server/'+vehicleNumber,
+    method: 'GET'
   }
-  return blctekRequest(config);
+  return request(config);
 }
 
 /**
  * 根据车牌号和日期获得坐标点集合
- * @param plateNumber
+ * @param vehicleNumber
  * @param Date
  * @returns {AxiosPromise}
  */
-export async function getPointListByPlateNumberAndDate(plateNumber,date) {
-  /*console.log(plateNumber);
+export async function getPointListByVehicleNumberAndDate(vehicleNumber,date) {
+  /*console.log(vehicleNumber);
   console.log(date);*/
   let config = {
-    url: '/v0/loc/'+plateNumber+'/'+date,
-    type: 'GET',
+    url: 'polyline-server/'+vehicleNumber+'/'+date,
+    method: 'GET',
   }
-  return blctekRequest(config);
+  return request(config);
 }
 

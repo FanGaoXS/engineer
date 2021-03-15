@@ -1,3 +1,7 @@
+
+server:
+  port: 8093
+
 spring:
   application:
     name: assets-server
@@ -5,6 +9,4 @@ spring:
     multipart:
       max-file-size: 15MB
 
-server:
-  port: 8093
 

@@ -45,6 +45,7 @@ public class CrudInterceptor implements HandlerInterceptor {
             response.getWriter().print("token异常："+e.getMessage());
             return false;//不放行
         }
+        System.out.println("CrudInterceptor拦截成功");
         return false;
     }
 }

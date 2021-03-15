@@ -81,7 +81,7 @@ export const constantRoutes = [
 
       { //工时列表（根据车牌号）
         hidden: true,
-        path: 'work/:plateNumber',
+        path: 'work/:vehicleNumber',
         name: 'Work',
         meta: {
           title: '工时列表',
@@ -92,7 +92,7 @@ export const constantRoutes = [
 
       { //轨迹详情
         hidden: true,
-        path: 'map/:plateNumber/:date/:mileage',
+        path: 'map/:vehicleNumber/:date/:mileage',
         name: 'Map',
         meta: {
           title: '轨迹详情',
@@ -105,10 +105,10 @@ export const constantRoutes = [
   },
 
   { //工程用具
-    path: '/car',
+    path: '/engineer',
     component: Layout,
     redirect: '/car/vehicleList',
-    name: 'Car',
+    name: 'Engineer',
     meta: {title: '工程用具', icon: 'el-icon-truck'},
     alwaysShow: true,
     children: [
@@ -118,14 +118,14 @@ export const constantRoutes = [
         name: 'VehicleList',
         // alwaysShow: true,
         meta: { title: '车辆列表',},
-        component: () => import('@/views/car/vehicle/index'),
+        component: () => import('@/views/engineer/vehicle/index'),
       },
 
       /*{ //机械列表
         path: 'machineList',
         name: 'MachineList',
         meta: { title: '机械列表（待开发）',},
-        component: () => import('@/views/car/machine/index')
+        component: () => import('@/views/engineer/machine/index')
       },*/
 
     ]
