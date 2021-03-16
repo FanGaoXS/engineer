@@ -105,7 +105,7 @@ import {
 
 import {
   getPointListByVehicleNumberAndDate
-} from "@/api/car";
+} from "@/api/engineer";
 
 export default {
   computed: {

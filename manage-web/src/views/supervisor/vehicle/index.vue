@@ -4,13 +4,14 @@
       v-loading="listLoading"
       :data="list"
       element-loading-text="加载中"
+      :default-sort = "{prop: 'id', order: 'ascending'}"
       border
       fit
     >
 
-      <el-table-column label="序号" align="center" width="75">
+      <el-table-column label="序号" align="center" width="75" prop="id">
         <template slot-scope="scope">
-          {{ scope.$index+1 }}
+          {{ scope.row.id }}
         </template>
       </el-table-column>
 
@@ -59,6 +60,16 @@
       </el-table-column>
 
     </el-table>
+
+    <el-pagination
+      style="margin-top: 15px"
+      background
+      :total="listQuery.totalSize"
+      :page-size="listQuery.pageSize"
+      :current-page.sync="listQuery.currentPage"
+      @current-change="handleCurrentChange"
+      layout="total, prev, pager, next, jumper">
+    </el-pagination>
   </div>
 </template>
 
@@ -72,7 +83,7 @@ import {
   getVehicleList,
   getWorkListByVehicleNumber,
   getPointListByVehicleNumberAndDate
-} from "@/api/car";
+} from "@/api/engineer";
 
 import AMapLoader from "@/utils/AMap";
 
@@ -87,7 +98,14 @@ export default {
   },
   data() {
     return {
-      list: [],//车辆对象数组
+      listQuery:{
+        currentPage: 1,
+        pageSize: 10,
+        totalSize: 0
+      },
+      list: [
+
+      ],//车辆对象数组
       listLoading: true,
       map: null
     }
@@ -98,19 +116,26 @@ export default {
     AMapLoader().then(AMap => {
       this.map = AMap; // 加载成功后将异步加载的高德原生js赋给this.map
       // console.logger('高德地图api加载成功');
-      this.fetchData(); //组件初始化完成后取得数据并且填充
+      this.fetchList(this.listQuery.currentPage,this.listQuery.pageSize); //组件初始化完成后取得数据并且填充
     }, e => {
       console.logger('高德地图api加载失败',e)
     })
   },
   methods: {
-    async fetchData() {
+    handleCurrentChange(){
+      this.fetchList(this.listQuery.currentPage,this.listQuery.pageSize)
+    },
+    async fetchList(currentPage,pageSize) {
       let tempList = [];
       this.listLoading = true;
-      const { data:list } = await getVehicleList(); //同步获得车辆列表
+      const { data:list } = await getVehicleList(currentPage,pageSize); //同步获得车辆列表
       const vehicleList = list.items;
+      this.listQuery.totalSize = list.totalSize
+      this.listQuery.currentPage = list.currentPage
+      this.listQuery.pageSize = list.pageSize
       // console.logger('vehicleList',vehicleList);
       for (let i = 0; i < vehicleList.length; i++) {
+        let id = vehicleList[i].id
         let vehicleNumber = vehicleList[i].vehicleNumber
         let driverName = vehicleList[i].driver.name
         let driverPhone = vehicleList[i].driver.phone
@@ -130,7 +155,7 @@ export default {
           let mileage = this.map.GeometryUtil.distanceOfLine(lineArray); // 利用AMap的官方工具计算里程
           totalMileage+=mileage;
         }
-        tempList.push({driverName,driverPhone,vehicleNumber,totalWorkDays,totalMileage})
+        tempList.push({id,driverName,driverPhone,vehicleNumber,totalWorkDays,totalMileage})
         /*
         * 将数据一个一个一次通过数组的push方法动态放置进vue上的list
         * （list会一条一条记录的刷新）

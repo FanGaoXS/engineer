@@ -20,10 +20,11 @@ axiosInstance.interceptors.request.use(
       //让每一个request的headers里携带一个token（其中token从本地的cookies中获取）
       config.headers['X-Token'] = getToken()
     }
+    // console.log(config)
     return config
   },
   error => {
-    console.log(error) // for debug
+    console.log('request interceptors error',error) // for debug
     return Promise.reject(error)
   }
 )
@@ -33,8 +34,7 @@ axiosInstance.interceptors.response.use(
   response => {
     const res = response.data
 
-    // 自定义响应状态码code的全局判断
-    if (res.code !== 20000) {
+    if (res.code !== 20000 && res.code!==0 ) {
       Message({
         message: res.message || '错误！',
         type: 'error',
@@ -60,7 +60,7 @@ axiosInstance.interceptors.response.use(
     }
   },
   error => {
-    console.log('err->' + error) // for debug
+    console.log('response interceptors error->' + error) // for debug
     Message({
       message: error.message,
       type: 'error',

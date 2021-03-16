@@ -89,6 +89,16 @@
 
     </el-table>
 
+    <el-pagination
+      style="margin-top: 15px"
+      background
+      :total="listQuery.totalSize"
+      :page-size="listQuery.pageSize"
+      :current-page.sync="listQuery.currentPage"
+      @current-change="handleCurrentChange"
+      layout="total, prev, pager, next, jumper">
+    </el-pagination>
+
     <!--修改车辆信息的对话框-->
     <el-dialog
       title="修改车辆信息"
@@ -161,7 +171,7 @@ import {
   deleteVehicle,  //删除车辆信息的网络请求
   getVehicleList, //获得所有车辆的网络请求
   updateVehicle   //修改车辆信息的网络请求
-} from "@/api/car";
+} from "@/api/engineer";
 
 import {
   IMAGE_BASE_URL  //获取图片url的地址前缀
@@ -199,16 +209,31 @@ export default {
       tempForm: {
         model:{},
         driver:{}
-        },
-      list: [],
+      },
+      listQuery:{
+        currentPage: 1,
+        pageSize: 10,
+        totalSize: 0
+      },
+      list: [
+
+      ],
       listLoading: true,
       IMAGE_PREFIX_URL: IMAGE_BASE_URL+'/image/car/'
     }
   },
   created() {
-    this.fetchData(); //组件初始化完成后取得数据并且填充
+    //组件初始化完成后取得数据并且填充
+    this.fetchOptions();
+    this.fetchList(this.listQuery.currentPage,this.listQuery.pageSize);
   },
   methods: {
+
+    //分页组件中当前页改变时
+    handleCurrentChange(){
+      //根据当前页和每页记录数重新拉取数据
+      this.fetchList(this.listQuery.currentPage,this.listQuery.pageSize)
+    },
 
     handleUpdate(row){
       /*console.logger('handleUpdate',row)
@@ -274,24 +299,19 @@ export default {
         })
       })*/
     },
-
-    async fetchData() {
-      this.listLoading = true
+    async fetchOptions() {
       const { data:modelList } = await getModelByVehicle() //同步获取类型列表
       this.options = modelList.items
-      const { data:vehicleList } = await getVehicleList() //同步获取车辆列表
+    },
+    async fetchList(currentPage,pageSize){
+      this.listLoading = true
+      const { data:vehicleList } = await getVehicleList(currentPage,pageSize) //同步获取车辆列表
       this.list = vehicleList.items
+      this.listQuery.currentPage = vehicleList.currentPage
+      this.listQuery.pageSize = vehicleList.pageSize
+      this.listQuery.totalSize = vehicleList.totalSize
       this.listLoading = false;
-    },
-    // 路由前进
-    routerAhead(row){
-      this.$router.push({
-        name: 'Work',
-        params: {
-          plateNumber: row.plateNumber
-        }
-      })
-    },
+    }
   },
 }
 </script>

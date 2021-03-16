@@ -1,6 +1,8 @@
 package com.blctek.assetsserver.controller;
 
 import com.blctek.assetsserver.utils.FileUtils;
+import com.blctek.assetsserver.vo.Image;
+import com.blctek.commonserver.response.ResultResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,20 +24,17 @@ import java.util.UUID;
 @Slf4j
 public class ImageController {
 
-    @PostMapping("/imgInsert")
-    public Map<String,Object> imgInsert(@RequestParam("file")MultipartFile image){
+    @PostMapping("/insertEngineer")
+    public ResultResponse imgInsert(@RequestParam("file")MultipartFile image){
         log.info("图片的原名称->[{}]",image.getOriginalFilename());
         log.info("图片的格式->[{}]",image.getContentType());
         log.info("图片的大小->[{}]",FileUtils.getFileSize(image));
         log.info("图片是否为空->[{}]",image.isEmpty()?"空文件":"不是空文件");
-        //生成uuid来作为图片名
-        String imageName = UUID.randomUUID().toString();
-        String imagePath = FileUtils.uploadFile(image, "/image/car/", imageName);
+        String imageName = UUID.randomUUID().toString();//生成uuid来作为图片名
+        String imagePath = FileUtils.uploadFile(image, "/image/engineer/", imageName);
         log.info("图片上传后的路径->[{}]",imagePath);
-
-        HashMap<String, Object> resMap = new HashMap<>();
-        resMap.put("data",imageName);
-        
-        return resMap;
+        return new ResultResponse()
+                .setMessage("插入工程用具的图片")
+                .setData(new Image(imagePath));
     }
 }

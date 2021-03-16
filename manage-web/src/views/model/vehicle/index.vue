@@ -25,19 +25,19 @@
 
       <el-table-column label="类型名" align="center" width="250">
         <template slot-scope="scope">
-          {{ scope.row.modelName }}
+          {{ scope.row.name }}
         </template>
       </el-table-column>
 
       <el-table-column label="类型描述" :show-overflow-tooltip="true" width="800">
         <template slot-scope="scope">
-          <span>{{ scope.row.modelDescription }}</span>
+          <span>{{ scope.row.description }}</span>
         </template>
       </el-table-column>
 
       <el-table-column label="类型所属" width="150" align="center">
         <template slot-scope="scope">
-          {{ scope.row.modelBelong }}
+          {{ scope.row.type }}
         </template>
       </el-table-column>
 
@@ -54,10 +54,15 @@
 
     </el-table>
 
-    <div style="margin-top: 20px">
-      <span>添加类型成功后重新扫描二维码即可看到刚刚添加的类型</span>
-      <el-divider content-position="left">Tips</el-divider>
-    </div>
+    <el-pagination
+      style="margin-top: 15px"
+      background
+      :total="listQuery.totalSize"
+      :page-size="listQuery.pageSize"
+      :current-page.sync="listQuery.currentPage"
+      @current-change="handleCurrentChange"
+      layout="total, prev, pager, next, jumper">
+    </el-pagination>
 
 
     <!--新增或修改类型的对话框-->
@@ -68,13 +73,13 @@
       <el-form :model="tempForm" label-width="80px">
 
         <el-form-item label="类型名" >
-          <el-input v-model="tempForm.modelName" autocomplete="off"></el-input>
+          <el-input v-model="tempForm.name" autocomplete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="类型描述" >
           <el-input
             type="textarea"
-            v-model="tempForm.modelDescription"
+            v-model="tempForm.description"
             maxlength="200"
             show-word-limit
             rows="8"></el-input>
@@ -82,7 +87,7 @@
 
 
         <el-form-item label="类型所属" >
-          <el-radio-group v-model="tempForm.modelBelong">
+          <el-radio-group v-model="tempForm.type">
             <el-radio border label="车辆"></el-radio>
             <el-radio border label="机械"  disabled></el-radio>
           </el-radio-group>
@@ -99,7 +104,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+
 import {
   getModelByVehicle,
   insertModel,
@@ -113,18 +118,21 @@ export default {
   },
   data() {
     return {
-      modelBelong: '车辆',
+      listQuery:{
+        currentPage: 1,
+        pageSize: 10,
+        totalSize: 0
+      },
       list: [
-        /*{
-          id,modelName,modelDescription,modelBelong,modelExampleImage
-        }*/
+
       ],
       listLoading: true,
       dialogFormVisible: false,
       tempForm: { //  临时表
-        modelName: '',
-        modelDescription: '',
-        modelBelong: '车辆'
+        id: 0,
+        name: '',
+        description: '',
+        type: '车辆'
       },
       dialogType: '',
       titleMap: { //  对话框标题映射
@@ -135,22 +143,29 @@ export default {
   },
   created() {
     // 组件被创建时填充数据
-    this.fetchData()
+    this.fetchList(this.listQuery.currentPage,this.listQuery.pageSize)
   },
   methods: {
+    handleCurrentChange(){
+      this.fetchList(this.listQuery.currentPage,this.listQuery.pageSize)
+    },
     // 填充数据
-    async fetchData() {
+    async fetchList(currentPage,pageSize) {
       this.listLoading = true
-      const { data:modelList } = await getModelByBelong(this.modelBelong)
-      this.list = modelList;
+      const { data:modelList } = await getModelByVehicle(currentPage,pageSize)
+      this.list = modelList.items;
+      this.listQuery.pageSize = modelList.pageSize
+      this.listQuery.currentPage = modelList.currentPage
+      this.listQuery.totalSize = modelList.totalSize
       this.listLoading = false;
     },
     // 清空临时表单
     resetTemp(){
       this.tempForm = {
-        modelName: '',
-        modelDescription: '',
-        modelBelong: '车辆'
+        id: 0,
+        name: '',
+        description: '',
+        type: '车辆'
       }
     },
     // 处理新增（清空临时表，打开对话框）
@@ -161,7 +176,6 @@ export default {
     },
     // 处理修改（清空临时表，打开对话框，将该行数据填充）
     handleUpdate(row){
-      // console.logger(row);
       this.dialogFormVisible = true;
       this.dialogType = 'update';
       this.resetTemp();
@@ -169,8 +183,6 @@ export default {
     },
     // 处理删除
     handleDelete(row,index) {
-      console.logger(row);
-      console.logger(index);
       this.$confirm('此操作将永久删除记录, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -182,9 +194,7 @@ export default {
     //  新增类型
     insertModel(){
       insertModel(this.tempForm).then(res=>{
-        // console.logger(res.data)
-        // this.list.push(this.tempForm);
-        this.fetchData();
+        this.fetchList(this.listQuery.currentPage,this.listQuery.pageSize);//新增完成后重新加载数据
         this.dialogFormVisible = false;
         this.$notify({
           type: 'success',
@@ -192,7 +202,7 @@ export default {
         })
         this.dialogFormVisible = false;
       }).catch(error=>{
-        console.logger(error);
+        console.log(error);
         this.$notify({
           type: 'error',
           message: '新增类型失败，请联系管理员：'+error
@@ -201,19 +211,16 @@ export default {
     },
     //  修改类型
     updateModel(){
-      console.logger(this.tempForm);
       updateModel(this.tempForm).then(res=>{
-        // console.logger(res.data)
         this.dialogFormVisible = false;
         let index = this.list.findIndex(v=> v.id === this.tempForm.id )
-        // console.logger(index);
-        this.list.splice(index,1,this.tempForm);
+        this.list.splice(index,1,this.tempForm); //用新增后的数据替换新增前的数据
         this.$notify({
           type: 'success',
           message: '修改类型成功！'
         })
       }).catch(error=>{
-        console.logger(error);
+        console.log(error);
         this.$notify({
           type: 'error',
           message: '修改类型失败，请联系管理员：'+error
@@ -222,17 +229,14 @@ export default {
     },
     // 删除类型
     deleteModel(id,index){
-      console.logger(index)
-      console.logger(id)
       deleteModel(id).then(res=>{
-        // console.logger(res.data)
         this.$notify({
           type: 'success',
           message: '删除类型成功'
         })
-        this.list.splice(index,1);
+        this.fetchList(this.listQuery.currentPage,this.listQuery.pageSize)
       }).catch(error=>{
-        console.logger(error);
+        console.log(error);
         this.$notify({
           type: 'success',
           message: '删除类型失败，请联系管理员：'+error

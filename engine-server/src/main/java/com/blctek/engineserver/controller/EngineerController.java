@@ -4,13 +4,11 @@ import com.blctek.commonserver.response.ResultResponse;
 import com.blctek.engineserver.anno.CrudLog;
 import com.blctek.engineserver.pojo.Driver;
 import com.blctek.engineserver.pojo.Engineer;
-import com.blctek.engineserver.service.DevService;
 import com.blctek.engineserver.service.EngineerService;
 import com.blctek.engineserver.vo.VoDriver;
 import com.blctek.engineserver.vo.VoEngineer;
 import com.blctek.engineserver.vo.VoEngineerList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -115,7 +113,7 @@ public class EngineerController {
     @CrudLog("修改车辆及其驾驶员信息")
     @PostMapping("/updateVehicle")
     public ResultResponse updateVehicle(@RequestBody VoEngineer voEngineer){
-        System.out.println("voEngineer = " + voEngineer);
+//        System.out.println("voEngineer = " + voEngineer);
         Boolean result = false;
         Engineer dbEngineer = engineerService.selectEngineerById(voEngineer.getId());//根据id查询是否存在该记录
         //修改前先查询数据库中是否存在该记录

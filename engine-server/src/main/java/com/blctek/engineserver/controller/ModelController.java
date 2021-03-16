@@ -4,7 +4,6 @@ import com.blctek.commonserver.response.ResultResponse;
 import com.blctek.engineserver.anno.CrudLog;
 import com.blctek.engineserver.pojo.Model;
 import com.blctek.engineserver.service.ModelService;
-import com.blctek.engineserver.vo.VoDriverList;
 import com.blctek.engineserver.vo.VoModel;
 import com.blctek.engineserver.vo.VoModelList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class ModelController {
     @CrudLog("新增类型")
     @PostMapping("/insertModel")
     public ResultResponse insertModel(@RequestBody VoModel voModel){
-//        System.out.println("voModel = " + voModel);
+        System.out.println("voModel = " + voModel);
         Model model = new Model();
         model.setUuid(UUID.randomUUID().toString());    //model表中UUID字段
         model.setName(voModel.getName());               //model表中name字段
@@ -45,7 +44,7 @@ public class ModelController {
     @CrudLog("删除类型")
     @GetMapping("/deleteModel")
     public ResultResponse deleteModel(@RequestParam("id")Integer id) {
-//        System.out.println("id = " + id);
+        System.out.println("id = " + id);
         Boolean result = modelService.deleteModel(id);
         return new ResultResponse()
                 .setData(result)
@@ -55,7 +54,7 @@ public class ModelController {
     @CrudLog("修改类型")
     @PostMapping("/updateModel")
     public ResultResponse updateModel(@RequestBody VoModel voModel){
-//        System.out.println("voModel = " + voModel);
+        System.out.println("voModel = " + voModel);
         Model model = new Model();
         model.setId(voModel.getId());                       //model表中id主键
         model.setName(voModel.getName());                   //model表中的name字段
