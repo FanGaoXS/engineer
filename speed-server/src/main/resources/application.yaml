@@ -1,0 +1,11 @@
+server:
+  port: 8098
+  tomcat:
+    max-http-form-post-size: 5MB
+spring:
+  application:
+    name: speed-server
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB

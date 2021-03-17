@@ -1,5 +1,9 @@
 package com.blctek.commonserver.pojo;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 /**
@@ -9,6 +13,9 @@ import java.io.Serializable;
  * @Date: 2021/03/07/19:07
  * @Description: pojo的base，包含分页功能（当前页和每页记录数）
  */
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class BasePojo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -23,19 +30,4 @@ public class BasePojo implements Serializable {
      */
     private Integer pageSize;
 
-    public Integer getCurrentPage() {
-        return currentPage;
-    }
-
-    public void setCurrentPage(Integer currentPage) {
-        this.currentPage = currentPage;
-    }
-
-    public Integer getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
 }

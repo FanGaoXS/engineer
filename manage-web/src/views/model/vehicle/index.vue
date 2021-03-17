@@ -19,7 +19,7 @@
     >
       <el-table-column align="center" label="序号" width="75">
         <template slot-scope="scope">
-          {{ scope.$index+1 }}
+          {{ scope.row.id }}
         </template>
       </el-table-column>
 
@@ -70,13 +70,13 @@
       :title="titleMap[dialogType]"
       :visible.sync="dialogFormVisible"
       width="35%">
-      <el-form :model="tempForm" label-width="80px">
+      <el-form :model="tempForm" label-width="80px" :rules="rules" ref="dialogForm">
 
-        <el-form-item label="类型名" >
+        <el-form-item label="类型名" prop="name">
           <el-input v-model="tempForm.name" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="类型描述" >
+        <el-form-item label="类型描述" prop="description">
           <el-input
             type="textarea"
             v-model="tempForm.description"
@@ -95,7 +95,12 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogType==='update'?updateModel():insertModel()">确 定</el-button>
+        <el-button
+          type="primary"
+          @click="dialogType==='update'?updateModel():insertModel()"
+          :loading="buttonLoading"
+          :disabled="buttonLoading"
+        >确 定</el-button>
       </div>
     </el-dialog>
     <!--新增车辆类型对话框-->
@@ -113,11 +118,18 @@ import {
 } from "@/api/model";
 
 export default {
-  filters: {
-
-  },
   data() {
     return {
+      buttonLoading: false,
+      rules:{
+        name:[
+          { required: true, message: '请输入类型名', trigger: 'blur' },
+        ],
+        description:[
+          { required: true, message: '请输入类型描述', trigger: 'blur' },
+          { min: 3, max: 200, message: '长度在 3 到 200 个字符', trigger: 'blur' }
+        ]
+      },
       listQuery:{
         currentPage: 1,
         pageSize: 10,
@@ -193,38 +205,50 @@ export default {
     },
     //  新增类型
     insertModel(){
-      insertModel(this.tempForm).then(res=>{
-        this.fetchList(this.listQuery.currentPage,this.listQuery.pageSize);//新增完成后重新加载数据
-        this.dialogFormVisible = false;
-        this.$notify({
-          type: 'success',
-          message: '新增类型成功！'
-        })
-        this.dialogFormVisible = false;
-      }).catch(error=>{
-        console.log(error);
-        this.$notify({
-          type: 'error',
-          message: '新增类型失败，请联系管理员：'+error
-        });
+      this.$refs['dialogForm'].validate(valid=>{
+        if (valid){//验证表单
+          this.buttonLoading = true
+          insertModel(this.tempForm).then(res=>{
+            this.dialogFormVisible = false;
+            this.fetchList(this.listQuery.currentPage,this.listQuery.pageSize);//新增完成后重新加载数据
+            this.$notify({
+              type: 'success',
+              message: '新增类型成功！'
+            })
+            this.buttonLoading = false
+          }).catch(error=>{
+            console.log(error);
+            this.$notify({
+              type: 'error',
+              message: '新增类型失败，请联系管理员：'+error
+            });
+            this.buttonLoading = false
+          })
+        }
       })
     },
     //  修改类型
     updateModel(){
-      updateModel(this.tempForm).then(res=>{
-        this.dialogFormVisible = false;
-        let index = this.list.findIndex(v=> v.id === this.tempForm.id )
-        this.list.splice(index,1,this.tempForm); //用新增后的数据替换新增前的数据
-        this.$notify({
-          type: 'success',
-          message: '修改类型成功！'
-        })
-      }).catch(error=>{
-        console.log(error);
-        this.$notify({
-          type: 'error',
-          message: '修改类型失败，请联系管理员：'+error
-        });
+      this.$refs['dialogForm'].validate(valid=>{
+        if (valid){//验证表单
+          this.buttonLoading = true
+          updateModel(this.tempForm).then(res=>{
+            this.dialogFormVisible = false;
+            this.fetchList(this.listQuery.currentPage,this.listQuery.pageSize)
+            this.$notify({
+              type: 'success',
+              message: '修改类型成功！'
+            })
+            this.buttonLoading = false
+          }).catch(error=>{
+            console.log(error);
+            this.$notify({
+              type: 'error',
+              message: '修改类型失败，请联系管理员：'+error
+            });
+            this.buttonLoading = false
+          })
+        }
       })
     },
     // 删除类型

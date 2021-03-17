@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @Date: 2021/03/03/18:16
  * @Description: 前端交互的用户信息
  */
-//@AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class VoUserInfo implements Serializable {
@@ -26,12 +26,6 @@ public class VoUserInfo implements Serializable {
     private String avatar;
 
     private String phone;
-
-    public VoUserInfo(String name, String avatar, String phone) {
-        this.name = name;
-        this.avatar = avatar;
-        this.phone = phone;
-    }
 
     /**
      * 直接将从数据库中查出的pojo对象赋值给VoUserInfo

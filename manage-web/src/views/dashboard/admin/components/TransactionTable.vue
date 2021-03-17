@@ -20,7 +20,7 @@
 
 <script>
 
-import {plateNumberFilter} from "@/utils/globalFilters";
+import {plateNumberFilter} from "@/utils/global-filters";
 
 export default {
   filters: {

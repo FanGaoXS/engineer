@@ -9,11 +9,11 @@
       </el-button-group>
       <!--普通车辆表单-->
       <el-form label-position="left" v-if="isVehicle">
-        <!--设备编号（从url中获取devId）-->
+        <!--设备编号（从url中获取deviceId）-->
         <el-form-item label="设备编号">
           <el-input
                   type="text"
-                  :value="devId"
+                  :value="deviceId"
                   disabled
           ></el-input>
         </el-form-item>
@@ -94,11 +94,11 @@
 
       <!--机械用具表单-->
       <el-form label-position="left" v-if="!isVehicle">
-        <!--设备编号（从url中获取devId）-->
+        <!--设备编号（从url中获取deviceId）-->
         <el-form-item label="设备编号">
           <el-input
                   type="text"
-                  :value="devId"
+                  :value="deviceId"
                   disabled
           ></el-input>
         </el-form-item>
@@ -253,30 +253,30 @@
     },
     created() {
       getModelByModelBelong('车辆').then(res=>{
-        // console.logger(res.data);
+        // console.log(res.data);
         this.vehicleModelOption.options = res.data;
       }).catch(error=>{
-        console.logger(error);
+        console.log(error);
       })
       getModelByModelBelong('机械').then(res=>{
-        // console.logger(res.data);
+        // console.log(res.data);
         this.machineModelOption.options = res.data;
       }).catch(error=>{
-        console.logger(error);
+        console.log(error);
       })
     },
     computed: {
-      // 从url中获取参数devId（设备编号）
-      devId() {
-        return this.$route.params.devId;
+      // 从url中获取参数deviceId（设备编号）
+      deviceId() {
+        return this.$route.params.deviceId;
       }
     },
     methods: {
       handleRemove(file, fileList) {
-        console.logger(file, fileList);
+        console.log(file, fileList);
       },
       handlePreview(file) {
-        console.logger(file);
+        console.log(file);
       },
       /*  重置表单
       * */
@@ -297,7 +297,7 @@
       /*  输入框输入完成后的回调函数
       * */
       getPlateNumber(inputValue){
-        console.logger('输入的车牌号是->'+inputValue);
+        console.log('输入的车牌号是->'+inputValue);
         this.formItem1.plateNumber=inputValue;
       },
       /*  比较上传的文件的大小函数（限制文件大小）
@@ -307,12 +307,12 @@
         // 文件大小（MB）
         let fileSize = file.size / 1024 / 1024 ;
         if (file.size>0&&file.size<=1024*1024){ //如果文件大小 0<size<=1M
-          console.logger('准备上传文件大小->',(file.size/1024).toFixed(2)+'Kb'); // 以Kb显示
+          console.log('准备上传文件大小->',(file.size/1024).toFixed(2)+'Kb'); // 以Kb显示
         } else if (file.size>1024*1024) {
-          console.logger('准备上传文件大小->',(file.size/1024/1024).toFixed(2)+'M');// 以M显示
+          console.log('准备上传文件大小->',(file.size/1024/1024).toFixed(2)+'M');// 以M显示
         }
         // 文件大小是否小于15M
-        console.logger('是否小于'+limitFileSize+'M->',fileSize<limitFileSize);
+        console.log('是否小于'+limitFileSize+'M->',fileSize<limitFileSize);
         /* 返回文件大小是否小于15M，是返回true，否则返回false。
          */
         return fileSize<limitFileSize ;
@@ -325,7 +325,7 @@
         let limitFileSize = this.limitFileSize;
         // 待上传的图片是否在范围之内，true小于限制，false大于限制
         let compareFileSizeResult = this.compareFileSize(file,limitFileSize);
-        this.chipId=this.devId;
+        this.chipId=this.deviceId;
         if (this.isVehicle){ // 普通车辆上传前处理
           if (this.chipId!==''
               && this.formItem1.plateType!==null
@@ -394,7 +394,7 @@
         formData.append('driverName',this.formItem2.driverName);
         formData.append('driverPhone',this.formItem2.driverPhone);
         uploadMachine(formData).then(res=>{ // request成功
-          console.logger('上传成功->',res);
+          console.log('上传成功->',res);
           this.$notify({
             title: '成功',
             message: res.msg+'成功',
@@ -402,7 +402,7 @@
             offset: 100
           });
         }).catch(error=>{ // request失败
-          console.logger('上传失败->',error);
+          console.log('上传失败->',error);
           this.$notify({
             title: '失败',
             message: '您的机械信息上传失败，请联系管理员',
@@ -426,7 +426,7 @@
         vehicleFormData.append('driverPhone',this.formItem1.driverPhone);
         vehicleFormData.append('imagePath',imagePath)
         uploadVehicle(vehicleFormData).then(res=>{ // request成功
-          // console.logger('上传成功->',res);
+          // console.log('上传成功->',res);
           this.$notify({
             title: '成功',
             message: res.msg+'成功',
@@ -434,7 +434,7 @@
             offset: 100
           });
         }).catch(error=>{ // request失败
-          console.logger('上传失败->',error);
+          console.log('上传失败->',error);
           this.$notify({
             title: '失败',
             message: '您的车辆信息上传失败，请联系管理员',

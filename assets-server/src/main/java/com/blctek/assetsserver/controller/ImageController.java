@@ -30,11 +30,13 @@ public class ImageController {
         log.info("图片的格式->[{}]",image.getContentType());
         log.info("图片的大小->[{}]",FileUtils.getFileSize(image));
         log.info("图片是否为空->[{}]",image.isEmpty()?"空文件":"不是空文件");
-        String imageName = UUID.randomUUID().toString();//生成uuid来作为图片名
-        String imagePath = FileUtils.uploadFile(image, "/image/engineer/", imageName);
-        log.info("图片上传后的路径->[{}]",imagePath);
+        String uuid = UUID.randomUUID().toString();//生成uuid来作为图片名
+        String path = FileUtils.uploadFile(image, "/image/engineer/", uuid);
+        log.info("图片上传后的路径->[{}]",path);
+        Image resultImage = new Image();
+        resultImage.setUuid(uuid);
         return new ResultResponse()
                 .setMessage("插入工程用具的图片")
-                .setData(new Image(imagePath));
+                .setData(resultImage);//返回该图片的uuid
     }
 }

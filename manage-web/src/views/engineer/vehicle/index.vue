@@ -32,9 +32,9 @@
           <!--图片预览，支持放大-->
           <el-image
             style="width: 100px;height: 50px"
-            :src="IMAGE_PREFIX_URL+scope.row.uuid"
+            :src="IMAGE_URL+scope.row.uuid"
             fit="cover"
-            :preview-src-list="[IMAGE_PREFIX_URL+scope.row.uuid]">
+            :preview-src-list="[IMAGE_URL+scope.row.uuid]">
           </el-image>
         </template>
       </el-table-column>
@@ -120,16 +120,15 @@
         </el-form-item>
 
         <el-form-item label="车辆类型" >
-          <el-select v-model="tempForm.model.name" placeholder="请选择">
+          <el-select v-model="tempForm.model.id" placeholder="请选择">
             <el-option
               v-for="item in options"
               :key="item.name"
               :label="item.name"
-              :value="item.name">
+              :value="item.id">
             </el-option>
           </el-select>
         </el-form-item>
-
 
         <el-form-item label="车辆或机械" >
           <el-input :value="tempForm.type" disabled></el-input>
@@ -154,7 +153,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="updateVehicle()">确 定</el-button>
+        <el-button type="primary" @click="updateVehicle()" :loading="buttonLoading">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -165,7 +164,7 @@
 
 import {
   plateNumberFilter
-} from "@/utils/globalFilters";
+} from "@/utils/global-filters";
 
 import {
   deleteVehicle,  //删除车辆信息的网络请求
@@ -174,12 +173,12 @@ import {
 } from "@/api/engineer";
 
 import {
-  IMAGE_BASE_URL  //获取图片url的地址前缀
-} from "@/utils/myRequest";
-
-import {
   getModelByVehicle  //获取类型的网络请求
 } from "@/api/model";
+
+import {
+  IMAGE_PREFIX_URL  //图片资源前缀
+} from "@/utils/global-variable";
 
 export default {
   filters: {
@@ -200,6 +199,7 @@ export default {
   },
   data() {
     return {
+      buttonLoading: false,
       dialogFormVisible: false,
       options:[
         {
@@ -219,7 +219,7 @@ export default {
 
       ],
       listLoading: true,
-      IMAGE_PREFIX_URL: IMAGE_BASE_URL+'/image/car/'
+      IMAGE_URL: IMAGE_PREFIX_URL+'engineer/' //图片URL
     }
   },
   created() {
@@ -255,27 +255,22 @@ export default {
     },
 
     updateVehicle(){
-      console.log('updateVehicle',this.tempForm);
-      /*
-      array.findIndex(v=> v.id === array1.id);
-      这个函数就是查询数组对应的下标：返回值是 如果array.id=array1.id相等的然后该对象在array数组里的下标值
-      */
-      let index = this.list.findIndex(v=> v.id === this.tempForm.id)
-      // console.log(index);
+      this.buttonLoading = true;
       updateVehicle(this.tempForm).then(res=>{
-        console.log(res);
         this.dialogFormVisible = false;
-        this.list.splice(index,1,this.tempForm); //替换掉原数组的对象
+        this.fetchList(this.listQuery.currentPage,this.listQuery.pageSize)
         this.$notify({
           type: 'success',
           message: '修改车辆信息成功！'
         })
+        this.buttonLoading = false;
       }).catch(error=>{
         console.log(error)
         this.$notify({
           type: 'error',
           message: '修改车辆信息失败请联系管理员'+error
         })
+        this.buttonLoading = false;
       });
     },
 

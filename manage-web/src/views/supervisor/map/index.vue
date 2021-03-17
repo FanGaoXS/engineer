@@ -101,7 +101,7 @@
 import {
   plateNumberFilter,
   mileageFilter,
-} from "@/utils/globalFilters";
+} from "@/utils/global-filters";
 
 import {
   getPointListByVehicleNumberAndDate

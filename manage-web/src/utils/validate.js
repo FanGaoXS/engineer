@@ -16,9 +16,9 @@ export function isExternal(path) {
  * @returns {Boolean}
  */
 export function validUsername(str) {
-  const uPattern = /^[a-zA-Z0-9_-]{5,16}$/;
+  const pattern = /^[a-zA-Z0-9_-]{5,16}$/;
   // console.log('validUsername->',uPattern.test(str));
-  return uPattern.test(str) //符合返回true，否则返回false
+  return pattern.test(str) //符合返回true，否则返回false
 }
 
 /**
@@ -27,7 +27,8 @@ export function validUsername(str) {
  * @returns {boolean}
  */
 export function validPassword(str) {
-  const pPattern = /^.*(?=.{5,}).*$/;
+  const pattern = /^.*(?=.{5,}).*$/;
   // console.log('validPassword->',pPattern.test(str));
-  return pPattern.test(str)
+  return pattern.test(str)
 }
+

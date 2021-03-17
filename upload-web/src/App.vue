@@ -1,20 +1,18 @@
 <template>
   <div id="app">
-
-    <Upload></Upload>
-
+    <Upload2></Upload2>
   </div>
 </template>
 
 <script>
 
-  import Upload from "./views/upload/Upload";
+  import Upload2 from "./views/upload/Upload2";
 
   export default {
     name: 'app',
-    components: {
-      Upload,
-    },
+    components:{
+      Upload2
+    }
   }
 </script>
 

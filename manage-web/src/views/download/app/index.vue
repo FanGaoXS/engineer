@@ -39,6 +39,10 @@
 </template>
 
 <script>
+  import {
+    ZIP_PREFIX_URL
+  } from "@/utils/global-variable";
+
   export default {
     name: "index",
     data() {
@@ -48,7 +52,7 @@
           {
             fileName: 'vpconf.zip',
             fileDes: '车辆管理系统固定站设备配置程序',
-            fileHref: process.env["VUE_APP_BASE_URL"]+'/zip/vpconf.zip'
+            fileHref: ZIP_PREFIX_URL+'vpconf.zip'//下载地址
           }
         ]
       }

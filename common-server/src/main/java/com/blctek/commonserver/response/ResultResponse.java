@@ -19,6 +19,7 @@ import java.io.Serializable;
  *               timeStamp：返回时间戳
  */
 @Data
+@AllArgsConstructor
 @Accessors(chain = true)
 public class ResultResponse implements Serializable {
     /**
