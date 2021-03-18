@@ -1,12 +1,13 @@
-
 server:
   port: 8095
-
+  tomcat:
+    max-http-form-post-size: 15MB
 spring:
   application:
     name: assets-server
   servlet:
     multipart:
       max-file-size: 15MB
+      max-request-size: 15MB
 
 

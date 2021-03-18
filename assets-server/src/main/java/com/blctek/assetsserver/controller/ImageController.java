@@ -25,11 +25,12 @@ import java.util.UUID;
 public class ImageController {
 
     @PostMapping("/insertEngineer")
-    public ResultResponse imgInsert(@RequestParam("file")MultipartFile image){
-        log.info("图片的原名称->[{}]",image.getOriginalFilename());
-        log.info("图片的格式->[{}]",image.getContentType());
-        log.info("图片的大小->[{}]",FileUtils.getFileSize(image));
-        log.info("图片是否为空->[{}]",image.isEmpty()?"空文件":"不是空文件");
+    public ResultResponse imgInsert(@RequestParam("image")MultipartFile image){
+        log.info("图片原名称[{}]，图片的格式[{}]，图片的大小[{}]，图片是否为空[{}]",
+                image.getOriginalFilename(),
+                image.getContentType(),
+                FileUtils.getFileSize(image),
+                image.isEmpty()?"空文件":"不是空文件");
         String uuid = UUID.randomUUID().toString();//生成uuid来作为图片名
         String path = FileUtils.uploadFile(image, "/image/engineer/", uuid);
         log.info("图片上传后的路径->[{}]",path);
@@ -39,4 +40,5 @@ public class ImageController {
                 .setMessage("插入工程用具的图片")
                 .setData(resultImage);//返回该图片的uuid
     }
+
 }

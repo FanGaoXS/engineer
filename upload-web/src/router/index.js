@@ -4,9 +4,18 @@ Vue.use(VueRouter);
 
 let routes=[
   {
-    name: 'Upload',
     path: '/:deviceId',
-    component: () => import('../views/upload/Upload2')
+    redirect: '/vehicle/:deviceId'
+  },
+  {
+    name: 'Vehicle',
+    path: '/vehicle/:deviceId',
+    component: () => import('../views/upload/vehicle')
+  },
+  {
+    name: 'Machine',
+    path: '/machine/:deviceId',
+    component: () => import('../views/upload/machine')
   }
 ];
 

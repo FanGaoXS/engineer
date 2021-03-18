@@ -11,6 +11,7 @@ import com.blctek.engineserver.vo.VoEngineerList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,7 +47,8 @@ public class EngineerController {
         driver.setPhone(voDriver.getPhone());
         Engineer engineer = new Engineer();
         engineer.setUuid(voEngineer.getUuid());
-        engineer.setType(voEngineer.getType());
+        engineer.setType("车辆");
+        engineer.setInputTime(new Date());
         engineer.setDeviceId(voEngineer.getDeviceId());
         engineer.setModelId(voEngineer.getModel().getId());
         engineer.setVehicleNumber(voEngineer.getVehicleNumber());
@@ -55,7 +57,7 @@ public class EngineerController {
         Boolean result = engineerService.insertEngineerAndDriver(driver, engineer);
         return new ResultResponse()
                 //.setCode(statusCode.value())
-                .setMessage("新增车辆"+voEngineer.getVehicleNumber())
+                .setMessage("新增车辆 "+voEngineer.getVehicleNumber())
                 .setData(result);//返回新增的结果
     }
 
@@ -77,7 +79,8 @@ public class EngineerController {
         driver.setPhone(voDriver.getPhone());
         Engineer engineer = new Engineer();
         engineer.setUuid(voEngineer.getUuid());
-        engineer.setType(voEngineer.getType());
+        engineer.setType("机械");
+        engineer.setInputTime(new Date());
         engineer.setDeviceId(voEngineer.getDeviceId());
         engineer.setModelId(voEngineer.getModel().getId());
         engineer.setMachineNumber(voEngineer.getMachineNumber());
@@ -86,7 +89,7 @@ public class EngineerController {
         Boolean result = engineerService.insertEngineerAndDriver(driver, engineer);
         return new ResultResponse()
                 //.setCode(statusCode.value())
-                .setMessage("新增机械"+voEngineer.getEngineNumber())
+                .setMessage("新增机械 "+voEngineer.getEngineNumber())
                 .setData(result);//返回新增结果
     }
 
@@ -107,7 +110,7 @@ public class EngineerController {
         Boolean result = engineerService.deleteEngineer(id);
         return new ResultResponse()
                 .setData(result)
-                .setMessage("删除机械"+id);
+                .setMessage("删除机械 "+id);
     }
 
     @CrudLog("修改车辆及其驾驶员信息")
@@ -130,7 +133,7 @@ public class EngineerController {
             result = engineerService.updateEngineerAndDriver(driver, engineer);
         }
         return new ResultResponse()
-                .setMessage("修改车辆"+voEngineer.getVehicleNumber())
+                .setMessage("修改车辆 "+voEngineer.getVehicleNumber())
                 .setData(result);
     }
 
@@ -154,7 +157,7 @@ public class EngineerController {
             result = engineerService.updateEngineerAndDriver(driver, engineer);
         }
         return new ResultResponse()
-                .setMessage("修改机械"+voEngineer.getEngineNumber())
+                .setMessage("修改机械 "+voEngineer.getEngineNumber())
                 .setData(result);
     }
 
@@ -174,7 +177,7 @@ public class EngineerController {
         voEngineerList.setCurrentPage(currentPage);
         return new ResultResponse()
                 .setData(voEngineerList)
-                .setMessage("查询"+type+"列表");
+                .setMessage("查询 "+type+" 列表");
     }
 
 }
