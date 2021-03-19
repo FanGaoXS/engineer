@@ -21,7 +21,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="车牌号" align="center" width="250">
+      <el-table-column label="车牌号" align="center" width="200">
         <template slot-scope="scope">
           {{ scope.row.vehicleNumber | plateNumberFilter }}
         </template>
@@ -39,7 +39,12 @@
         </template>
       </el-table-column>
 
-
+      <el-table-column align="center" label="录入时间" width="200">
+        <template slot-scope="scope">
+          <i class="el-icon-time" />
+          <span>{{ scope.row.inputTime | inputTimeFilter}}</span>
+        </template>
+      </el-table-column>
 
       <el-table-column label="车牌类型" align="center" width="150">
         <template slot-scope="scope">
@@ -49,13 +54,13 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="车辆类型" align="center" width="150">
+      <el-table-column label="车辆类型" align="center" width="100">
         <template slot-scope="scope">
           {{ scope.row.model.name }}
         </template>
       </el-table-column>
 
-      <el-table-column label="所属工程用具" align="center" width="150">
+      <el-table-column label="所属工程用具" align="center" width="100">
         <template slot-scope="scope">
           {{ scope.row.type }}
         </template>
@@ -194,6 +199,10 @@ export default {
 
     plateNumberFilter(plateNumber){
       return plateNumberFilter(plateNumber); //执行globalFilters里的过滤器
+    },
+
+    inputTimeFilter(inputTime){
+      return ' '+(new Date(inputTime).toLocaleString())
     }
 
   },

@@ -57,13 +57,15 @@
     </el-form-item>
     <el-upload
             ref="upload"
-            action="#"
+            action="/assets-server/img/insertEngineer"
             show-file-list
             list-type="picture"
+            name="image"
             :limit="1"
             :accept="'image/png, image/jpeg'"
             :before-upload="beforeUpload"
-            :http-request="upload"
+            :on-success="successUpload"
+            :on-error="errorUpload"
     >
       <el-button size="medium" type="primary">上传车辆照片<i class="el-icon-upload el-icon--right"></i></el-button>
       <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过15MB</div>
@@ -182,14 +184,31 @@
         let limitFileSize = this.limitFileSize * 1024 * 1024 //限制文件大小（单位字节）
         return realFileSize<limitFileSize //上传文件的大小小于限制文件大小返回true，否则返回false
       },
+      //上传成功的钩子函数
+      successUpload(response, file, fileList){
+        const { data } = response
+        this.machineForm.uuid = data.uuid //将uuid赋值到表单中
+        this.$notify.success({
+          title: '成功',
+          message: '图片上传成功！'
+        })
+      },
+      //上传失败的钩子函数
+      errorUpload(error, file, fileList){
+        console.log('图片上传失败->',error)
+        this.$notify.error({
+          title: '失败',
+          message: '图片上传失败！请联系管理员'
+        })
+      },
       //自定义上传
-      async upload(param){
+      /*async upload(param){
         let formData = new FormData()
         formData.append('image',param.file) //param.file即是刚刚上传的文件
         const { data } = await uploadImage(formData)
         const uuid = data.uuid //从返回的数据中获得uuid
         this.machineForm.uuid = uuid //将uuid赋值到表单中
-      },
+      },*/
     },
     computed: {
       //从url中获取的deviceId
