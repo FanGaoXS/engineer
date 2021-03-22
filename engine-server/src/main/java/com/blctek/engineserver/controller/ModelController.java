@@ -5,7 +5,7 @@ import com.blctek.engineserver.anno.CrudLog;
 import com.blctek.engineserver.pojo.Model;
 import com.blctek.engineserver.service.ModelService;
 import com.blctek.engineserver.vo.VoModel;
-import com.blctek.engineserver.vo.VoModelList;
+import com.blctek.engineserver.vo.list.VoModelList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +43,7 @@ public class ModelController {
 
     @CrudLog("删除类型")
     @GetMapping("/deleteModel")
-    public ResultResponse deleteModel(@RequestParam("id")Integer id) {
+    public ResultResponse deleteModel(@RequestParam(required = true)Integer id) {
 //        System.out.println("id = " + id);
         Boolean result = modelService.deleteModel(id);
         return new ResultResponse()
@@ -68,7 +68,8 @@ public class ModelController {
 
     //@CrudLog("查询车辆的类型")
     @GetMapping("/selectListByVehicle")
-    public ResultResponse selectListByVehicle(Integer currentPage,Integer pageSize){
+    public ResultResponse selectListByVehicle(@RequestParam(required = false) Integer currentPage,
+                                              @RequestParam(required = false) Integer pageSize){
 //        System.out.println("currentPage = " + currentPage + ", pageSize = " + pageSize);
         String type = "车辆";
 
@@ -92,7 +93,8 @@ public class ModelController {
 
     //@CrudLog("查询机械的类型")
     @GetMapping("/selectListByMachine")
-    public ResultResponse selectListByMachine(Integer currentPage,Integer pageSize){
+    public ResultResponse selectListByMachine(@RequestParam(required = false) Integer currentPage,
+                                              @RequestParam(required = false) Integer pageSize){
 //        System.out.println("currentPage = " + currentPage + ", pageSize = " + pageSize);
         String type = "机械";
 

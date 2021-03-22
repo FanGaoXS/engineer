@@ -26,3 +26,14 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function getUserList(currentPage,pageSize) {
+  return request({
+    url: 'user-server/user/userList',
+    method: 'GET',
+    params: {
+      currentPage,
+      pageSize
+    }
+  })
+}

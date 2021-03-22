@@ -21,7 +21,7 @@
         <dependency><!--后端公用模块-->
             <groupId>com.blctek</groupId>
             <artifactId>common-server</artifactId>
-            <version>1.2.0</version>
+            <version>1.2.3</version>
         </dependency>
         <dependency><!--springboot-aop-->
             <groupId>org.springframework.boot</groupId>

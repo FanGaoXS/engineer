@@ -8,7 +8,7 @@ import com.blctek.engineserver.service.DevService;
 import com.blctek.engineserver.service.EngineerService;
 import com.blctek.engineserver.vo.VoDriver;
 import com.blctek.engineserver.vo.VoEngineer;
-import com.blctek.engineserver.vo.VoEngineerList;
+import com.blctek.engineserver.vo.list.VoEngineerList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -99,7 +99,7 @@ public class EngineerController {
 
     @CrudLog("删除车辆")
     @GetMapping("/deleteVehicle")
-    public ResultResponse deleteVehicle(@RequestParam("id")Integer id){
+    public ResultResponse deleteVehicle(@RequestParam(required = true) Integer id){
 //        System.out.println("id = " + id);
         Boolean result = engineerService.deleteEngineer(id);
         return new ResultResponse()
@@ -109,7 +109,7 @@ public class EngineerController {
 
     @CrudLog("删除机械")
     @GetMapping("/deleteMachine")
-    public ResultResponse deleteMachine(@RequestParam("id")Integer id){
+    public ResultResponse deleteMachine(@RequestParam(required = true) Integer id){
 //        System.out.println("id = " + id);
         Boolean result = engineerService.deleteEngineer(id);
         return new ResultResponse()
@@ -166,9 +166,9 @@ public class EngineerController {
     }
 
     @GetMapping("/selectListByType")
-    public ResultResponse selectListByType(@RequestParam("type")String type,
-                                           Integer currentPage,
-                                           Integer pageSize){
+    public ResultResponse selectListByType(@RequestParam(required = true) String type,
+                                           @RequestParam(required = false) Integer currentPage,
+                                           @RequestParam(required = false) Integer pageSize){
 //        System.out.println("type = " + type + ", currentPage = " + currentPage + ", pageSize = " + pageSize);
         List<Engineer> engineerList = engineerService.selectListByType(type, currentPage, pageSize);
         Engineer engineer = new Engineer();

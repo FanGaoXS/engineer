@@ -1,4 +1,4 @@
-package com.blctek.commonserver.service;
+package com.blctek.userserver.service;
 
 import com.blctek.commonserver.pojo.Logger;
 import org.springframework.stereotype.Service;
@@ -7,12 +7,11 @@ import org.springframework.stereotype.Service;
  * Created with IntelliJ IDEA.
  *
  * @Auther: 吴青珂
- * @Date: 2021/03/05/13:26
- * @Description: 日志表的业务（公用的，大多数项目都会用到）
+ * @Date: 2021/03/22/14:08
+ * @Description:
  */
 @Service
 public interface LoggerService {
-
     /**
      * 新增一条日志
      * @param logger    日志对象

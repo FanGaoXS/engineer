@@ -23,3 +23,12 @@ export function plateNumberFilter(plateNumber) {
   }
 }
 
+/**
+ * 时间过滤器
+ * @param time
+ * @returns {string}
+ */
+export function timeFilter(time){
+  return ' '+(new Date(time).toLocaleString())
+}
+

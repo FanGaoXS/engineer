@@ -1,6 +1,7 @@
-package com.blctek.engineserver.vo;
+package com.blctek.engineserver.vo.list;
 
 import com.blctek.engineserver.pojo.Driver;
+import com.blctek.engineserver.vo.VoDriver;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

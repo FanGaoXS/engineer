@@ -48,9 +48,9 @@
     <!--分页的条件sql-->
     <sql id="limitCondition">
         <if test=" currentPage!=null and currentPage!='' and pageSize!=null and pageSize!='' ">
-            <bind name="startIndex" value="pageSize*(currentPage-1)"/>
-            <bind name="endIndex" value="pageSize*currentPage"/>
-            #{startIndex},#{endIndex}
+            <bind name="offset" value="pageSize*(currentPage-1)"/>
+            <bind name="rows" value="pageSize"/>
+            #{offset},#{rows}
         </if>
     </sql>
 

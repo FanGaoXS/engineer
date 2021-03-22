@@ -155,6 +155,22 @@ export const constantRoutes = [
     ]
   },
 
+  {
+    path: '/logger',
+    component: Layout,
+    redirect: '/logger/operation',
+    // name: 'Logger',
+    // meta: { title: '日志管理', icon: 'el-icon-tickets'},
+    children: [
+      {
+        name: 'Operation',
+        path: 'operation',
+        component: () => import('@/views/logger/operation/index'),
+        meta: { title: '操作日志', icon: 'el-icon-tickets'}
+      }
+    ]
+  },
+
   { //相关下载
     path: '/download',
     component: Layout,

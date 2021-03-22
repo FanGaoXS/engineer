@@ -4,6 +4,8 @@ import com.blctek.userserver.pojo.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -28,4 +30,18 @@ public interface UserService {
      * @return  唯一的用户对象
      */
     User selectUserByUuid(String uuid);
+
+    /**
+     * 查询所有用户
+     * @return 用户集合
+     */
+    List<User> selectUserList(Integer currentPage,
+                              Integer pageSize);
+
+    /**
+     * 查询记录数
+     * @param user
+     * @return              记录数
+     */
+    Long selectTotalSize(User user);
 }

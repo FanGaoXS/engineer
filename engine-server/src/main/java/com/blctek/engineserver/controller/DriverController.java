@@ -5,7 +5,7 @@ import com.blctek.engineserver.anno.CrudLog;
 import com.blctek.engineserver.pojo.Driver;
 import com.blctek.engineserver.service.DriverService;
 import com.blctek.engineserver.vo.VoDriver;
-import com.blctek.engineserver.vo.VoDriverList;
+import com.blctek.engineserver.vo.list.VoDriverList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +44,8 @@ public class DriverController {
 
     //@CrudLog("查询驾驶员列表")
     @GetMapping("/selectList")
-    public ResultResponse selectDriver(Integer currentPage,Integer pageSize){
+    public ResultResponse selectDriver(@RequestParam(required = false) Integer currentPage,
+                                       @RequestParam(required = false) Integer pageSize){
 //        System.out.println("currentPage = " + currentPage + ", pageSize = " + pageSize);
         List<Driver> driverList = driverService.selectList(currentPage, pageSize);
         Long totalSize = driverService.selectTotalSize(new Driver());

@@ -42,7 +42,7 @@
       <el-table-column align="center" label="录入时间" width="200">
         <template slot-scope="scope">
           <i class="el-icon-time" />
-          <span>{{ scope.row.inputTime | inputTimeFilter}}</span>
+          <span>{{ scope.row.inputTime | timeFilter}}</span>
         </template>
       </el-table-column>
 
@@ -168,7 +168,8 @@
 <script>
 
 import {
-  plateNumberFilter
+  plateNumberFilter,
+  timeFilter
 } from "@/utils/global-filters";
 
 import {
@@ -201,8 +202,8 @@ export default {
       return plateNumberFilter(plateNumber); //执行globalFilters里的过滤器
     },
 
-    inputTimeFilter(inputTime){
-      return ' '+(new Date(inputTime).toLocaleString())
+    timeFilter(time){
+      return timeFilter(time)
     }
 
   },

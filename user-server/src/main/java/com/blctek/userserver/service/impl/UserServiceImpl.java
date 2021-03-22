@@ -38,4 +38,18 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectOne(user);
     }
 
+    @Override
+    public List<User> selectUserList(Integer currentPage,
+                                     Integer pageSize) {
+        User user = new User();
+        user.setCurrentPage(currentPage);
+        user.setPageSize(pageSize);
+        return userMapper.selectList(user);
+    }
+
+    @Override
+    public Long selectTotalSize(User user) {
+        return userMapper.count(user);
+    }
+
 }
