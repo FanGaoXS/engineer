@@ -9,7 +9,6 @@ import com.blctek.userserver.service.UserService;
 import com.blctek.userserver.vo.VoToken;
 import com.blctek.userserver.vo.VoLogin;
 import com.blctek.userserver.vo.VoUserInfo;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +24,6 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin("*")
-@Slf4j
 public class AuthController {
 
     @Autowired

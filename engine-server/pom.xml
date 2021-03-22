@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.blctek</groupId>
     <artifactId>engine-server</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.1</version>
     <name>engine-server</name>
     <description>工程用具数据后端</description>
     <properties>
@@ -40,6 +40,11 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.6</version>
+        </dependency>
+        <dependency><!--druid数据源-->
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.10</version>
         </dependency>
         <dependency><!--lombok-->
             <groupId>org.projectlombok</groupId>

@@ -5,6 +5,14 @@ spring:
   application:
     name: user-server
 
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      stat-view-servlet:
+        enabled: true
+        login-username: mysql
+        login-password: mysql
+
 server:
   port: 8097
 

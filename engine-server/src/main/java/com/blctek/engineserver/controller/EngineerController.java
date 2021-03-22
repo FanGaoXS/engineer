@@ -4,11 +4,13 @@ import com.blctek.commonserver.response.ResultResponse;
 import com.blctek.engineserver.anno.CrudLog;
 import com.blctek.engineserver.pojo.Driver;
 import com.blctek.engineserver.pojo.Engineer;
+import com.blctek.engineserver.service.DevService;
 import com.blctek.engineserver.service.EngineerService;
 import com.blctek.engineserver.vo.VoDriver;
 import com.blctek.engineserver.vo.VoEngineer;
 import com.blctek.engineserver.vo.VoEngineerList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -28,6 +30,8 @@ import java.util.UUID;
 public class EngineerController {
     @Autowired
     private EngineerService engineerService;
+    @Autowired
+    private DevService devService;
 
     @CrudLog("新增车辆及其驾驶员信息")
     @PostMapping("/insertVehicle")
@@ -53,10 +57,10 @@ public class EngineerController {
         engineer.setModelId(voEngineer.getModel().getId());
         engineer.setVehicleNumber(voEngineer.getVehicleNumber());
         engineer.setPlateType(voEngineer.getPlateType());
-        //HttpStatus statusCode = devService.insertDev(engineer.getDeviceId(), engineer.getVehicleNumber());
+        HttpStatus statusCode = devService.insertDev(engineer.getDeviceId(), engineer.getVehicleNumber());
         Boolean result = engineerService.insertEngineerAndDriver(driver, engineer);
         return new ResultResponse()
-                //.setCode(statusCode.value())
+                .setCode(statusCode.value())
                 .setMessage("新增车辆 "+voEngineer.getVehicleNumber())
                 .setData(result);//返回新增的结果
     }
@@ -85,10 +89,10 @@ public class EngineerController {
         engineer.setModelId(voEngineer.getModel().getId());
         engineer.setMachineNumber(voEngineer.getMachineNumber());
         engineer.setEngineNumber(voEngineer.getEngineNumber());
-        //HttpStatus statusCode = devService.insertDev(engineer.getDeviceId(), engineer.getEngineNumber());
+        HttpStatus statusCode = devService.insertDev(engineer.getDeviceId(), engineer.getEngineNumber());
         Boolean result = engineerService.insertEngineerAndDriver(driver, engineer);
         return new ResultResponse()
-                //.setCode(statusCode.value())
+                .setCode(statusCode.value())
                 .setMessage("新增机械 "+voEngineer.getEngineNumber())
                 .setData(result);//返回新增结果
     }

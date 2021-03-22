@@ -5,6 +5,16 @@ spring:
   application:
     name: engine-server
 
+  #druid数据源
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      # http:localhost:8080/druid/datasource.html
+      stat-view-servlet:
+        enabled: true
+        login-username: mysql
+        login-password: mysql
+
 server:
   port: 8096
 
