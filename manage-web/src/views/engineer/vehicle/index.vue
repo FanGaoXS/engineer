@@ -17,7 +17,7 @@
     >
       <el-table-column label="序号" align="center" width="75">
         <template slot-scope="scope">
-          {{ scope.$index+1 }}
+          {{ scope.row.id }}
         </template>
       </el-table-column>
 
@@ -85,7 +85,7 @@
       </el-table-column>
 
 
-      <el-table-column label="操作" width="250">
+      <el-table-column label="操作" width="200">
         <template slot-scope="scope">
           <el-button type="primary" size="medium" @click="handleUpdate(scope.row,scope.$index)">修改</el-button>
           <el-button type="danger" size="medium" @click="handleDelete(scope.row,scope.$index)">删除</el-button>
@@ -148,11 +148,11 @@
         </el-form-item>
 
         <el-form-item label="驾驶员姓名" >
-          <el-input :value="tempForm.driver.name"></el-input>
+          <el-input v-model="tempForm.driver.name"></el-input>
         </el-form-item>
 
         <el-form-item label="驾驶员联系方式" >
-          <el-input :value="tempForm.driver.phone"></el-input>
+          <el-input v-model="tempForm.driver.phone"></el-input>
         </el-form-item>
 
       </el-form>
@@ -217,8 +217,12 @@ export default {
         }
       ],
       tempForm: {
-        model:{},
-        driver:{}
+        model:{
+
+        },
+        driver:{
+
+        }
       },
       listQuery:{
         currentPage: 1,

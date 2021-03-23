@@ -1,7 +1,8 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-select placeholder="选择用户" v-model="listQuery.executor" clearable @change="handleCurrentChange">
+
+      <el-select placeholder="根据用户查询" v-model="listQuery.executor" clearable @change="handleListQueryChange">
         <el-option
           v-for=" item in executorOptions"
           :key="item.name"
@@ -9,7 +10,8 @@
           :value="item.name"
         ></el-option>
       </el-select>
-      <el-select placeholder="选择客户端" v-model="listQuery.client" clearable @change="handleCurrentChange">
+
+      <el-select placeholder="根据客户端查询" v-model="listQuery.client" clearable @change="handleListQueryChange" style="margin-left: 15px">
         <el-option
           v-for=" item in clientOptions"
           :key="item"
@@ -17,6 +19,7 @@
           :value="item"
         ></el-option>
       </el-select>
+
     </div>
 
     <el-table
@@ -74,7 +77,7 @@
       :total="listQuery.totalSize"
       :page-size="listQuery.pageSize"
       :current-page.sync="listQuery.currentPage"
-      @current-change="handleCurrentChange"
+      @current-change="handleListQueryChange"
       layout="total, prev, pager, next, jumper">
     </el-pagination>
   </div>
@@ -118,7 +121,7 @@
       this.fetchList(this.listQuery.executor,this.listQuery.client,this.listQuery.currentPage, this.listQuery.pageSize)
     },
     methods: {
-      handleCurrentChange(){
+      handleListQueryChange(){
         this.fetchList(this.listQuery.executor,this.listQuery.client,this.listQuery.currentPage, this.listQuery.pageSize)
       },
       async fetchList(executor,client,currentPage,pageSize) {
@@ -138,20 +141,6 @@
       fetchClientOptions(){
         this.clientOptions = [ 'manage-web', 'postman', 'upload-web', '未知' ];
       }
-    },
-    watch: {
-      /*'listQuery.executor'(newValue, oldValue) {
-        /!*console.log('new',newValue)
-        console.log('old',oldValue)*!/
-        let executor = newValue
-        this.fetchList(executor,this.listQuery.client,this.listQuery.currentPage,this.listQuery.pageSize)
-      },
-      'listQuery.client'(newValue, oldValue) {
-        /!*console.log('new',newValue)
-        console.log('old',oldValue)*!/
-        let client = newValue
-        this.fetchList(this.listQuery.executor,client,this.listQuery.currentPage,this.listQuery.pageSize)
-      }*/
     },
   }
 </script>

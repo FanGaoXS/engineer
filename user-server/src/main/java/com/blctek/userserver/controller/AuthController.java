@@ -39,12 +39,13 @@ public class AuthController {
     @PostMapping("/login")
     public ResultResponse login(@RequestBody VoLogin voLogin){
         User dbUser = userService.verify(voLogin.getUsername(), voLogin.getPassword()); //根据用户名和密码去数据中查找
+        System.out.println("dbUser = " + dbUser);
         ResultResponse resultResponse = new ResultResponse();
         if (dbUser!=null){ //用户存在
             HashMap<String, String> payloadMap = new HashMap<>();
             payloadMap.put("uuid",dbUser.getUuid());//将用户唯一标识uuid存进JWT的payload中
             payloadMap.put("name",dbUser.getName());//将用户的姓名存进JWT的payload中
-            payloadMap.put("role","developer");//将角色存进JWT的payload中
+            payloadMap.put("role",dbUser.getRole().getName());//将角色存进JWT的payload中
             payloadMap.put("username",dbUser.getUsername());//将用户的用户名存进JWT的payload中
             String token = JWTUtils.createToken(payloadMap,voLogin.getValidityDay()); //利用payload和有效期生成token
             resultResponse.setData(new VoToken(token));

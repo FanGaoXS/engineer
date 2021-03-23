@@ -6,25 +6,28 @@
     <!--select的条件sql（全有）-->
     <sql id="selectCondition">
         <if test=" id!=null and id!='' ">
-            AND id = #{id}
+            AND u.id = #{id}
         </if>
         <if test=" uuid!=null and uuid!='' ">
-            AND uuid = #{uuid}
+            AND u.uuid = #{uuid}
         </if>
         <if test=" username!=null and username!='' ">
-            AND username = #{username}
+            AND u.username = #{username}
         </if>
         <if test=" password!=null and password!='' ">
-            AND password = #{password}
+            AND u.password = #{password}
         </if>
         <if test=" name!=null and name!='' ">
-            AND name = #{name}
+            AND u.name = #{name}
         </if>
         <if test=" avatar!=null and avatar!='' ">
-            AND avatar = #{avatar}
+            AND u.avatar = #{avatar}
         </if>
         <if test=" phone!=null and phone!='' ">
-            AND phone = #{phone}
+            AND u.phone = #{phone}
+        </if>
+        <if test=" roleId!=null and roleId!='' ">
+            AND u.roleId = #{roleId}
         </if>
     </sql>
     <!--update的条件sql（除了自增主键id）-->
@@ -47,6 +50,9 @@
         <if test=" phone!=null and phone!='' ">
             phone = #{phone},
         </if>
+        <if test=" roleId!=null and roleId!='' ">
+            roleId = #{roleId},
+        </if>
     </sql>
     <!--分页的条件sql（当前页，每页记录数）-->
     <sql id="limitCondition">
@@ -56,15 +62,33 @@
             #{offset},#{rows}
         </if>
     </sql>
+    <!--user表的别名-->
+    <sql id="userAs">
+        u.id                AS uId,
+        u.uuid              AS uUuid,
+        u.username          AS uUsername,
+        u.password          AS uPassword,
+        u.name              AS uName,
+        u.avatar            AS uAvatar,
+        u.phone             AS uPhone,
+        u.roleId            AS uRoleId
+    </sql>
     <!--返回的结果集-->
     <resultMap id="userMap" type="com.blctek.userserver.pojo.User">
-        <id column="id" property="id"/>
-        <result column="uuid" property="uuid"/>
-        <result column="username" property="username"/>
-        <result column="password" property="password"/>
-        <result column="name" property="name"/>
-        <result column="avatar" property="avatar"/>
-        <result column="phone" property="phone"/>
+        <id column="uId" property="id"/>
+        <result column="uUuid" property="uuid"/>
+        <result column="uUsername" property="username"/>
+        <result column="uPassword" property="password"/>
+        <result column="uName" property="name"/>
+        <result column="uAvatar" property="avatar"/>
+        <result column="uPhone" property="phone"/>
+        <result column="uRoleId" property="roleId"/>
+        <association property="role" javaType="com.blctek.userserver.pojo.Role">
+            <id column="rId" property="id"/>
+            <result column="rName" property="name"/>
+            <result column="rChineseName" property="chineseName"/>
+            <result column="rDescription" property="description"/>
+        </association>
     </resultMap>
     <!--新增一条-->
     <insert id="insertOne"
@@ -73,9 +97,9 @@
             parameterType="com.blctek.userserver.pojo.User">
         INSERT INTO
             user
-            (uuid,username,password,name,avatar,phone)
+            (uuid,username,password,name,avatar,phone,roleId)
         VALUES
-            (#{uuid},#{username},#{password},#{name},#{avatar},#{phone})
+            (#{uuid},#{username},#{password},#{name},#{avatar},#{phone},#{roleId})
     </insert>
     <!--删除一条-->
     <delete id="deleteOne"
@@ -98,12 +122,16 @@
             parameterType="com.blctek.userserver.pojo.User"
             resultMap="userMap">
         SELECT
-            *
+            <include refid="userAs"></include>,
+            <include refid="com.blctek.userserver.mapper.RoleMapper.roleAs"></include>
         FROM
-            user
+            user u
+            JOIN role r on u.roleId = r.id
         <trim prefix="WHERE" prefixOverrides="AND">
             <include refid="selectCondition"></include>
         </trim>
+        ORDER BY
+            u.id
         <trim prefix="LIMIT">
             <include refid="limitCondition"></include>
         </trim>
@@ -113,9 +141,11 @@
             parameterType="com.blctek.userserver.pojo.User"
             resultMap="userMap">
         SELECT
-            *
+            <include refid="userAs"></include>,
+            <include refid="com.blctek.userserver.mapper.RoleMapper.roleAs"></include>
         FROM
-            user
+            user u
+            JOIN role r on u.roleId = r.id
         <trim prefix="WHERE" prefixOverrides="AND">
             <include refid="selectCondition"></include>
         </trim>
@@ -125,9 +155,9 @@
             parameterType="com.blctek.userserver.pojo.User"
             resultType="long">
         SELECT
-            count(id)
+            count(u.id)
         FROM
-            user
+            user u
         <trim prefix="WHERE" prefixOverrides="AND">
             <include refid="selectCondition"></include>
         </trim>

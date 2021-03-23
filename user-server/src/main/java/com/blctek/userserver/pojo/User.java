@@ -55,4 +55,11 @@ public class User extends BasePojo {
      */
     private String phone;
 
+    /**
+     * 所属角色编号
+     */
+    private Integer roleId;
+
+    private Role role;
+
 }

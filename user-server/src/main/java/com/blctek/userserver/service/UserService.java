@@ -1,6 +1,7 @@
 package com.blctek.userserver.service;
 
 import com.blctek.userserver.pojo.User;
+import com.blctek.userserver.vo.VoUser;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
@@ -31,12 +32,16 @@ public interface UserService {
      */
     User selectUserByUuid(String uuid);
 
-    /**
-     * 查询所有用户
-     * @return 用户集合
-     */
-    List<User> selectUserList(Integer currentPage,
-                              Integer pageSize);
+    Boolean insertUser(VoUser voUser);
+
+    Boolean deleteUser(Integer id);
+
+    Boolean updateUser(VoUser voUser);
+
+
+    List<VoUser> selectUserListCondition(Integer roleId,
+                                         Integer currentPage,
+                                         Integer pageSize);
 
     /**
      * 查询记录数

@@ -69,6 +69,7 @@
     <el-dialog
       :title="titleMap[dialogType]"
       :visible.sync="dialogFormVisible"
+      @closed="dialogClose"
       width="35%">
       <el-form :model="tempForm" label-width="80px" :rules="rules" ref="dialogForm">
 
@@ -82,7 +83,8 @@
             v-model="tempForm.description"
             maxlength="200"
             show-word-limit
-            rows="8"></el-input>
+            rows="8">
+          </el-input>
         </el-form-item>
 
 
@@ -93,6 +95,7 @@
           </el-radio-group>
         </el-form-item>
       </el-form>
+
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button
@@ -158,6 +161,10 @@ export default {
     this.fetchList(this.listQuery.currentPage,this.listQuery.pageSize)
   },
   methods: {
+    dialogClose(){
+      this.resetTemp()//对话框关闭时清空对话框表单
+      this.$refs['dialogForm'].clearValidate() //清空对话框的验证
+    },
     handleCurrentChange(){
       this.fetchList(this.listQuery.currentPage,this.listQuery.pageSize)
     },
@@ -174,9 +181,9 @@ export default {
     // 清空临时表单
     resetTemp(){
       this.tempForm = {
-        id: 0,
-        name: '',
-        description: '',
+        id: undefined,
+        name: undefined,
+        description: undefined,
         type: '车辆'
       }
     },

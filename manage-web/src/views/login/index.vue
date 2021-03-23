@@ -85,8 +85,12 @@ export default {
         validityDay: 7
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [
+          { required: true, trigger: 'blur', validator: validateUsername }
+        ],
+        password: [
+          { required: true, trigger: 'blur', validator: validatePassword }
+        ]
       },
       loading: false,
       passwordType: 'password',
@@ -123,7 +127,7 @@ export default {
             this.loading = false
           })
         } else {
-          console.logger('用户名或者密码不符合规则！')
+          console.log('用户名或者密码不符合规则！')
           return false
         }
       })

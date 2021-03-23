@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blctek.userserver.mapper.RoleMapper">
+    <!--select的条件sql（全有）-->
+    <sql id="selectCondition">
+        <if test=" id!=null and id!='' ">
+            AND id = #{id}
+        </if>
+        <if test=" name!=null and name!='' ">
+            AND name = #{name}
+        </if>
+        <if test=" chineseName!=null and chineseName!='' ">
+            AND chineseName = #{chineseName}
+        </if>
+        <if test=" description!=null and description!='' ">
+            AND description = #{description}
+        </if>
+    </sql>
+    <!--update的条件sql（除了自增主键id）-->
+    <sql id="updateCondition">
+        <if test=" name!=null and name!='' ">
+            name = #{name},
+        </if>
+        <if test=" chineseName!=null and chineseName!='' ">
+            chineseName = #{chineseName},
+        </if>
+        <if test=" description!=null and description!='' ">
+            description = #{description},
+        </if>
+    </sql>
+    <!--分页的条件sql（当前页，每页记录数）-->
+    <sql id="limitCondition">
+        <if test=" currentPage!=null and currentPage!='' and pageSize!=null and pageSize!='' ">
+            <bind name="offset" value="pageSize*(currentPage-1)"/>
+            <bind name="rows" value="pageSize"/>
+            #{offset},#{rows}
+        </if>
+    </sql>
+    <!--role表的别名-->
+    <sql id="roleAs">
+        r.id                AS rId,
+        r.name              AS rName,
+        r.chineseName       AS rChineseName,
+        r.description       AS rDescription
+    </sql>
+    <!--返回的结果集-->
+    <resultMap id="RoleMap" type="com.blctek.userserver.pojo.Role">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="chineseName" property="chineseName"/>
+        <result column="description" property="description"/>
+    </resultMap>
+    <!--新增一条记录-->
+    <insert id="insertOne"
+            keyProperty="id"
+            useGeneratedKeys="true"
+            parameterType="com.blctek.userserver.pojo.Role">
+        INSERT INTO
+            role
+            (name,chineseName,description)
+        VALUES
+            (#{name},#{chineseName},#{description})
+    </insert>
+    <!--删除一条记录-->
+    <delete id="deleteOne"
+            parameterType="com.blctek.userserver.pojo.Role">
+        DELETE FROM
+            role
+        WHERE
+            id = #{id}
+    </delete>
+    <!--修改一条记录（根据id主键）-->
+    <update id="updateOne"
+            parameterType="com.blctek.userserver.pojo.Role">
+        UPDATE
+            role
+        <trim prefix="SET" suffixOverrides=",">
+            <include refid="updateCondition"></include>
+        </trim>
+        WHERE
+            id = #{id}
+    </update>
+    <!--查询所有（可分页，可单条件，可多条件）-->
+    <select id="selectList"
+            parameterType="com.blctek.userserver.pojo.Role"
+            resultMap="RoleMap">
+        SELECT
+            *
+        FROM
+            role
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="selectCondition"></include>
+        </trim>
+        ORDER BY
+            id
+        <trim prefix="LIMIT">
+            <include refid="limitCondition"></include>
+        </trim>
+    </select>
+    <!--查询一条（可单条件，可多条件）-->
+    <select id="selectOne"
+            parameterType="com.blctek.userserver.pojo.Role"
+            resultMap="RoleMap">
+        SELECT
+            *
+        FROM
+            role
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="selectCondition"></include>
+        </trim>
+    </select>
+    <!--根据主键id（效率高）查询记录数（可单条件，可多条件）-->
+    <select id="count"
+            parameterType="com.blctek.userserver.pojo.Role"
+            resultType="long">
+        SELECT
+            count(id)
+        FROM
+            role
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="selectCondition"></include>
+        </trim>
+    </select>
+</mapper>

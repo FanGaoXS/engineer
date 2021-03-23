@@ -156,6 +156,28 @@ export const constantRoutes = [
   },
 
   {
+    path: '/permission',
+    component: Layout,
+    redirect: '/permission/user',
+    name: 'Permission',
+    meta: { title: '权限管理', icon: 'el-icon-s-check'},
+    children: [
+      {
+        name: 'User',
+        path: 'user',
+        component: () => import('@/views/permission/user'),
+        meta: { title: '用户管理'}
+      },
+      {
+        name: 'Role',
+        path: 'role',
+        component: () => import('@/views/permission/role'),
+        meta: { title: '角色管理'}
+      }
+    ]
+  },
+
+  {
     path: '/logger',
     component: Layout,
     redirect: '/logger/operation',
