@@ -39,7 +39,7 @@ public interface LoggerMapper {
     Integer updateOne(Logger logger);
 
     /**
-     * 查询日志（可分页，可单条件查询，可多条件）
+     * 根据时间倒序（最近）查询日志（可分页，可单条件查询，可多条件）
      * @return  日志集合
      */
     List<Logger> selectList(Logger logger);

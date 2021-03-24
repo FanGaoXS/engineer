@@ -1,6 +1,7 @@
 package com.blctek.engineserver.service;
 
 import com.blctek.engineserver.pojo.Model;
+import com.blctek.engineserver.vo.VoModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,9 +43,9 @@ public interface ModelService {
      * @param pageSize      每页记录数
      * @return
      */
-    List<Model> selectModelByType(String type,
-                                  Integer currentPage,
-                                  Integer pageSize);
+    List<VoModel> selectModelByType(String type,
+                                    Integer currentPage,
+                                    Integer pageSize);
 
     /**
      * 根据条件查询记录数

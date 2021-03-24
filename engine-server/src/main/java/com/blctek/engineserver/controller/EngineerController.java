@@ -1,6 +1,7 @@
 package com.blctek.engineserver.controller;
 
 import com.blctek.commonserver.response.ResultResponse;
+import com.blctek.commonserver.vo.VoList;
 import com.blctek.engineserver.anno.CrudLog;
 import com.blctek.engineserver.pojo.Driver;
 import com.blctek.engineserver.pojo.Engineer;
@@ -8,7 +9,6 @@ import com.blctek.engineserver.service.DevService;
 import com.blctek.engineserver.service.EngineerService;
 import com.blctek.engineserver.vo.VoDriver;
 import com.blctek.engineserver.vo.VoEngineer;
-import com.blctek.engineserver.vo.list.VoEngineerList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -170,17 +170,17 @@ public class EngineerController {
                                            @RequestParam(required = false) Integer currentPage,
                                            @RequestParam(required = false) Integer pageSize){
 //        System.out.println("type = " + type + ", currentPage = " + currentPage + ", pageSize = " + pageSize);
-        List<Engineer> engineerList = engineerService.selectListByType(type, currentPage, pageSize);
+        List<VoEngineer> voEngineerList = engineerService.selectListByType(type, currentPage, pageSize);
         Engineer engineer = new Engineer();
         engineer.setType(type);
         Long totalSize = engineerService.selectTotalSize(engineer);//查询出该type下的记录数
-        VoEngineerList voEngineerList = new VoEngineerList();
-        voEngineerList.setItems(engineerList);
-        voEngineerList.setTotalSize(totalSize);
-        voEngineerList.setPageSize(pageSize);
-        voEngineerList.setCurrentPage(currentPage);
+        VoList<VoEngineer> voList = new VoList<VoEngineer>();
+        voList.setItems(voEngineerList);
+        voList.setPageSize(pageSize);
+        voList.setCurrentPage(currentPage);
+        voList.setTotalSize(totalSize);
         return new ResultResponse()
-                .setData(voEngineerList)
+                .setData(voList)
                 .setMessage("查询 "+type+" 列表");
     }
 

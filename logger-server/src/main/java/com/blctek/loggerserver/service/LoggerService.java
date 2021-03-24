@@ -1,6 +1,7 @@
 package com.blctek.loggerserver.service;
 
 import com.blctek.commonserver.pojo.Logger;
+import com.blctek.loggerserver.vo.VoLogger;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,10 +32,10 @@ public interface LoggerService {
      * @param pageSize                  每页记录数
      * @return                          日志集合
      */
-    List<Logger> selectListByCondition(String executor,
-                                       String client,
-                                       Integer currentPage,
-                                       Integer pageSize);
+    List<VoLogger> selectListByCondition(String executor,
+                                         String client,
+                                         Integer currentPage,
+                                         Integer pageSize);
 
     /**
      * 返回记录数

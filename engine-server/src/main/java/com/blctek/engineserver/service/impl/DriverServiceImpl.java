@@ -3,9 +3,11 @@ package com.blctek.engineserver.service.impl;
 import com.blctek.engineserver.mapper.DriverMapper;
 import com.blctek.engineserver.pojo.Driver;
 import com.blctek.engineserver.service.DriverService;
+import com.blctek.engineserver.vo.VoDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,11 +30,14 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public List<Driver> selectList(Integer currentPage, Integer pageSize) {
+    public List<VoDriver> selectList(Integer currentPage, Integer pageSize) {
         Driver driver = new Driver();
         driver.setPageSize(pageSize);
         driver.setCurrentPage(currentPage);
-        return driverMapper.selectList(driver);
+        List<Driver> driverList = driverMapper.selectList(driver);
+        ArrayList<VoDriver> voDriverList = new ArrayList<>();
+        driverList.forEach(driver1 -> voDriverList.add(new VoDriver(driver1)));
+        return voDriverList;
     }
 
     @Override

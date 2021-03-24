@@ -27,7 +27,7 @@ import java.util.Date;
 @Component
 @Slf4j
 @Aspect
-public class LoggerAspect {
+public class CrudAspect {
     @Autowired
     private LoggerService loggerService;
     /**

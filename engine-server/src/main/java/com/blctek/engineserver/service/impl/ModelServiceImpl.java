@@ -3,9 +3,11 @@ package com.blctek.engineserver.service.impl;
 import com.blctek.engineserver.mapper.ModelMapper;
 import com.blctek.engineserver.pojo.Model;
 import com.blctek.engineserver.service.ModelService;
+import com.blctek.engineserver.vo.VoModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,12 +39,15 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
-    public List<Model> selectModelByType(String type, Integer currentPage, Integer pageSize) {
+    public List<VoModel> selectModelByType(String type, Integer currentPage, Integer pageSize) {
         Model model = new Model();
         model.setType(type);
         model.setCurrentPage(currentPage);
         model.setPageSize(pageSize);
-        return modelMapper.selectList(model);
+        List<Model> modelList = modelMapper.selectList(model);
+        ArrayList<VoModel> voModelList = new ArrayList<>();
+        modelList.forEach(model1 -> voModelList.add(new VoModel(model1)));
+        return voModelList;
     }
 
     @Override

@@ -104,6 +104,12 @@
 
       </el-form>
 
+      <div v-show="dialogType==='新增'" style="margin-top: 30px">
+        <el-divider content-position="left">
+          初始登录密码为：用户名+123
+        </el-divider>
+      </div>
+
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取消</el-button>
         <el-button
@@ -180,6 +186,11 @@
         dialogFormVisible: false,
         dialogType: '',
         tempForm: {
+          id: undefined,
+          username: undefined,
+          name: undefined,
+          phone: undefined,
+          roleId: undefined
         },
         listLoading: false,
         listQuery:{
@@ -216,6 +227,7 @@
         this.dialogType = '新增'
       },
       handleUpdate(row,index){
+        // console.log(row)
         this.dialogFormVisible = true
         this.dialogType = '修改'
         this.tempForm = {
@@ -263,7 +275,7 @@
               this.dialogFormVisible = false
               this.buttonLoading = false
               this.fetchList(this.listQuery.roleId,this.listQuery.currentPage,this.listQuery.pageSize);
-            })
+            }).catch()
           }
         })
       },

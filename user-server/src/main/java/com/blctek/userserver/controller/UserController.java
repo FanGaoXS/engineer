@@ -2,6 +2,7 @@ package com.blctek.userserver.controller;
 
 import com.blctek.commonserver.response.ResultResponse;
 import com.blctek.commonserver.vo.VoList;
+import com.blctek.userserver.anno.CrudLog;
 import com.blctek.userserver.pojo.User;
 import com.blctek.userserver.service.UserService;
 import com.blctek.userserver.vo.VoUser;
@@ -24,9 +25,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @CrudLog("新增用户")
     @PostMapping("/insertUser")
     public ResultResponse insertUser(@RequestBody VoUser voUser){
-        System.out.println("voUser = " + voUser);
+//        System.out.println("voUser = " + voUser);
         Object data = false;
         String message;
         int code = 20000;
@@ -45,9 +47,10 @@ public class UserController {
                 .setData(data);
     }
 
+    @CrudLog("删除用户")
     @GetMapping("/deleteUser")
     public ResultResponse deleteUser(@RequestParam(required = true)Integer id){
-        System.out.println("id = " + id);
+//        System.out.println("id = " + id);
         Object data = false;
         String message;
         int code = 20000;
@@ -66,9 +69,10 @@ public class UserController {
                 .setData(data);
     }
 
+    @CrudLog("修改用户")
     @PostMapping("/updateUser")
     public ResultResponse updateUser(@RequestBody VoUser voUser){
-        System.out.println("voUser = " + voUser);
+//        System.out.println("voUser = " + voUser);
         Object data = false;
         String message;
         int code = 20000;

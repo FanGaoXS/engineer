@@ -1,11 +1,11 @@
 package com.blctek.engineserver.controller;
 
 import com.blctek.commonserver.response.ResultResponse;
+import com.blctek.commonserver.vo.VoList;
 import com.blctek.engineserver.anno.CrudLog;
 import com.blctek.engineserver.pojo.Model;
 import com.blctek.engineserver.service.ModelService;
 import com.blctek.engineserver.vo.VoModel;
-import com.blctek.engineserver.vo.list.VoModelList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -79,14 +79,15 @@ public class ModelController {
         model.setPageSize(pageSize);
         Long totalSize = modelService.selectTotalSize(model);//查询记录数
 
-        List<Model> modelList = modelService.selectModelByType(type, currentPage, pageSize);//查询list
+        List<VoModel> voModelList = modelService.selectModelByType(type, currentPage, pageSize);
 
-        VoModelList voModelList = new VoModelList(modelList);
-        voModelList.setCurrentPage(currentPage);
-        voModelList.setPageSize(pageSize);
-        voModelList.setTotalSize(totalSize);
+        VoList<VoModel> voList = new VoList<>();
+        voList.setItems(voModelList);
+        voList.setPageSize(pageSize);
+        voList.setCurrentPage(currentPage);
+        voList.setTotalSize(totalSize);
         return new ResultResponse()
-                .setData(voModelList)
+                .setData(voList)
                 .setMessage("查询车辆的类型");
 
     }
@@ -104,15 +105,16 @@ public class ModelController {
         model.setPageSize(pageSize);
         Long totalSize = modelService.selectTotalSize(model);//查询记录数
 
-        List<Model> modelList = modelService.selectModelByType(type, currentPage, pageSize);//查询list
+        List<VoModel> voModelList = modelService.selectModelByType(type, currentPage, pageSize);
 
-        VoModelList voModelList = new VoModelList(modelList);
-        voModelList.setCurrentPage(currentPage);
-        voModelList.setPageSize(pageSize);
-        voModelList.setTotalSize(totalSize);
+        VoList<VoModel> voList = new VoList<>();
+        voList.setItems(voModelList);
+        voList.setPageSize(pageSize);
+        voList.setCurrentPage(currentPage);
+        voList.setTotalSize(totalSize);
 
         return new ResultResponse()
-                .setData(voModelList)
+                .setData(voList)
                 .setMessage("查询机械的类型");
     }
 

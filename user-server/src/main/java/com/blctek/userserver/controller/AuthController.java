@@ -39,7 +39,6 @@ public class AuthController {
     @PostMapping("/login")
     public ResultResponse login(@RequestBody VoLogin voLogin){
         User dbUser = userService.verify(voLogin.getUsername(), voLogin.getPassword()); //根据用户名和密码去数据中查找
-        System.out.println("dbUser = " + dbUser);
         ResultResponse resultResponse = new ResultResponse();
         if (dbUser!=null){ //用户存在
             HashMap<String, String> payloadMap = new HashMap<>();

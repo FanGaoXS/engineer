@@ -3,9 +3,11 @@ package com.blctek.loggerserver.service.impl;
 import com.blctek.commonserver.mapper.LoggerMapper;
 import com.blctek.commonserver.pojo.Logger;
 import com.blctek.loggerserver.service.LoggerService;
+import com.blctek.loggerserver.vo.VoLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +30,7 @@ public class LoggerServiceImpl implements LoggerService {
     }
 
     @Override
-    public List<Logger> selectListByCondition(String executor,
+    public List<VoLogger> selectListByCondition(String executor,
                                               String client,
                                               Integer currentPage,
                                               Integer pageSize) {
@@ -37,7 +39,10 @@ public class LoggerServiceImpl implements LoggerService {
         logger.setClient(client);
         logger.setCurrentPage(currentPage);
         logger.setPageSize(pageSize);
-        return loggerMapper.selectList(logger);
+        List<Logger> loggerList = loggerMapper.selectList(logger);
+        ArrayList<VoLogger> voLoggerList = new ArrayList<>();
+        loggerList.forEach(logger1 -> voLoggerList.add(new VoLogger(logger1)));
+        return voLoggerList;
     }
 
     @Override

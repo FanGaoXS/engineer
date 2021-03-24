@@ -5,6 +5,7 @@ import com.blctek.engineserver.mapper.EngineerMapper;
 import com.blctek.engineserver.pojo.Driver;
 import com.blctek.engineserver.pojo.Engineer;
 import com.blctek.engineserver.service.EngineerService;
+import com.blctek.engineserver.vo.VoEngineer;
 import org.apache.ibatis.transaction.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -76,12 +78,15 @@ public class EngineerServiceImpl implements EngineerService {
     }
 
     @Override
-    public List<Engineer> selectListByType(String type, Integer currentPage, Integer pageSize) {
+    public List<VoEngineer> selectListByType(String type, Integer currentPage, Integer pageSize) {
         Engineer engineer = new Engineer();
         engineer.setType(type);
         engineer.setCurrentPage(currentPage);
         engineer.setPageSize(pageSize);
-        return engineerMapper.selectList(engineer);
+        List<Engineer> engineerList = engineerMapper.selectList(engineer);
+        ArrayList<VoEngineer> voEngineerList = new ArrayList<>();
+        engineerList.forEach(engineer1 -> voEngineerList.add(new VoEngineer(engineer1)));
+        return voEngineerList;
     }
 
     @Override

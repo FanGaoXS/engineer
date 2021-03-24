@@ -2,6 +2,7 @@ package com.blctek.engineserver.service;
 
 import com.blctek.engineserver.pojo.Driver;
 import com.blctek.engineserver.pojo.Engineer;
+import com.blctek.engineserver.vo.VoEngineer;
 import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.stereotype.Service;
 
@@ -46,9 +47,9 @@ public interface EngineerService {
      * @param pageSize              每页记录数
      * @return                      工程用具集合
      */
-    List<Engineer> selectListByType(String type,
-                                    Integer currentPage,
-                                    Integer pageSize);
+    List<VoEngineer> selectListByType(String type,
+                                      Integer currentPage,
+                                      Integer pageSize);
 
     /**
      * 根据车牌号来查询数据库中是否存在该车辆

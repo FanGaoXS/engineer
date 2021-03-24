@@ -2,6 +2,7 @@ package com.blctek.userserver.controller;
 
 import com.blctek.commonserver.response.ResultResponse;
 import com.blctek.commonserver.vo.VoList;
+import com.blctek.userserver.anno.CrudLog;
 import com.blctek.userserver.service.RoleService;
 import com.blctek.userserver.vo.VoRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ import java.util.List;
 public class RoleController {
     @Autowired
     private RoleService roleService;
+
+    @CrudLog("新增角色")
     @PostMapping("/insertRole")
     public ResultResponse insertRole(@RequestBody VoRole voRole){
 //        System.out.println("voRole = " + voRole);
@@ -30,6 +33,8 @@ public class RoleController {
                 .setData(result)
                 .setMessage("新增角色 "+voRole.getChineseName());
     }
+
+    @CrudLog("删除角色")
     @GetMapping("/deleteRole")
     public ResultResponse deleteRole(@RequestParam(required = true)Integer id){
 //        System.out.println("id = " + id);
@@ -38,6 +43,8 @@ public class RoleController {
                 .setData(result)
                 .setMessage("删除角色 ");
     }
+
+    @CrudLog("修改角色")
     @PostMapping("/updateRole")
     public ResultResponse updateRole(@RequestBody VoRole voRole){
 //        System.out.println("voRole = " + voRole);

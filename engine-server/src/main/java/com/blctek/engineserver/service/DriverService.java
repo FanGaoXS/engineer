@@ -1,6 +1,7 @@
 package com.blctek.engineserver.service;
 
 import com.blctek.engineserver.pojo.Driver;
+import com.blctek.engineserver.vo.VoDriver;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,8 +29,8 @@ public interface DriverService {
      * @param pageSize      每页记录数
      * @return              司机列表集合
      */
-    List<Driver> selectList(Integer currentPage,
-                            Integer pageSize);
+    List<VoDriver> selectList(Integer currentPage,
+                              Integer pageSize);
 
     /**
      * 查询驾驶员列表的记录数（可单条件，可多条件）

@@ -21,7 +21,7 @@ import java.util.Map;
  */
 @RestController
 @CrossOrigin("*")
-@RequestMapping("speed")
+@RequestMapping("/speed")
 @Slf4j
 public class SpeedController {
     @PostMapping("/uploadTest")

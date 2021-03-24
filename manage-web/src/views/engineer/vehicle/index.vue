@@ -249,11 +249,26 @@ export default {
       this.fetchList(this.listQuery.currentPage,this.listQuery.pageSize)
     },
 
-    handleUpdate(row){
-      /*console.logger('handleUpdate',row)
-      console.logger('handleUpdate',index)*/
+    handleUpdate(row,index){
+      /*console.log('handleUpdate',row)
+      console.log('handleUpdate',index)*/
       this.dialogFormVisible = true;
-      this.tempForm = Object.assign({}, row)
+      this.tempForm = {
+        id: row.id,
+        deviceId: row.deviceId,
+        type: row.type,
+        plateType: row.plateType,
+        vehicleNumber: row.vehicleNumber,
+        driver: {
+          id: row.driver.id,
+          name: row.driver.name,
+          phone: row.driver.phone
+        },
+        model: {
+          id: row.model.id,
+          name: row.model.name
+        }
+      }
     },
 
     handleDelete(row,index){
