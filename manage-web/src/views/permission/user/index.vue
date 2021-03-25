@@ -19,37 +19,37 @@
       fit
       highlight-current-row
     >
-      <el-table-column label="序号" align="center" width="100">
+      <el-table-column label="序号" align="center" width="150">
         <template slot-scope="scope">
           {{ scope.row.id }}
         </template>
       </el-table-column>
 
-      <el-table-column label="姓名" align="center" width="200">
+      <el-table-column label="姓名" align="center">
         <template slot-scope="scope">
           {{ scope.row.name }}
         </template>
       </el-table-column>
 
-      <el-table-column label="用户名" align="center" width="200">
+      <el-table-column label="用户名" align="center">
         <template slot-scope="scope">
           {{ scope.row.username }}
         </template>
       </el-table-column>
 
-      <el-table-column label="联系方式" align="center" width="200">
+      <el-table-column label="联系方式" align="center" width="300">
         <template slot-scope="scope">
           {{ scope.row.phone }}
         </template>
       </el-table-column>
 
-      <el-table-column label="角色" align="center" width="200">
+      <el-table-column label="角色" align="center" width="250">
         <template slot-scope="scope">
           {{ scope.row.role.chineseName }}
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" align="center" width="250">
+      <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <el-button type="primary" size="medium" @click="handleUpdate(scope.row,scope.$index)" >修改</el-button>
           <el-button type="danger" size="medium" @click="handleDelete(scope.row,scope.$index)">删除</el-button>

@@ -32,12 +32,19 @@ public interface UserService {
      */
     User selectUserByUuid(String uuid);
 
+    User selectUserByIdAndUuid(Integer id,
+                               String uuid);
+
     Boolean insertUser(VoUser voUser);
 
     Boolean deleteUser(Integer id);
 
     Boolean updateUser(VoUser voUser);
 
+    Boolean updateUserInfo(Integer id,
+                           String password,
+                           String name,
+                           String phone);
 
     List<VoUser> selectUserListCondition(Integer roleId,
                                          Integer currentPage,

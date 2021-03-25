@@ -17,25 +17,25 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="角色名" align="center" width="150">
+      <el-table-column label="角色名" align="center">
         <template slot-scope="scope">
           {{ scope.row.name }}
         </template>
       </el-table-column>
 
-      <el-table-column label="角色中文名" align="center" width="200">
+      <el-table-column label="角色中文名" align="center">
         <template slot-scope="scope">
           {{ scope.row.chineseName }}
         </template>
       </el-table-column>
 
-      <el-table-column label="角色描述" align="center" width="250">
+      <el-table-column label="角色描述" align="center" width="300">
         <template slot-scope="scope">
           {{ scope.row.description }}
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" align="center" width="250">
+      <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <el-button type="primary" size="medium" @click="handleUpdate(scope.row,scope.$index)">修改</el-button>
           <el-button type="danger" size="medium" @click="handleDelete(scope.row,scope.$index)">删除</el-button>

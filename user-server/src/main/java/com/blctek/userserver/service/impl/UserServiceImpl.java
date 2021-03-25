@@ -42,6 +42,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User selectUserByIdAndUuid(Integer id, String uuid) {
+        User user = new User();
+        user.setId(id);
+        user.setUuid(uuid);
+        return userMapper.selectOne(user);
+    }
+
+    @Override
     public Boolean insertUser(VoUser voUser) {
         User user = new User();
         user.setUuid(UUID.randomUUID().toString());
@@ -67,6 +75,16 @@ public class UserServiceImpl implements UserService {
         user.setName(voUser.getName());           //修改名字
         user.setPhone(voUser.getPhone());         //修改用户名
         user.setRoleId(voUser.getRole().getId()); //修改角色
+        return userMapper.updateOne(user) > 0;
+    }
+
+    @Override
+    public Boolean updateUserInfo(Integer id, String password, String name, String phone) {
+        User user = new User();
+        user.setId(id);
+        user.setPassword(password);
+        user.setName(name);
+        user.setPhone(phone);
         return userMapper.updateOne(user) > 0;
     }
 

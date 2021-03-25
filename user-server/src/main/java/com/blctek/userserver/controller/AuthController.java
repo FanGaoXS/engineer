@@ -4,10 +4,12 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.blctek.commonserver.response.ResultResponse;
 import com.blctek.commonserver.utils.JWTUtils;
 import com.blctek.userserver.anno.AuthLog;
+import com.blctek.userserver.mapper.UserMapper;
 import com.blctek.userserver.pojo.User;
 import com.blctek.userserver.service.UserService;
 import com.blctek.userserver.vo.VoToken;
 import com.blctek.userserver.vo.VoLogin;
+import com.blctek.userserver.vo.VoUser;
 import com.blctek.userserver.vo.VoUserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -113,5 +115,41 @@ public class AuthController {
             resultResponse.setCode(20001);
         }
         return resultResponse;
+    }
+
+    @PostMapping("/update")
+    public ResultResponse update(@RequestParam(required = true)Integer id,
+                                 @RequestParam(required = true)String uuid,
+                                 @RequestParam(required = false)String password,
+                                 @RequestParam(required = false)String name,
+                                 @RequestParam(required = false)String phone){
+        Object data = false;
+        String message = "";
+        int code = 20000;
+        User dbUser = userService.selectUserByIdAndUuid(id, uuid);
+        if (dbUser!=null){ //如果数据库中存在在用户
+            if (dbUser.getPassword().equals(password)){ //如果将要修改的密码和原数据库密码一致
+                data = false;
+                message = "新密码与原密码相同";
+            } else { //如果新密码与原密码不同或者不修改密码
+                try { //捕获修改用户的异常
+                    data = userService.updateUserInfo(id, password, name, phone);
+                    message = "修改个人信息 ";
+                } catch (Exception e){
+                    e.printStackTrace();
+                    message = e.getMessage().substring(0,150);
+                    data = false;
+                    code = 20001;
+                }
+            }
+        } else { //数据库中不存在该用户
+            code = 20001;
+            message = "数据库中不存在该用户 ";
+            data = false;
+        }
+        return new ResultResponse()
+                .setCode(code)
+                .setMessage(message)
+                .setData(data);
     }
 }

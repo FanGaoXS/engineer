@@ -55,6 +55,18 @@ export const constantRoutes = [
     }]
   },
 
+  {
+    path: '/info',
+    component: Layout,
+    redirect: '/info/center',
+    children: [{
+      path: 'center',
+      name: 'Center',
+      component: () => import('@/views/info/index'),
+      meta: { title: '个人中心', icon: 'el-icon-user'}
+    }]
+  },
+
   { //工程监理
     path: '/supervisor',
     component: Layout,
