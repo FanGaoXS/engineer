@@ -1,10 +1,13 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout } from '@/api/user/auth'
+import { getInfo } from "@/api/user/profile";
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
   return {
     token: getToken(), //token（存在cookies中）
+    id: undefined,
+    role: '',
     name: '',          //名字
     avatar: ''         //头像
   }
@@ -12,10 +15,19 @@ const getDefaultState = () => {
 
 const state = getDefaultState()
 
+//同步方法
 const mutations = {
   // 重置STATE
   RESET_STATE: (state) => {
     Object.assign(state, getDefaultState())
+  },
+  // 设置id
+  SET_ID: (state, id) => {
+    state.id = id
+  },
+  // 设置角色
+  SET_ROLE: (state, role) => {
+    state.role = role
   },
   // 设置token
   SET_TOKEN: (state, token) => {
@@ -55,9 +67,11 @@ const actions = {
         if (!data) { //没有data
           return reject('认证失败，请重新登录！')
         }
-        const { name, avatar } = data
+        const { name, avatar,id, role } = data
+        commit('SET_ID', id) //将id放入store的state中
         commit('SET_NAME', name) //将name放入store的state中
         commit('SET_AVATAR', avatar) //将avatar放入store的state中
+        commit('SET_ROLE', role.name) //将role放入store的state中
         console.log(state.name,'登录')
         resolve(data)
       }).catch(error => {

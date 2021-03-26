@@ -24,7 +24,7 @@ import java.util.Date;
  *
  * @Auther: 吴青珂
  * @Date: 2021/03/12/16:14
- * @Description:    对加上CrudLog注解的方法进行日志aop
+ * @Description:    对加上CrudLog注解的方法进行日志aop：增删改进行打印并且输入到日志表中
  */
 @Component
 @Slf4j
@@ -43,7 +43,10 @@ public class CrudAspect {
 
     /**
      * 正常返回通知（方法有正常返回值时）：（一般用这个）
-     * 在整个后置通知前，在整个前置通知后，与异常返回并列
+     * 在整个后置通知前，在整个前置通知后，与异常返回并列。
+     * 将返回值强转为ResultResponse，获得其中的data，如果data为true则证明操作成功，
+     * 再从切点里获得注解名称（也就是操作名），从handler中获得request再从request中获得ip，
+     * 再从header中根据X-Client和X-Token获得客户端名称和token，再从token中获得name（executor操作者）
      *
      * @param joinPoint   切点
      * @param returnValue 正常返回值

@@ -2,6 +2,8 @@ package com.blctek.userserver.service;
 
 import com.blctek.userserver.pojo.User;
 import com.blctek.userserver.vo.VoUser;
+import com.blctek.userserver.vo.VoUserUpdate;
+import com.blctek.userserver.vo.VoUserUpdatePassword;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +34,9 @@ public interface UserService {
      */
     User selectUserByUuid(String uuid);
 
-    User selectUserByIdAndUuid(Integer id,
-                               String uuid);
+    User selectUserById(Integer id);
+
+    User selectUserByIdAndPassword(VoUserUpdatePassword voUserUpdatePassword);
 
     Boolean insertUser(VoUser voUser);
 
@@ -41,10 +44,9 @@ public interface UserService {
 
     Boolean updateUser(VoUser voUser);
 
-    Boolean updateUserInfo(Integer id,
-                           String password,
-                           String name,
-                           String phone);
+    Boolean updateUserPassword(VoUserUpdatePassword voUserUpdatePassword);
+
+    Boolean updateUserInfo(VoUserUpdate voUserUpdate);
 
     List<VoUser> selectUserListCondition(Integer roleId,
                                          Integer currentPage,

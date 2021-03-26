@@ -108,4 +108,12 @@ public class UserController {
                 .setMessage("查询用户列表")
                 .setData(voList);
     }
+
+    @GetMapping("/selectUserById")
+    public ResultResponse selectUserById(@RequestParam("id")Integer id){
+        User dbUser = userService.selectUserById(id);
+        return new ResultResponse()
+                .setMessage("根据编号查询用户")
+                .setData(new VoUser(dbUser));
+    }
 }

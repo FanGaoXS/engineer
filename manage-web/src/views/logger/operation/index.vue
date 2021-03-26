@@ -95,7 +95,7 @@
   import {
     getLoggerList
   } from "@/api/logger";
-  import {getUserList} from "@/api/user";
+  import {getUserList} from "@/api/user/user";
 
   export default {
     name: "index",

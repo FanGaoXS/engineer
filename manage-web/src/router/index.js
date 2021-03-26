@@ -56,13 +56,13 @@ export const constantRoutes = [
   },
 
   {
-    path: '/info',
+    path: '/profile',
     component: Layout,
-    redirect: '/info/center',
+    redirect: '/profile/info',
     children: [{
-      path: 'center',
-      name: 'Center',
-      component: () => import('@/views/info/index'),
+      path: 'info',
+      name: 'Info',
+      component: () => import('@/views/profile/index'),
       meta: { title: '个人中心', icon: 'el-icon-user'}
     }]
   },

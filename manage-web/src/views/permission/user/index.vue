@@ -131,7 +131,7 @@
     insertUser,
     deleteUser,
     updateUser
-  } from "@/api/user";
+  } from "@/api/user/user";
   import {
     getRoleList
   } from "@/api/role";

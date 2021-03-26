@@ -4,6 +4,8 @@ import com.blctek.userserver.mapper.UserMapper;
 import com.blctek.userserver.pojo.User;
 import com.blctek.userserver.service.UserService;
 import com.blctek.userserver.vo.VoUser;
+import com.blctek.userserver.vo.VoUserUpdate;
+import com.blctek.userserver.vo.VoUserUpdatePassword;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,10 +44,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User selectUserByIdAndUuid(Integer id, String uuid) {
+    public User selectUserById(Integer id) {
         User user = new User();
         user.setId(id);
-        user.setUuid(uuid);
+        return userMapper.selectOne(user);
+    }
+
+    @Override
+    public User selectUserByIdAndPassword(VoUserUpdatePassword voUserUpdatePassword) {
+        User user = new User();
+        user.setId(voUserUpdatePassword.getId());
+        user.setPassword(voUserUpdatePassword.getOldPassword());
         return userMapper.selectOne(user);
     }
 
@@ -79,12 +88,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean updateUserInfo(Integer id, String password, String name, String phone) {
+    public Boolean updateUserPassword(VoUserUpdatePassword voUserUpdatePassword) {
         User user = new User();
-        user.setId(id);
-        user.setPassword(password);
-        user.setName(name);
-        user.setPhone(phone);
+        user.setId(voUserUpdatePassword.getId());
+        user.setPassword(voUserUpdatePassword.getNewPassword());
+        return userMapper.updateOne(user) > 0;
+    }
+
+    @Override
+    public Boolean updateUserInfo(VoUserUpdate voUserUpdate) {
+        User user = new User();
+        user.setId(voUserUpdate.getId());
+        user.setName(voUserUpdate.getName());
+        user.setPhone(voUserUpdate.getPhone());
         return userMapper.updateOne(user) > 0;
     }
 
