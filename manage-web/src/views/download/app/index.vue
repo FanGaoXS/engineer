@@ -8,28 +8,37 @@
         :data="tableData"
         border
         style="width: 100%"><!--表格-->
+
         <el-table-column
           type="index"
           width="100">
         </el-table-column>
+
         <el-table-column
           prop="fileName"
           label="文件名"
-          width="100">
+          width="250">
         </el-table-column>
+
         <el-table-column
           prop="fileDes"
           label="文件描述"
-          width="250">
+          width="400">
         </el-table-column>
+
         <el-table-column
           label="文件下载">
           <template slot-scope="scope">
             <a :href="scope.row.fileHref">
-              <el-button type="primary"><i class="el-icon-download"></i> 下载</el-button>
+              <el-button
+                size="medium"
+                round
+                icon="el-icon-download"
+                type="primary">下载</el-button>
             </a>
           </template>
         </el-table-column>
+
       </el-table>
     </el-main>
 

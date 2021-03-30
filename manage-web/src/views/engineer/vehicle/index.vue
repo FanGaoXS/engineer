@@ -46,7 +46,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="车牌类型" align="center" width="150">
+      <el-table-column label="车牌类型" align="center">
         <template slot-scope="scope">
           <el-tag :type=" scope.row.plateType | plateTypeFilter ">
             {{ scope.row.plateType }}
@@ -54,7 +54,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="车辆类型" align="center" width="100">
+      <el-table-column label="车辆类型" align="center">
         <template slot-scope="scope">
           {{ scope.row.model.name }}
         </template>
@@ -85,10 +85,20 @@
       </el-table-column>
 
 
-      <el-table-column label="操作" width="200">
+      <el-table-column label="操作" align="center" width="250">
         <template slot-scope="scope">
-          <el-button type="primary" size="medium" @click="handleUpdate(scope.row,scope.$index)">修改</el-button>
-          <el-button type="danger" size="medium" @click="handleDelete(scope.row,scope.$index)">删除</el-button>
+          <el-button
+            type="primary"
+            size="medium"
+            round
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row,scope.$index)">修改</el-button>
+          <el-button
+            type="danger"
+            size="medium"
+            round
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row,scope.$index)">删除</el-button>
         </template>
       </el-table-column>
 
@@ -157,8 +167,17 @@
 
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="updateVehicle()" :loading="buttonLoading">确 定</el-button>
+        <el-button
+          size="medium"
+          round
+          @click="dialogFormVisible = false">取 消</el-button>
+        <el-button
+          type="primary"
+          size="medium"
+          round
+          @click="updateVehicle()"
+          :disabled="buttonLoading"
+          :loading="buttonLoading">确 定</el-button>
       </div>
     </el-dialog>
 

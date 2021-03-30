@@ -1,7 +1,12 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button type="primary" size="medium" @click="handleInsert">添加</el-button>
+      <el-button
+        type="primary"
+        size="medium"
+        round
+        icon="el-icon-upload"
+        @click="handleInsert">添加</el-button>
     </div>
     <el-table
       v-loading="listLoading"
@@ -37,8 +42,19 @@
 
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button type="primary" size="medium" @click="handleUpdate(scope.row,scope.$index)">修改</el-button>
-          <el-button type="danger" size="medium" @click="handleDelete(scope.row,scope.$index)">删除</el-button>
+          <el-button
+            type="primary"
+            size="medium"
+            round
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row,scope.$index)">修改</el-button>
+          <el-button
+            type="danger"
+            size="medium"
+            round
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row,scope.$index)"
+          :disabled="scope.row.name==='admin'">删除</el-button>
         </template>
       </el-table-column>
 
@@ -86,9 +102,14 @@
       </el-form>
 
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-button
+          size="medium"
+          round
+          @click="dialogFormVisible = false">取消</el-button>
         <el-button
           type="primary"
+          size="medium"
+          round
           @click="dialogType==='新增'?insertRole():updateRole()"
           :loading="buttonLoading"
           :disabled="buttonLoading"

@@ -40,6 +40,8 @@
       </el-row>
       <el-button
         @click="downloadButton"
+        round
+        icon="el-icon-download"
         :disabled="flag"
         type="primary"
         :loading="flag"
@@ -47,6 +49,8 @@
       </el-button>
       <el-button
         @click="uploadButton"
+        round
+        icon="el-icon-upload"
         :disabled="flag"
         type="success"
         :loading="flag"

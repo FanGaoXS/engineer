@@ -36,7 +36,7 @@ axiosInstance.interceptors.response.use(
 
     if (res.code !== 20000 && res.code!==0 ) {
       Message({
-        message: res.message || '错误！',
+        message: res.message || '错误！请联系管理员',
         type: 'error',
         duration: 5 * 1000
       })

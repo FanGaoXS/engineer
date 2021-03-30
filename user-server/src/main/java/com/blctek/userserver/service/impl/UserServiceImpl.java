@@ -1,14 +1,19 @@
 package com.blctek.userserver.service.impl;
 
+import com.blctek.userserver.mapper.SaltMapper;
 import com.blctek.userserver.mapper.UserMapper;
+import com.blctek.userserver.pojo.Salt;
 import com.blctek.userserver.pojo.User;
 import com.blctek.userserver.service.UserService;
+import com.blctek.userserver.utils.Md5Utils;
 import com.blctek.userserver.vo.VoUser;
 import com.blctek.userserver.vo.VoUserUpdate;
 import com.blctek.userserver.vo.VoUserUpdatePassword;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +28,13 @@ import java.util.UUID;
  */
 @Service
 @Slf4j
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private SaltMapper saltMapper;
 
     @Override
     public User verify(String username, String password) {
@@ -60,21 +68,50 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean insertUser(VoUser voUser) {
-        User user = new User();
-        user.setUuid(UUID.randomUUID().toString());
-        user.setUsername(voUser.getUsername());
-        user.setPassword(voUser.getUsername()+"123"); //初始密码为用户名+123
-        user.setName(voUser.getName());
-        user.setPhone(voUser.getPhone());
-        user.setRoleId(voUser.getRole().getId());
-        return userMapper.insertOne(user) > 0;
+        try {
+            User user = new User();
+            user.setUuid(UUID.randomUUID().toString());
+            user.setUsername(voUser.getUsername());
+            Integer randomSalt = Md5Utils.randomSalt();
+            String password = voUser.getUsername()+"123";                   //初始密码为：用户名+123
+            String md5Password = Md5Utils.md5Password(password,randomSalt); //密码+随机盐生成md5
+            user.setPassword(md5Password);
+            user.setName(voUser.getName());
+            user.setPhone(voUser.getPhone());
+            user.setRoleId(voUser.getRole().getId());
+            userMapper.insertOne(user);
+
+            Salt salt = new Salt();
+            salt.setId(user.getId()); //将成功插入的用户的id作为盐的id存入
+            salt.setUsername(voUser.getUsername());
+            salt.setValue(randomSalt);
+            saltMapper.insertOne(salt);
+
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly(); //事务回滚
+        }
+        return false;
     }
 
     @Override
     public Boolean deleteUser(Integer id) {
-        User user = new User();
-        user.setId(id);
-        return userMapper.deleteOne(user) > 0;
+        try {
+            User user = new User();
+            user.setId(id);
+            userMapper.deleteOne(user);
+
+            Salt salt = new Salt();
+            salt.setId(user.getId());
+            saltMapper.deleteOne(salt);
+
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+        }
+        return false;
     }
 
     @Override

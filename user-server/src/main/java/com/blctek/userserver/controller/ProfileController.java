@@ -4,8 +4,11 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.blctek.commonserver.response.ResultResponse;
 import com.blctek.commonserver.utils.JWTUtils;
 import com.blctek.userserver.anno.CrudLog;
+import com.blctek.userserver.pojo.Salt;
 import com.blctek.userserver.pojo.User;
+import com.blctek.userserver.service.SaltService;
 import com.blctek.userserver.service.UserService;
+import com.blctek.userserver.vo.VoSalt;
 import com.blctek.userserver.vo.VoUser;
 import com.blctek.userserver.vo.VoUserUpdate;
 import com.blctek.userserver.vo.VoUserUpdatePassword;
@@ -25,6 +28,8 @@ import org.springframework.web.bind.annotation.*;
 public class ProfileController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private SaltService saltService;
 
     /**
      * /profile/info
@@ -66,6 +71,29 @@ public class ProfileController {
                 .setData(data)
                 .setCode(code)
                 .setMessage(message.toString());
+    }
+
+    /**
+     * 登录或修改密码前需要获取用户密码的随机盐
+     * @param username
+     * @return
+     */
+    @GetMapping("/salt")
+    public ResultResponse getSalt(@RequestParam(required = true)String username){
+        Object data = null;
+        int code = 20001;
+        StringBuffer message = new StringBuffer("获取 "+username+" 用户的随机盐");
+        try {
+            data = saltService.selectSaltByUsername(username);
+            code = 20000;
+        } catch (Exception e){
+            e.printStackTrace();
+            message.append(e.getMessage().substring(0,150));
+        }
+        return new ResultResponse()
+                .setMessage(message.toString())
+                .setCode(code)
+                .setData(data);
     }
 
     /**

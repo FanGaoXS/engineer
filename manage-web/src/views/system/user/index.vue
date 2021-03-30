@@ -9,7 +9,12 @@
           :value="item.id"
         ></el-option>
       </el-select>
-      <el-button type="primary" size="medium" @click="handleInsert" style="margin-left: 15px">添加</el-button>
+      <el-button
+        type="primary"
+        size="medium"
+        round
+        icon="el-icon-upload"
+        @click="handleInsert" style="margin-left: 15px">添加</el-button>
     </div>
     <el-table
       v-loading="listLoading"
@@ -51,8 +56,20 @@
 
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button type="primary" size="medium" @click="handleUpdate(scope.row,scope.$index)" >修改</el-button>
-          <el-button type="danger" size="medium" @click="handleDelete(scope.row,scope.$index)">删除</el-button>
+          <el-button
+            type="primary"
+            size="medium"
+            round
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row,scope.$index)"
+          :disabled="scope.row.username==='admin'">修改</el-button>
+          <el-button
+            type="danger"
+            size="medium"
+            round
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row,scope.$index)"
+          :disabled="scope.row.username==='admin'">删除</el-button>
         </template>
       </el-table-column>
 
@@ -111,9 +128,14 @@
       </div>
 
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-button
+          size="medium"
+          round
+          @click="dialogFormVisible = false">取消</el-button>
         <el-button
           type="primary"
+          size="medium"
+          round
           @click="dialogType==='新增'?insertUser():updateUser()"
           :loading="buttonLoading"
           :disabled="buttonLoading"
@@ -259,6 +281,9 @@
               this.dialogFormVisible = false
               this.buttonLoading = false
               this.fetchList(this.listQuery.roleId,this.listQuery.currentPage,this.listQuery.pageSize);
+            }).catch(error=>{
+              console.log(error)
+              this.buttonLoading = false
             })
           }
         })
@@ -275,7 +300,10 @@
               this.dialogFormVisible = false
               this.buttonLoading = false
               this.fetchList(this.listQuery.roleId,this.listQuery.currentPage,this.listQuery.pageSize);
-            }).catch()
+            }).catch(error=>{
+              console.log(error)
+              this.buttonLoading = false
+            })
           }
         })
       },

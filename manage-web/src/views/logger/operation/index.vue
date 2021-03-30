@@ -45,13 +45,13 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="来源客户端" align="center" width="200">
+      <el-table-column label="来源客户端" align="center">
         <template slot-scope="scope">
           {{ scope.row.client }}
         </template>
       </el-table-column>
 
-      <el-table-column label="操作者" align="center" width="200">
+      <el-table-column label="操作者" align="center">
         <template slot-scope="scope">
           {{ scope.row.executor }}
         </template>
@@ -64,7 +64,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="ip地址" align="center" width="200">
+      <el-table-column label="ip地址" align="center">
         <template slot-scope="scope">
           {{ scope.row.ip }}
         </template>

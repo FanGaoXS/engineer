@@ -3,7 +3,12 @@
 
     <div class="filter-container">
 
-      <el-button type="primary" size="medium" @click="handleInsert">
+      <el-button
+        icon="el-icon-upload"
+        round
+        type="primary"
+        size="medium"
+        @click="handleInsert">
         添加
       </el-button>
 
@@ -41,12 +46,22 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" width="250">
+      <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button type="primary" size="medium" @click="handleUpdate(scope.row)">
+          <el-button
+            round
+            icon="el-icon-edit"
+            type="primary"
+            size="medium"
+            @click="handleUpdate(scope.row)">
             修改
           </el-button>
-          <el-button type="danger" size="medium" @click="handleDelete(scope.row,scope.$index)">
+          <el-button
+            round
+            size="medium"
+            icon="el-icon-delete"
+            type="danger"
+            @click="handleDelete(scope.row,scope.$index)">
             删除
           </el-button>
         </template>
@@ -97,9 +112,14 @@
       </el-form>
 
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button
+          round
+          size="medium"
+          @click="dialogFormVisible = false">取 消</el-button>
         <el-button
           type="primary"
+          round
+          size="medium"
           @click="dialogType==='update'?updateModel():insertModel()"
           :loading="buttonLoading"
           :disabled="buttonLoading"

@@ -42,8 +42,9 @@
         <template slot-scope="scope">
           <!--路由跳转-->
           <el-button
+            round
             type="primary"
-            size="small"
+            size="medium"
             icon="el-icon-position"
             @click="routerToMap(scope.row)"
             :disabled="scope.row.mileage===0" >

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blctek.userserver.mapper.SaltMapper">
+    <!--select的条件sql（全有）-->
+    <sql id="selectCondition">
+        <if test=" id!=null and id!='' ">
+            AND id = #{id}
+        </if>
+        <if test=" username!=null and username!='' ">
+            AND username = #{username}
+        </if>
+        <if test=" value!=null and value!='' ">
+            AND value = #{value}
+        </if>
+    </sql>
+    <!--返回的结果集-->
+    <resultMap id="SaltMap" type="com.blctek.userserver.pojo.Salt">
+        <id column="id" property="id"/>
+        <result column="value" property="value"/>
+    </resultMap>
+    <!--新增一条记录-->
+    <insert id="insertOne"
+            parameterType="com.blctek.userserver.pojo.Salt">
+        INSERT INTO
+            password_salt
+            (id,username,value)
+        VALUES
+            (#{id},#{username},#{value})
+    </insert>
+    <!--删除一条记录-->
+    <delete id="deleteOne"
+            parameterType="com.blctek.userserver.pojo.Salt">
+        DELETE FROM
+            password_salt
+        WHERE
+            id = #{id}
+    </delete>
+    <!--查询一条（可单条件，可多条件）-->
+    <select id="selectOne"
+            parameterType="com.blctek.userserver.pojo.Salt"
+            resultMap="SaltMap">
+        SELECT
+            *
+        FROM
+            password_salt
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <include refid="selectCondition"></include>
+        </trim>
+    </select>
+</mapper>

@@ -7,6 +7,7 @@ const getDefaultState = () => {
   return {
     token: getToken(), //token（存在cookies中）
     id: undefined,
+    username: undefined,
     role: '',
     name: '',          //名字
     avatar: ''         //头像
@@ -29,6 +30,9 @@ const mutations = {
   SET_ROLE: (state, role) => {
     state.role = role
   },
+  SET_USERNAME: (state, username) =>{
+    state.username = username
+  },
   // 设置token
   SET_TOKEN: (state, token) => {
     state.token = token
@@ -43,6 +47,7 @@ const mutations = {
   }
 }
 
+//异步方法
 const actions = {
   // 用户登录
   login({ commit }, loginInfo) {
@@ -67,11 +72,12 @@ const actions = {
         if (!data) { //没有data
           return reject('认证失败，请重新登录！')
         }
-        const { name, avatar,id, role } = data
+        const { name, avatar,id, role, username } = data
         commit('SET_ID', id) //将id放入store的state中
         commit('SET_NAME', name) //将name放入store的state中
         commit('SET_AVATAR', avatar) //将avatar放入store的state中
         commit('SET_ROLE', role.name) //将role放入store的state中
+        commit('SET_USERNAME', username)
         console.log(state.name,'登录')
         resolve(data)
       }).catch(error => {

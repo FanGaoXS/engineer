@@ -49,6 +49,7 @@
         <template slot-scope="scope">
           <!--路由跳转（跳转到名为Work的路由，并且将车牌号作为参数传递过去）-->
           <el-button
+            round
             :disabled="scope.row.totalMileage===0"
             type="primary"
             size="medium"

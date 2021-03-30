@@ -59,62 +59,61 @@ export const constantRoutes = [
     path: '/profile',
     component: Layout,
     redirect: '/profile/info',
-    children: [{
-      path: 'info',
-      name: 'Info',
-      component: () => import('@/views/profile/index'),
-      meta: { title: '个人中心', icon: 'el-icon-user'}
-    }]
-  },
-
-  { //工程监理
-    path: '/supervisor',
-    component: Layout,
-    redirect: '/supervisor/vehicle',
-    name: 'Supervisor',
-    meta: {title: '工程监理', icon: 'el-icon-s-order'},
-    alwaysShow: true,
     children: [
-
-      { //车辆监理
-        path: 'vehicle',
-        name: 'Vehicle',
-        // alwaysShow: true,
-        meta: {title: '车辆监理',},
-        component: () => import('@/views/supervisor/vehicle/index'),
+      {
+        path: 'info',
+        name: 'Info',
+        component: () => import('@/views/profile/info/index'),
+        meta: { title: '个人中心', icon: 'el-icon-user'}
       },
-
-      /*{ //机械监理
-        path: 'machine',
-        name: 'Machine',
-        meta: {title: '机械监理（待开发）',},
-        component: () => import('@/views/supervisor/machine/index')
-      },*/
-
-      { //工时列表（根据车牌号）
-        hidden: true,
-        path: 'work/:vehicleNumber',
-        name: 'Work',
-        meta: {
-          title: '工时列表',
-          activeMenu: '/supervisor/vehicle'
-        },
-        component: () => import('@/views/supervisor/work/index')
-      },
-
-      { //轨迹详情
-        hidden: true,
-        path: 'map/:vehicleNumber/:date/:mileage',
-        name: 'Map',
-        meta: {
-          title: '轨迹详情',
-          activeMenu: '/supervisor/vehicle'
-        },
-        component: () => import('@/views/supervisor/map/index')
+      {
+        path: 'password',
+        name: 'Password',
+        component: () => import('@/views/profile/password/index'),
+        meta: { title: '修改密码'},
+        hidden: true
       }
-
     ]
   },
+
+  {
+    path: '/logger',
+    component: Layout,
+    redirect: '/logger/operation',
+    // name: 'Logger',
+    // meta: { title: '日志管理', icon: 'el-icon-tickets'},
+    children: [
+      {
+        name: 'Operation',
+        path: 'operation',
+        component: () => import('@/views/logger/operation/index'),
+        meta: { title: '操作日志', icon: 'el-icon-tickets'}
+      }
+    ]
+  },
+
+  {
+    path: '/system',
+    component: Layout,
+    redirect: '/system/user',
+    name: 'System',
+    meta: { title: '系统权限', icon: 'el-icon-s-check'},
+    children: [
+      {
+        name: 'User',
+        path: 'user',
+        component: () => import('@/views/system/user/index'),
+        meta: { title: '用户管理'}
+      },
+      {
+        name: 'Role',
+        path: 'role',
+        component: () => import('@/views/system/role/index'),
+        meta: { title: '角色管理'}
+      }
+    ]
+  },
+
 
   { //工程用具
     path: '/engineer',
@@ -167,41 +166,52 @@ export const constantRoutes = [
     ]
   },
 
-  {
-    path: '/permission',
+  { //工程监理
+    path: '/supervisor',
     component: Layout,
-    redirect: '/permission/user',
-    name: 'Permission',
-    meta: { title: '权限管理', icon: 'el-icon-s-check'},
+    redirect: '/supervisor/vehicle',
+    name: 'Supervisor',
+    meta: {title: '工程监理', icon: 'el-icon-s-order'},
+    alwaysShow: true,
     children: [
-      {
-        name: 'User',
-        path: 'user',
-        component: () => import('@/views/permission/user'),
-        meta: { title: '用户管理'}
-      },
-      {
-        name: 'Role',
-        path: 'role',
-        component: () => import('@/views/permission/role'),
-        meta: { title: '角色管理'}
-      }
-    ]
-  },
 
-  {
-    path: '/logger',
-    component: Layout,
-    redirect: '/logger/operation',
-    // name: 'Logger',
-    // meta: { title: '日志管理', icon: 'el-icon-tickets'},
-    children: [
-      {
-        name: 'Operation',
-        path: 'operation',
-        component: () => import('@/views/logger/operation/index'),
-        meta: { title: '操作日志', icon: 'el-icon-tickets'}
+      { //车辆监理
+        path: 'vehicle',
+        name: 'Vehicle',
+        // alwaysShow: true,
+        meta: {title: '车辆监理',},
+        component: () => import('@/views/supervisor/vehicle/index'),
+      },
+
+      /*{ //机械监理
+        path: 'machine',
+        name: 'Machine',
+        meta: {title: '机械监理（待开发）',},
+        component: () => import('@/views/supervisor/machine/index')
+      },*/
+
+      { //工时列表（根据车牌号）
+        hidden: true,
+        path: 'work/:vehicleNumber',
+        name: 'Work',
+        meta: {
+          title: '工时列表',
+          activeMenu: '/supervisor/vehicle'
+        },
+        component: () => import('@/views/supervisor/work/index')
+      },
+
+      { //轨迹详情
+        hidden: true,
+        path: 'map/:vehicleNumber/:date/:mileage',
+        name: 'Map',
+        meta: {
+          title: '轨迹详情',
+          activeMenu: '/supervisor/vehicle'
+        },
+        component: () => import('@/views/supervisor/map/index')
       }
+
     ]
   },
 
