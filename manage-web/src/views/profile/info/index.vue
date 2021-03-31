@@ -151,8 +151,7 @@
                 title: res.data===true?'成功':'失败',
                 message: '修改个人信息 '+(res.data===true?'成功':'失败')
               })
-              this.buttonLoading = false
-              this.isUpdate = false
+              this.refreshView(2)
             }).catch(error=>{
               this.$notify.error({
                 title: '失败',
@@ -169,9 +168,18 @@
         this.$refs[formName].clearValidate()
         this.fetchData(this.id)
       },
+      // 根据id填充个人信息表单
       async fetchData(id) {
         const { data } = await getUser(id)
         this.form = data
+      },
+      //刷新页面（目的是重新请求info，重新加载vuex中的全局个人信息）
+      refreshView(second=2){
+        setTimeout(()=>{
+          this.isUpdate = false
+          this.buttonLoading = false
+          this.$router.go(0)
+        },1000*second) //多少秒后刷新当前页
       }
     },
     computed: {
