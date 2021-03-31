@@ -75,11 +75,11 @@
             { required: true, message: '请输入用户名', trigger: 'blur'}
           ],
           oldPassword: [
-            { required: true, message: '请输入密码', trigger: 'blur'},
+            { required: true, message: '请输入旧密码', trigger: 'blur'},
             { validator: validatorPassword, trigger: 'blur'}
           ],
           newPassword: [
-            { required: true, message: '请输入密码', trigger: 'blur'},
+            { required: true, message: '请输入新密码', trigger: 'blur'},
             { validator: validatorPassword, trigger: 'blur'}
           ],
           checkPassword: [
@@ -105,21 +105,20 @@
     methods: {
       //提交表单
       submitForm(formName) {
-        this.$refs[formName].validate(valid=>{
-          if (valid){
-            this.buttonLoading = true
-            updatePassword(this.form).then(res=>{
-              console.log(res.data)
+        this.$refs[formName].validate(valid=>{ //验证表单
+          if (valid){ //验证通过
+            this.buttonLoading = true //按钮进入加载
+            //向后端发起修改密码的请求
+            updatePassword(this.form).then(res=>{ //请求成功
               this.$notify({
                 type: res.data===true?'success':'error',
                 title: res.data===true?'成功':'失败',
                 message: '修改密码'+(res.data===true?'成功':'失败')
               })
+              this.refreshView(2) //请求收到后2秒后刷新页面
+            }).catch(error=>{ //请求失败
               this.buttonLoading = false
-              this.refreshView(2)
-            }).catch(error=>{
-              this.buttonLoading = false
-              this.resetForm('form')
+              this.resetForm('form') //清空表单
             })
           } else {
             console.log('错误的提交')
@@ -133,6 +132,7 @@
       //刷新页面
       refreshView(second=2){
         setTimeout(()=>{
+          this.buttonLoading = false
           this.$router.go(0)
         },1000*second) //多少秒后刷新当前页
       }

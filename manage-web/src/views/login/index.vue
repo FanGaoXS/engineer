@@ -83,8 +83,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: 'admin',
+        username: undefined,
+        password: undefined,
         validityDay: 7
       },
       loginRules: {

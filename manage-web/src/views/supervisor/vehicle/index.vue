@@ -45,7 +45,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" width="250">
+      <el-table-column label="操作" width="250" align="center">
         <template slot-scope="scope">
           <!--路由跳转（跳转到名为Work的路由，并且将车牌号作为参数传递过去）-->
           <el-button

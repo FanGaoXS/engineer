@@ -231,10 +231,6 @@ export default {
     width: 100%;
   }
 
-  .el-input {
-    width: 80%;
-  }
-
   .el-col {
     margin-top: 5px;
     padding: 5px;
