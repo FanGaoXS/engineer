@@ -92,12 +92,14 @@
             size="medium"
             round
             icon="el-icon-edit"
+            :disabled="!checkPermission(['admin','developer','supervisor'])"
             @click="handleUpdate(scope.row,scope.$index)">修改</el-button>
           <el-button
             type="danger"
             size="medium"
             round
             icon="el-icon-delete"
+            :disabled="!checkPermission(['admin','developer'])"
             @click="handleDelete(scope.row,scope.$index)">删除</el-button>
         </template>
       </el-table-column>
@@ -205,6 +207,8 @@ import {
   IMAGE_PREFIX_URL  //图片资源前缀
 } from "@/utils/global-variable";
 
+import checkPermission from "@/utils/permission";
+
 export default {
   filters: {
     //车牌类型过滤
@@ -217,13 +221,9 @@ export default {
       return plateTypeMap[plateType];
     },
 
-    plateNumberFilter(plateNumber){
-      return plateNumberFilter(plateNumber); //执行globalFilters里的过滤器
-    },
+    plateNumberFilter,
 
-    timeFilter(time){
-      return timeFilter(time)
-    }
+    timeFilter
 
   },
   data() {
@@ -354,7 +354,8 @@ export default {
       this.listQuery.pageSize = vehicleList.pageSize
       this.listQuery.totalSize = vehicleList.totalSize
       this.listLoading = false;
-    }
+    },
+    checkPermission
   },
 }
 </script>

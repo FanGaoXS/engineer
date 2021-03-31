@@ -70,10 +70,6 @@
         </template>
       </el-table-column>
 
-
-
-
-
     </el-table>
     <el-pagination
       style="margin-top: 15px"

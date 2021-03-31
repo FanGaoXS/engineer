@@ -56,12 +56,14 @@
           type="primary"
           icon="el-icon-edit"
           size="medium"
+          :disabled="$store.state.user.roles[0]==='ghost'"
           round>修改信息</el-button>
         <el-button
           @click="$router.push('Password')"
           type="primary"
           icon="el-icon-edit"
           size="medium"
+          :disabled="$store.state.user.roles[0]==='ghost'"
           round>修改密码</el-button>
       </el-form-item>
       <el-form-item v-show="isUpdate">
@@ -93,7 +95,10 @@
   import {
     updateInfo
   } from "@/api/user/profile";
-  import {validateName, validatePhone} from "@/utils/validate";
+  import {
+    validateName,
+    validatePhone
+  } from "@/utils/validate";
 
   export default {
     name: "index",
@@ -180,7 +185,7 @@
           this.buttonLoading = false
           this.$router.go(0)
         },1000*second) //多少秒后刷新当前页
-      }
+      },
     },
     computed: {
       id(){

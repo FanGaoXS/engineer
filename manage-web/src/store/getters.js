@@ -4,8 +4,9 @@ const getters = {
   token: state => state.user.token,   //用户token（JWT）
   avatar: state => state.user.avatar, //用户头像
   name: state => state.user.name,     //用户姓名
+  username: state => state.user.username,
   id: state => state.user.id,
-  role: state => state.user.role,
-  username: state => state.user.username
+  roles: state => state.user.roles,
+  permission_routes: state => state.permission.routes
 }
 export default getters

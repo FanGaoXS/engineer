@@ -35,7 +35,7 @@
           round
           type="primary"
           @click="submitForm('form')"
-          :disabled="buttonLoading"
+          :disabled="buttonLoading||$store.state.user.roles[0]==='ghost'"
           :loading="buttonLoading">提交</el-button>
         <el-button
           round

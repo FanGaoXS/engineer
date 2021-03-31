@@ -14,6 +14,7 @@
         size="medium"
         round
         icon="el-icon-upload"
+        :disabled="!checkPermission(['admin','developer'])"
         @click="handleInsert" style="margin-left: 15px">添加</el-button>
     </div>
     <el-table
@@ -62,14 +63,14 @@
             round
             icon="el-icon-edit"
             @click="handleUpdate(scope.row,scope.$index)"
-          :disabled="scope.row.username==='admin'">修改</el-button>
+            :disabled="(scope.row.username==='admin')||!(checkPermission(['admin','developer']))">修改</el-button>
           <el-button
             type="danger"
             size="medium"
             round
             icon="el-icon-delete"
             @click="handleDelete(scope.row,scope.$index)"
-          :disabled="scope.row.username==='admin'">删除</el-button>
+          :disabled="(scope.row.username==='admin')||!(checkPermission(['admin','developer']))">删除</el-button>
         </template>
       </el-table-column>
 
@@ -85,6 +86,7 @@
       layout="total, prev, pager, next, jumper">
     </el-pagination>
 
+    <!--新增或修改的对话框-->
     <el-dialog
       :title="dialogType+'用户'"
       width="35%"
@@ -164,6 +166,8 @@
     validatePhone
   } from "@/utils/validate";
 
+  import checkPermission from "@/utils/permission";
+
   export default {
     name: "index",
     data() {
@@ -226,6 +230,7 @@
       }
     },
     created() {
+      console.log('permission->',this.checkPermission(['admin','developer']))
       this.fetchRoleOptions();
       this.fetchList(this.listQuery.roleId,this.listQuery.currentPage,this.listQuery.pageSize);
     },
@@ -334,7 +339,8 @@
         getRoleList(null,null).then(res=>{
           this.roleOptions = res.data.items;
         })
-      }
+      },
+      checkPermission
     },
   }
 </script>

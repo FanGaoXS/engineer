@@ -6,6 +6,7 @@
         size="medium"
         round
         icon="el-icon-upload"
+        :disabled="!checkPermission(['admin','developer'])"
         @click="handleInsert">添加</el-button>
     </div>
     <el-table
@@ -47,6 +48,7 @@
             size="medium"
             round
             icon="el-icon-edit"
+            :disabled="!checkPermission(['admin','developer'])"
             @click="handleUpdate(scope.row,scope.$index)">修改</el-button>
           <el-button
             type="danger"
@@ -54,7 +56,7 @@
             round
             icon="el-icon-delete"
             @click="handleDelete(scope.row,scope.$index)"
-          :disabled="scope.row.name==='admin'">删除</el-button>
+          :disabled="(scope.row.name==='admin')||!(checkPermission(['admin','developer']))">删除</el-button>
         </template>
       </el-table-column>
 
@@ -132,6 +134,8 @@
     validIsEnglish,
     validIsChinese
   } from '@/utils/validate'
+
+  import checkPermission from "@/utils/permission";
 
   export default {
     name: "index",
@@ -230,6 +234,8 @@
               this.dialogFormVisible = false
               this.buttonLoading = false
               this.fetchList(this.listQuery.currentPage,this.listQuery.pageSize)
+            }).catch(error=>{
+              this.buttonLoading = false
             })
           }
         })
@@ -246,6 +252,8 @@
               this.dialogFormVisible = false
               this.buttonLoading = false
               this.fetchList(this.listQuery.currentPage,this.listQuery.pageSize)
+            }).catch(error=>{
+              this.buttonLoading = false
             })
           }
         })
@@ -270,7 +278,8 @@
         this.listQuery.pageSize = roleList.pageSize
         this.listQuery.totalSize = roleList.totalSize
         this.listLoading = false
-      }
+      },
+      checkPermission
     },
   }
 </script>

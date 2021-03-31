@@ -1,14 +1,14 @@
 import { login, logout } from '@/api/user/auth'
 import { getInfo } from "@/api/user/profile";
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import { resetRouter } from '@/router'
+import router , { resetRouter } from '@/router/index'
 
 const getDefaultState = () => {
   return {
     token: getToken(), //token（存在cookies中）
     id: undefined,
-    username: undefined,
-    role: '',
+    username: '',
+    roles: [],
     name: '',          //名字
     avatar: ''         //头像
   }
@@ -27,8 +27,8 @@ const mutations = {
     state.id = id
   },
   // 设置角色
-  SET_ROLE: (state, role) => {
-    state.role = role
+  SET_ROLES: (state, roles) => {
+    state.roles = roles
   },
   SET_USERNAME: (state, username) =>{
     state.username = username
@@ -64,7 +64,7 @@ const actions = {
     })
   },
 
-  // 获得用户信息（用户每一次上次的时候都需要提交token并且验证）
+  // 获得用户信息（用户每一次上线的时候都需要提交token并且验证）
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
@@ -76,7 +76,7 @@ const actions = {
         commit('SET_ID', id) //将id放入store的state中
         commit('SET_NAME', name) //将name放入store的state中
         commit('SET_AVATAR', avatar) //将avatar放入store的state中
-        commit('SET_ROLE', role.name) //将role放入store的state中
+        commit('SET_ROLES', [ role.name ]) //将role放入store的state中
         commit('SET_USERNAME', username)
         console.log(state.name,'登录')
         resolve(data)
@@ -90,10 +90,11 @@ const actions = {
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
+        console.log(state.name,'退出')
+        commit('SET_TOKEN', '')
+        commit('SET_ROLES', [])
         removeToken()   // 移除cookies中的token（第一步必须这么做！！！）
         resetRouter()   // 重置路由
-        console.log(state.name,'退出')
-        commit('RESET_STATE') //重置store的state
         resolve()
       }).catch(error => {
         reject(error)
@@ -104,11 +105,31 @@ const actions = {
   // 移除token
   resetToken({ commit }) {
     return new Promise(resolve => {
+      commit('SET_TOKEN', '')
+      commit('SET_ROLES', [])
       removeToken() // must remove  token  first
-      commit('RESET_STATE')
       resolve()
     })
+  },
+
+  async changeRoles({ commit, dispatch }, role) {
+    const token = role + '-token'
+
+    commit('SET_TOKEN', token)
+    setToken(token)
+
+    const { data } = await dispatch('getInfo')
+    const roles = [ data.role.name ]
+    resetRouter()
+    // generate accessible routes map based on roles
+    const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
+    // dynamically add accessible routes
+    router.addRoutes(accessRoutes)
+
+    // reset visited views and cached views
+    // dispatch('tagsView/delAllViews', null, { root: true })
   }
+
 }
 
 export default {
