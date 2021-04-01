@@ -5,7 +5,7 @@ import request from '@/utils/request'
  * @returns {AxiosPromise}
  */
 export function deleteVehicle(row) {
-  console.log('deleteVehicle------>row',row)
+  /*console.log('deleteVehicle------>row',row)*/
   return request({
     url: 'engine-server/engineer/deleteVehicle',
     method: 'GET',

@@ -297,7 +297,7 @@ export default {
       this.buttonLoading = true;
       updateVehicle(this.tempForm).then(res=>{
         this.dialogFormVisible = false;
-        this.fetchList(this.listQuery.currentPage,this.listQuery.pageSize)
+        this.handleCurrentChange()
         this.$notify({
           type: 'success',
           message: '修改车辆信息成功！'
@@ -314,24 +314,21 @@ export default {
     },
 
     deleteVehicle(row,index){
-      this.$notify({
-        type: 'warning',
-        message: '暂不支持删除车辆信息！'
-      })
-      /*deleteVehicle(row).then(res=>{
-        // console.logger(res);
+      deleteVehicle(row).then(res=>{
         this.$notify({
           type: 'success',
           message: '删除车辆信息成功！'
         })
-        this.list.splice(index,1);
+        this.handleCurrentChange()
+        this.buttonLoading = false;
       }).catch(error=> {
-        console.logger(error);
+        console.log(error);
         this.$notify({
           type: 'error',
           message: '删除车辆信息失败请联系管理员'+error
         })
-      })*/
+        this.buttonLoading = false;
+      })
     },
     async fetchOptions() {
       const { data:modelList } = await getModelByVehicle() //同步获取类型列表
