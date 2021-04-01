@@ -1,69 +1,67 @@
 <template>
   <div class="app-container">
+    <el-card shadow="hover">
+      <el-header style="margin-top: 10px"><!--页头（返回按钮）-->
+        <el-page-header @back="routerBack" content="工时列表">
+        </el-page-header>
+      </el-header>
 
-    <el-header style="margin-top: 10px"><!--页头（返回按钮）-->
-      <el-page-header @back="routerBack" content="工时列表">
-      </el-page-header>
-    </el-header>
+      <el-table
+        v-loading="listLoading"
+        :data="workList"
+        element-loading-text="加载中···"
+        :default-sort = "{prop: 'date', order: 'descending'}"
+        border
+        fit
+      >
+        <!--<el-table-column label="序号" align="center" width="75">
+          <template slot-scope="scope">
+            {{ scope.$index+1+(listQuery.currentPage-1)*listQuery.pageSize }}
+          </template>
+        </el-table-column>-->
 
-    <el-table
-      v-loading="listLoading"
-      :data="workList"
-      element-loading-text="加载中···"
-      :default-sort = "{prop: 'date', order: 'descending'}"
-      border
-      fit
-    >
-      <!--:default-sort = "{prop: 'date', order: 'descending'}"默认排序列-->
-      <!--highlight-current-row选中行高亮-->
-      <el-table-column label="序号" align="center" width="75">
-        <template slot-scope="scope">
-          {{ scope.$index+1+(listQuery.currentPage-1)*listQuery.pageSize }}
-        </template>
-      </el-table-column>
+        <el-table-column label="车牌号" align="center">
+          {{ $route.params.vehicleNumber | plateNumberFilter }}
+        </el-table-column>
 
-      <el-table-column label="车牌号" align="center" width="250">
-        {{ $route.params.vehicleNumber | plateNumberFilter }}
-      </el-table-column>
+        <el-table-column label="日期" align="center" prop="date" min-width="300">
+          <template slot-scope="scope">
+            {{ scope.row.date | dateFilter }}
+          </template>
+        </el-table-column>
 
-      <el-table-column label="日期" align="center" prop="date">
-        <template slot-scope="scope">
-          {{ scope.row.date | dateFilter }}
-        </template>
-      </el-table-column>
+        <el-table-column label="里程数" align="center" min-width="300">
+          <template slot-scope="scope">
+            {{ scope.row.mileage | mileageFilter}}
+          </template>
+        </el-table-column>
 
-      <el-table-column label="里程数" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.mileage | mileageFilter}}
-        </template>
-      </el-table-column>
+        <el-table-column label="操作" align="center" min-width="250">
+          <template slot-scope="scope">
+            <!--路由跳转-->
+            <el-button
+              round
+              type="primary"
+              size="medium"
+              icon="el-icon-position"
+              @click="routerToMap(scope.row)"
+              :disabled="scope.row.mileage===0" >
+              轨迹详情
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
 
-      <el-table-column label="操作" align="center" width="250">
-        <template slot-scope="scope">
-          <!--路由跳转-->
-          <el-button
-            round
-            type="primary"
-            size="medium"
-            icon="el-icon-position"
-            @click="routerToMap(scope.row)"
-            :disabled="scope.row.mileage===0" >
-            轨迹详情
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-
-    <el-pagination
-      style="margin-top: 15px"
-      background
-      :total="tempList.length"
-      :page-size="listQuery.pageSize"
-      :current-page="listQuery.currentPage"
-      @current-change="handleCurrentChange"
-      layout="total, prev, pager, next">
-    </el-pagination>
-
+      <el-pagination
+        style="margin-top: 15px"
+        background
+        :total="tempList.length"
+        :page-size="listQuery.pageSize"
+        :current-page="listQuery.currentPage"
+        @current-change="handleCurrentChange"
+        layout="total, prev, pager, next">
+      </el-pagination>
+    </el-card>
   </div>
 </template>
 
@@ -84,12 +82,8 @@ import AMapLoader from '@/utils/AMap'
 
 export default {
   filters: {
-    plateNumberFilter(plateNumber){
-      return plateNumberFilter(plateNumber); //使用globalFilters里的过滤器
-    },
-    mileageFilter(mileage){
-      return mileageFilter(mileage); //使用globalFilters里的过滤器
-    },
+    plateNumberFilter,
+    mileageFilter,
     /**
      * 将yyyy-mm-dd日期字符串转为yyyy/mm/dd类型的日期对象
      * @param date

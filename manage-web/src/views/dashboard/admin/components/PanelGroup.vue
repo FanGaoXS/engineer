@@ -1,6 +1,6 @@
 <template>
   <el-row :gutter="40" class="panel-group">
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-shopping">
           <svg-icon icon-class="shopping" class-name="card-panel-icon" />
@@ -13,7 +13,7 @@
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-message">
           <svg-icon icon-class="message" class-name="card-panel-icon" />
@@ -26,20 +26,20 @@
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-money">
           <svg-icon icon-class="money" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            总耗油量（理想）
+            总耗油量
           </div>
-          <count-to :end-val="totalFuel" class="card-panel-num"  suffix="升" :duration="2000"></count-to>
+          <count-to :end-val="totalFuel" class="card-panel-num" suffix="升" :duration="2000"></count-to>
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="24" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-people">
           <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -179,13 +179,13 @@ export default {
 }
 
 @media (max-width:550px) {
-  .card-panel-description {
+  /*.card-panel-description {
     display: none;
-  }
+  }*/
 
   .card-panel-icon-wrapper {
-    float: none !important;
-    width: 100%;
+    /*float: none !important;*/
+    width: 50%;
     height: 100%;
     margin: 0 !important;
 

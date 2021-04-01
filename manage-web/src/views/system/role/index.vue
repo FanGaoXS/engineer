@@ -1,124 +1,126 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
-      <el-button
-        type="primary"
-        size="medium"
-        round
-        icon="el-icon-upload"
-        :disabled="!checkPermission(['admin','developer'])"
-        @click="handleInsert">添加</el-button>
-    </div>
-    <el-table
-      v-loading="listLoading"
-      :data="list"
-      element-loading-text="加载中"
-      border
-      fit
-      highlight-current-row
-    >
-      <el-table-column label="序号" align="center" width="100">
-        <template slot-scope="scope">
-          {{ scope.row.id }}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="角色名" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.name }}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="角色中文名" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.chineseName }}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="角色描述" align="center" width="300">
-        <template slot-scope="scope">
-          {{ scope.row.description }}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="操作" align="center">
-        <template slot-scope="scope">
-          <el-button
-            type="primary"
-            size="medium"
-            round
-            icon="el-icon-edit"
-            :disabled="!checkPermission(['admin','developer'])"
-            @click="handleUpdate(scope.row,scope.$index)">修改</el-button>
-          <el-button
-            type="danger"
-            size="medium"
-            round
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row,scope.$index)"
-          :disabled="(scope.row.name==='admin')||!(checkPermission(['admin','developer']))">删除</el-button>
-        </template>
-      </el-table-column>
-
-    </el-table>
-
-    <el-pagination
-      style="margin-top: 15px"
-      background
-      :total="listQuery.totalSize"
-      :page-size="listQuery.pageSize"
-      :current-page.sync="listQuery.currentPage"
-      @current-change="handleListQueryChange"
-      layout="total, prev, pager, next, jumper">
-    </el-pagination>
-
-    <el-dialog
-      :title="dialogType+'角色'"
-      width="35%"
-      @closed="dialogClose"
-      :visible.sync="dialogFormVisible">
-      <el-form :model="tempForm" label-width="100px" ref="dialogForm" :rules="rules">
-
-        <el-form-item label="序号" prop="id" v-show="dialogType==='修改'" >
-          <el-input v-model="tempForm.id" disabled></el-input>
-        </el-form-item>
-
-        <el-form-item label="角色名" prop="name">
-          <el-input v-model="tempForm.name" autocomplete="off" :disabled="dialogType==='修改'"></el-input>
-        </el-form-item>
-
-        <el-form-item label="角色中文名" prop="chineseName">
-          <el-input v-model="tempForm.chineseName" autocomplete="off"></el-input>
-        </el-form-item>
-
-        <el-form-item label="角色描述" prop="description">
-          <el-input
-            type="textarea"
-            v-model="tempForm.description"
-            maxlength="200"
-            show-word-limit
-            rows="8">
-          </el-input>
-        </el-form-item>
-
-      </el-form>
-
-      <div slot="footer" class="dialog-footer">
-        <el-button
-          size="medium"
-          round
-          @click="dialogFormVisible = false">取消</el-button>
+    <el-card shadow="hover">
+      <div class="filter-container">
         <el-button
           type="primary"
           size="medium"
           round
-          @click="dialogType==='新增'?insertRole():updateRole()"
-          :loading="buttonLoading"
-          :disabled="buttonLoading"
-        >确定</el-button>
+          icon="el-icon-upload"
+          :disabled="!checkPermission(['admin','developer'])"
+          @click="handleInsert">添加</el-button>
       </div>
+      <el-table
+        v-loading="listLoading"
+        :data="list"
+        element-loading-text="加载中"
+        border
+        fit
+        highlight-current-row
+      >
+        <!--<el-table-column label="序号" align="center" width="100">
+          <template slot-scope="scope">
+            {{ scope.row.id }}
+          </template>
+        </el-table-column>-->
 
-    </el-dialog>
+        <el-table-column label="角色名" align="center"  min-width="200">
+          <template slot-scope="scope">
+            {{ scope.row.name }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="角色中文名" align="center">
+          <template slot-scope="scope">
+            {{ scope.row.chineseName }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="角色描述" align="center"  min-width="400">
+          <template slot-scope="scope">
+            {{ scope.row.description }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="操作" align="center"  min-width="250">
+          <template slot-scope="scope">
+            <el-button
+              type="primary"
+              size="medium"
+              round
+              icon="el-icon-edit"
+              :disabled="!checkPermission(['admin','developer'])"
+              @click="handleUpdate(scope.row,scope.$index)">修改</el-button>
+            <el-button
+              type="danger"
+              size="medium"
+              round
+              icon="el-icon-delete"
+              @click="handleDelete(scope.row,scope.$index)"
+              :disabled="(scope.row.name==='admin')||!(checkPermission(['admin','developer']))">删除</el-button>
+          </template>
+        </el-table-column>
+
+      </el-table>
+
+      <el-pagination
+        style="margin-top: 15px"
+        background
+        :total="listQuery.totalSize"
+        :page-size="listQuery.pageSize"
+        :current-page.sync="listQuery.currentPage"
+        @current-change="handleListQueryChange"
+        layout="total, prev, pager, next, jumper">
+      </el-pagination>
+
+      <el-dialog
+        :title="dialogType+'角色'"
+        custom-class="dialogWidth"
+        @closed="dialogClose"
+        :visible.sync="dialogFormVisible">
+        <el-form :model="tempForm" label-width="100px" ref="dialogForm" :rules="rules">
+
+          <el-form-item label="序号" prop="id" v-show="dialogType==='修改'" >
+            <el-input v-model="tempForm.id" disabled></el-input>
+          </el-form-item>
+
+          <el-form-item label="角色名" prop="name">
+            <el-input v-model="tempForm.name" autocomplete="off" :disabled="dialogType==='修改'"></el-input>
+          </el-form-item>
+
+          <el-form-item label="角色中文名" prop="chineseName">
+            <el-input v-model="tempForm.chineseName" autocomplete="off"></el-input>
+          </el-form-item>
+
+          <el-form-item label="角色描述" prop="description">
+            <el-input
+              type="textarea"
+              v-model="tempForm.description"
+              maxlength="200"
+              show-word-limit
+              rows="8">
+            </el-input>
+          </el-form-item>
+
+        </el-form>
+
+        <div slot="footer" class="dialog-footer">
+          <el-button
+            size="medium"
+            round
+            @click="dialogFormVisible = false">取消</el-button>
+          <el-button
+            type="primary"
+            size="medium"
+            round
+            @click="dialogType==='新增'?insertRole():updateRole()"
+            :loading="buttonLoading"
+            :disabled="buttonLoading"
+          >确定</el-button>
+        </div>
+
+      </el-dialog>
+    </el-card>
   </div>
 </template>
 
@@ -284,6 +286,13 @@
   }
 </script>
 
-<style scoped>
-
+<style>
+  .dialogWidth{
+    width: 35%;
+  }
+  @media (max-width:1000px)  {
+    .dialogWidth{
+      width: 90%;
+    }
+  }
 </style>

@@ -1,151 +1,152 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
-      <el-select placeholder="根据角色查询" v-model="listQuery.roleId" clearable @change="handleListQueryChange">
-        <el-option
-          v-for=" item in roleOptions"
-          :key="item.name"
-          :label="item.chineseName"
-          :value="item.id"
-        ></el-option>
-      </el-select>
-      <el-button
-        type="primary"
-        size="medium"
-        round
-        icon="el-icon-upload"
-        :disabled="!checkPermission(['admin','developer'])"
-        @click="handleInsert" style="margin-left: 15px">添加</el-button>
-    </div>
-    <el-table
-      v-loading="listLoading"
-      :data="list"
-      element-loading-text="加载中"
-      border
-      fit
-      highlight-current-row
-    >
-      <el-table-column label="序号" align="center" width="150">
-        <template slot-scope="scope">
-          {{ scope.row.id }}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="姓名" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.name }}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="用户名" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.username }}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="联系方式" align="center" width="300">
-        <template slot-scope="scope">
-          {{ scope.row.phone }}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="角色" align="center" width="250">
-        <template slot-scope="scope">
-          {{ scope.row.role.chineseName }}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="操作" align="center">
-        <template slot-scope="scope">
-          <el-button
-            type="primary"
-            size="medium"
-            round
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row,scope.$index)"
-            :disabled="(scope.row.username==='admin')||!(checkPermission(['admin','developer']))">修改</el-button>
-          <el-button
-            type="danger"
-            size="medium"
-            round
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row,scope.$index)"
-          :disabled="(scope.row.username==='admin')||!(checkPermission(['admin','developer']))">删除</el-button>
-        </template>
-      </el-table-column>
-
-    </el-table>
-
-    <el-pagination
-      style="margin-top: 15px"
-      background
-      :total="listQuery.totalSize"
-      :page-size="listQuery.pageSize"
-      :current-page.sync="listQuery.currentPage"
-      @current-change="handleListQueryChange"
-      layout="total, prev, pager, next, jumper">
-    </el-pagination>
-
-    <!--新增或修改的对话框-->
-    <el-dialog
-      :title="dialogType+'用户'"
-      width="35%"
-      @closed="dialogClose"
-      :visible.sync="dialogFormVisible">
-      <el-form :model="tempForm" label-width="100px" ref="dialogForm" :rules="rules">
-
-        <el-form-item label="序号" prop="id" v-show="dialogType==='修改'" >
-          <el-input v-model="tempForm.id" disabled></el-input>
-        </el-form-item>
-
-        <el-form-item label="用户名" prop="username">
-          <el-input v-model="tempForm.username" autocomplete="off" :disabled="dialogType==='修改'"></el-input>
-        </el-form-item>
-
-        <el-form-item label="姓名" prop="name">
-          <el-input v-model="tempForm.name" autocomplete="off"></el-input>
-        </el-form-item>
-
-        <el-form-item label="联系方式" prop="phone">
-          <el-input v-model="tempForm.phone" autocomplete="off"></el-input>
-        </el-form-item>
-
-        <el-form-item :label="dialogType==='新增'?'分配角色':'修改角色'" prop="roleId">
-          <el-select placeholder="选择角色" v-model="tempForm.roleId" clearable>
-            <el-option
-              v-for=" item in roleOptions"
-              :key="item.name"
-              :label="item.chineseName"
-              :value="item.id"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-
-      </el-form>
-
-      <div v-show="dialogType==='新增'" style="margin-top: 30px">
-        <el-divider content-position="left">
-          初始登录密码为：用户名+123
-        </el-divider>
-      </div>
-
-      <div slot="footer" class="dialog-footer">
-        <el-button
-          size="medium"
-          round
-          @click="dialogFormVisible = false">取消</el-button>
+    <el-card shadow="hover">
+      <div class="filter-container">
+        <el-select placeholder="根据角色查询" v-model="listQuery.roleId" clearable @change="handleListQueryChange">
+          <el-option
+            v-for=" item in roleOptions"
+            :key="item.name"
+            :label="item.chineseName"
+            :value="item.id"
+          ></el-option>
+        </el-select>
         <el-button
           type="primary"
           size="medium"
           round
-          @click="dialogType==='新增'?insertUser():updateUser()"
-          :loading="buttonLoading"
-          :disabled="buttonLoading"
-        >确定</el-button>
+          icon="el-icon-upload"
+          :disabled="!checkPermission(['admin','developer'])"
+          @click="handleInsert" style="margin-left: 15px">添加</el-button>
       </div>
+      <el-table
+        v-loading="listLoading"
+        :data="list"
+        element-loading-text="加载中"
+        border
+        fit
+        highlight-current-row
+      >
+        <!--<el-table-column label="序号" align="center" width="150">
+          <template slot-scope="scope">
+            {{ scope.row.id }}
+          </template>
+        </el-table-column>-->
 
-    </el-dialog>
+        <el-table-column label="姓名" align="center" min-width="200">
+          <template slot-scope="scope">
+            {{ scope.row.name }}
+          </template>
+        </el-table-column>
 
+        <el-table-column label="用户名" align="center" min-width="200">
+          <template slot-scope="scope">
+            {{ scope.row.username }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="联系方式" align="center" min-width="300">
+          <template slot-scope="scope">
+            {{ scope.row.phone }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="角色" align="center">
+          <template slot-scope="scope">
+            {{ scope.row.role.chineseName }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="操作" align="center" min-width="250">
+          <template slot-scope="scope">
+            <el-button
+              type="primary"
+              size="medium"
+              round
+              icon="el-icon-edit"
+              @click="handleUpdate(scope.row,scope.$index)"
+              :disabled="(scope.row.username==='admin')||!(checkPermission(['admin','developer']))">修改</el-button>
+            <el-button
+              type="danger"
+              size="medium"
+              round
+              icon="el-icon-delete"
+              @click="handleDelete(scope.row,scope.$index)"
+              :disabled="(scope.row.username==='admin')||!(checkPermission(['admin','developer']))">删除</el-button>
+          </template>
+        </el-table-column>
+
+      </el-table>
+
+      <el-pagination
+        style="margin-top: 15px"
+        background
+        :total="listQuery.totalSize"
+        :page-size="listQuery.pageSize"
+        :current-page.sync="listQuery.currentPage"
+        @current-change="handleListQueryChange"
+        layout="total, prev, pager, next, jumper">
+      </el-pagination>
+
+      <!--新增或修改的对话框-->
+      <el-dialog
+        :title="dialogType+'用户'"
+        custom-class="dialogWidth"
+        @closed="dialogClose"
+        :visible.sync="dialogFormVisible">
+        <el-form :model="tempForm" label-width="100px" ref="dialogForm" :rules="rules">
+
+          <el-form-item label="序号" prop="id" v-show="dialogType==='修改'" >
+            <el-input v-model="tempForm.id" disabled></el-input>
+          </el-form-item>
+
+          <el-form-item label="用户名" prop="username">
+            <el-input v-model="tempForm.username" autocomplete="off" :disabled="dialogType==='修改'"></el-input>
+          </el-form-item>
+
+          <el-form-item label="姓名" prop="name">
+            <el-input v-model="tempForm.name" autocomplete="off"></el-input>
+          </el-form-item>
+
+          <el-form-item label="联系方式" prop="phone">
+            <el-input v-model="tempForm.phone" autocomplete="off"></el-input>
+          </el-form-item>
+
+          <el-form-item :label="dialogType==='新增'?'分配角色':'修改角色'" prop="roleId">
+            <el-select placeholder="选择角色" v-model="tempForm.roleId" clearable>
+              <el-option
+                v-for=" item in roleOptions"
+                :key="item.name"
+                :label="item.chineseName"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+
+        </el-form>
+
+        <div v-show="dialogType==='新增'" style="margin-top: 30px">
+          <el-divider content-position="left">
+            初始登录密码为：用户名+123
+          </el-divider>
+        </div>
+
+        <div slot="footer" class="dialog-footer">
+          <el-button
+            size="medium"
+            round
+            @click="dialogFormVisible = false">取消</el-button>
+          <el-button
+            type="primary"
+            size="medium"
+            round
+            @click="dialogType==='新增'?insertUser():updateUser()"
+            :loading="buttonLoading"
+            :disabled="buttonLoading"
+          >确定</el-button>
+        </div>
+
+      </el-dialog>
+    </el-card>
   </div>
 </template>
 
@@ -230,7 +231,6 @@
       }
     },
     created() {
-      console.log('permission->',this.checkPermission(['admin','developer']))
       this.fetchRoleOptions();
       this.fetchList(this.listQuery.roleId,this.listQuery.currentPage,this.listQuery.pageSize);
     },
@@ -345,6 +345,16 @@
   }
 </script>
 
-<style scoped>
-
+<style>
+  .dialogWidth{
+    width: 35%;
+  }
+  @media (max-width:1000px)  {
+    .el-select {
+      width: 45%;
+    }
+    .dialogWidth{
+      width: 90%;
+    }
+  }
 </style>

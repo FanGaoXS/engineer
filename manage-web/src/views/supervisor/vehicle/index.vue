@@ -1,76 +1,78 @@
 <template>
   <div class="app-container">
-    <el-table
-      v-loading="listLoading"
-      :data="list"
-      element-loading-text="加载中"
-      :default-sort = "{prop: 'id', order: 'ascending'}"
-      border
-      fit
-    >
+    <el-card shadow="hover">
+      <el-table
+        v-loading="listLoading"
+        :data="list"
+        element-loading-text="加载中"
+        :default-sort = "{prop: 'id', order: 'ascending'}"
+        border
+        fit
+      >
 
-      <el-table-column label="序号" align="center" width="75" prop="id">
-        <template slot-scope="scope">
-          {{ scope.row.id }}
-        </template>
-      </el-table-column>
+        <!--<el-table-column label="序号" align="center" width="75" prop="id">
+          <template slot-scope="scope">
+            {{ scope.row.id }}
+          </template>
+        </el-table-column>-->
 
-      <el-table-column label="车牌号" align="center" width="250">
-        <template slot-scope="scope">
-          {{ scope.row.vehicleNumber | plateNumberFilter }}
-        </template>
-      </el-table-column>
+        <el-table-column label="车牌号" align="center" min-width="250">
+          <template slot-scope="scope">
+            {{ scope.row.vehicleNumber | plateNumberFilter }}
+          </template>
+        </el-table-column>
 
-      <el-table-column label="驾驶员姓名" align="center" width="150">
-        <template slot-scope="scope">
-          {{ scope.row.driverName }}
-        </template>
-      </el-table-column>
+        <el-table-column label="驾驶员姓名" align="center" min-width="150">
+          <template slot-scope="scope">
+            {{ scope.row.driverName }}
+          </template>
+        </el-table-column>
 
-      <el-table-column label="驾驶员联系方式" align="center" width="200">
-        <template slot-scope="scope">
-          {{ scope.row.driverPhone }}
-        </template>
-      </el-table-column>
+        <el-table-column label="驾驶员联系方式" align="center" min-width="200">
+          <template slot-scope="scope">
+            {{ scope.row.driverPhone }}
+          </template>
+        </el-table-column>
 
-      <el-table-column label="总工作天数" align="center" >
-        <template slot-scope="scope">
-          {{ scope.row.totalWorkDays  }}
-        </template>
-      </el-table-column>
+        <el-table-column label="总工作天数" align="center" >
+          <template slot-scope="scope">
+            {{ scope.row.totalWorkDays  }}
+          </template>
+        </el-table-column>
 
-      <el-table-column label="总里程数" align="center" >
-        <template slot-scope="scope">
-          {{ scope.row.totalMileage | mileageFilter }}
-        </template>
-      </el-table-column>
+        <el-table-column label="总里程数" align="center" min-width="250">
+          <template slot-scope="scope">
+            {{ scope.row.totalMileage | mileageFilter }}
+          </template>
+        </el-table-column>
 
-      <el-table-column label="操作" width="250" align="center">
-        <template slot-scope="scope">
-          <!--路由跳转（跳转到名为Work的路由，并且将车牌号作为参数传递过去）-->
-          <el-button
-            round
-            :disabled="scope.row.totalMileage===0"
-            type="primary"
-            size="medium"
-            icon="el-icon-time"
-            @click="routerToWork(scope.row)">
-            查看工时
-          </el-button>
-        </template>
-      </el-table-column>
+        <el-table-column label="操作" width="250" align="center" min-width="250">
+          <template slot-scope="scope">
+            <!--路由跳转（跳转到名为Work的路由，并且将车牌号作为参数传递过去）-->
+            <el-button
+              round
+              :disabled="scope.row.totalMileage===0"
+              type="primary"
+              size="medium"
+              icon="el-icon-time"
+              @click="routerToWork(scope.row)">
+              查看工时
+            </el-button>
+          </template>
+        </el-table-column>
 
-    </el-table>
+      </el-table>
 
-    <el-pagination
-      style="margin-top: 15px"
-      background
-      :total="listQuery.totalSize"
-      :page-size="listQuery.pageSize"
-      :current-page.sync="listQuery.currentPage"
-      @current-change="handleCurrentChange"
-      layout="total, prev, pager, next, jumper">
-    </el-pagination>
+      <el-pagination
+        style="margin-top: 15px"
+        background
+        :total="listQuery.totalSize"
+        :page-size="listQuery.pageSize"
+        :current-page.sync="listQuery.currentPage"
+        @current-change="handleCurrentChange"
+        layout="total, prev, pager, next, jumper">
+      </el-pagination>
+    </el-card>
   </div>
 </template>
 
@@ -90,12 +92,8 @@ import AMapLoader from "@/utils/AMap";
 
 export default {
   filters: {
-    plateNumberFilter(plateNumber){
-      return plateNumberFilter(plateNumber); //执行globalFilters里的过滤器
-    },
-    mileageFilter(mileage){
-      return mileageFilter(mileage);
-    }
+    plateNumberFilter,
+    mileageFilter
   },
   data() {
     return {

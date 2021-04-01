@@ -1,88 +1,90 @@
 <template>
   <div class="app-container">
-    <el-form :model="form" label-width="80px" :rules="rules" ref="form">
-      <el-row><!--自适应的编号框-->
-        <el-col :xs="formColSpan.xs" :sm="formColSpan.sm" :md="formColSpan.md" :lg="formColSpan.lg">
-          <el-form-item label="编号">
-            <span>{{form.id}}</span>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row><!--自适应的用户名框-->
-        <el-col :xs="formColSpan.xs" :sm="formColSpan.sm" :md="formColSpan.md" :lg="formColSpan.lg">
-          <el-form-item label="用户名">
-            <span>{{form.username}}</span>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row><!--自适应的头像框-->
-        <el-col :xs="formColSpan.xs" :sm="formColSpan.sm" :md="formColSpan.md" :lg="formColSpan.lg">
-          <el-form-item label="头像">
-            <el-avatar :size="80">{{form.name}}</el-avatar>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row><!--自适应的姓名框-->
-        <el-col :xs="formColSpan.xs" :sm="formColSpan.sm" :md="formColSpan.md" :lg="formColSpan.lg">
-          <el-form-item label="姓名" prop="name">
-            <span v-show="!isUpdate">{{form.name}}</span>
-            <el-input v-show="isUpdate" v-model="form.name" />
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row><!--自适应的联系方式框-->
-        <el-col :xs="formColSpan.xs" :sm="formColSpan.sm" :md="formColSpan.md" :lg="formColSpan.lg">
-          <el-form-item label="联系方式" prop="phone">
-            <span v-show="!isUpdate">{{form.phone}}</span>
-            <el-input v-show="isUpdate" v-model="form.phone" />
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row><!--自适应的角色框-->
-        <el-col :xs="formColSpan.xs" :sm="formColSpan.sm" :md="formColSpan.md" :lg="formColSpan.lg">
-          <el-form-item label="角色">
-            <span>{{form.role.chineseName}}</span>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col>
+    <el-card shadow="hover">
+      <el-form :model="form" label-width="80px" :rules="rules" ref="form">
+        <el-row><!--自适应的编号框-->
+          <el-col :xs="formColSpan.xs" :sm="formColSpan.sm" :md="formColSpan.md" :lg="formColSpan.lg">
+            <el-form-item label="编号">
+              <span>{{form.id}}</span>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row><!--自适应的用户名框-->
+          <el-col :xs="formColSpan.xs" :sm="formColSpan.sm" :md="formColSpan.md" :lg="formColSpan.lg">
+            <el-form-item label="用户名">
+              <span>{{form.username}}</span>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row><!--自适应的头像框-->
+          <el-col :xs="formColSpan.xs" :sm="formColSpan.sm" :md="formColSpan.md" :lg="formColSpan.lg">
+            <el-form-item label="头像">
+              <el-avatar :size="80">{{form.name}}</el-avatar>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row><!--自适应的姓名框-->
+          <el-col :xs="formColSpan.xs" :sm="formColSpan.sm" :md="formColSpan.md" :lg="formColSpan.lg">
+            <el-form-item label="姓名" prop="name">
+              <span v-show="!isUpdate">{{form.name}}</span>
+              <el-input v-show="isUpdate" v-model="form.name" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row><!--自适应的联系方式框-->
+          <el-col :xs="formColSpan.xs" :sm="formColSpan.sm" :md="formColSpan.md" :lg="formColSpan.lg">
+            <el-form-item label="联系方式" prop="phone">
+              <span v-show="!isUpdate">{{form.phone}}</span>
+              <el-input v-show="isUpdate" v-model="form.phone" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row><!--自适应的角色框-->
+          <el-col :xs="formColSpan.xs" :sm="formColSpan.sm" :md="formColSpan.md" :lg="formColSpan.lg">
+            <el-form-item label="角色">
+              <span>{{form.role.chineseName}}</span>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col>
 
-        </el-col>
-      </el-row>
-      <el-form-item v-show="!isUpdate">
-        <el-button
-          @click="isUpdate = true"
-          type="primary"
-          icon="el-icon-edit"
-          size="medium"
-          :disabled="$store.state.user.roles[0]==='ghost'"
-          round>修改信息</el-button>
-        <el-button
-          @click="$router.push('Password')"
-          type="primary"
-          icon="el-icon-edit"
-          size="medium"
-          :disabled="$store.state.user.roles[0]==='ghost'"
-          round>修改密码</el-button>
-      </el-form-item>
-      <el-form-item v-show="isUpdate">
-        <el-button
-          @click="submitUpdate('form')"
-          type="primary"
-          icon="el-icon-check"
-          :loading="buttonLoading"
-          :disabled="buttonLoading"
-          size="medium"
-          round>确认修改</el-button>
-        <el-button
-          @click="cancelUpdate('form')"
-          type="danger"
-          icon="el-icon-delete"
-          size="medium"
-          round>取消</el-button>
-      </el-form-item>
-    </el-form>
+          </el-col>
+        </el-row>
+        <el-form-item v-show="!isUpdate">
+          <el-button
+            @click="isUpdate = true"
+            type="primary"
+            icon="el-icon-edit"
+            size="medium"
+            :disabled="$store.state.user.roles[0]==='ghost'"
+            round>修改信息</el-button>
+          <el-button
+            @click="$router.push('Password')"
+            type="primary"
+            icon="el-icon-edit"
+            size="medium"
+            :disabled="$store.state.user.roles[0]==='ghost'"
+            round>修改密码</el-button>
+        </el-form-item>
+        <el-form-item v-show="isUpdate">
+          <el-button
+            @click="submitUpdate('form')"
+            type="primary"
+            icon="el-icon-check"
+            :loading="buttonLoading"
+            :disabled="buttonLoading"
+            size="medium"
+            round>确认修改</el-button>
+          <el-button
+            @click="cancelUpdate('form')"
+            type="danger"
+            icon="el-icon-delete"
+            size="medium"
+            round>取消</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
   </div>
 </template>
 
@@ -196,5 +198,11 @@
 </script>
 
 <style scoped>
-
+  @media (max-width:550px)  {
+    .el-button {
+      width: 80%;
+      margin-top: 20px;
+      margin-left: -10px;
+    }
+  }
 </style>

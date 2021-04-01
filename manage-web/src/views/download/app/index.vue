@@ -1,50 +1,47 @@
 <template>
-  <el-container>
+  <div class="app-container">
+    <el-card shadow="hover">
+      <el-container>
+        <el-main>
+          <el-table
+            :data="tableData"
+            border
+            style="width: 100%"><!--表格-->
 
-    <!--<el-header>&lt;!&ndash;header&ndash;&gt;</el-header>-->
+            <el-table-column
+              type="index"
+              width="100">
+            </el-table-column>
 
-    <el-main>
-      <el-table
-        :data="tableData"
-        border
-        style="width: 100%"><!--表格-->
+            <el-table-column
+              prop="fileName"
+              label="文件名"
+              width="250">
+            </el-table-column>
 
-        <el-table-column
-          type="index"
-          width="100">
-        </el-table-column>
+            <el-table-column
+              prop="fileDes"
+              label="文件描述"
+              width="400">
+            </el-table-column>
 
-        <el-table-column
-          prop="fileName"
-          label="文件名"
-          width="250">
-        </el-table-column>
-
-        <el-table-column
-          prop="fileDes"
-          label="文件描述"
-          width="400">
-        </el-table-column>
-
-        <el-table-column
-          label="文件下载">
-          <template slot-scope="scope">
-            <a :href="scope.row.fileHref">
-              <el-button
-                size="medium"
-                round
-                icon="el-icon-download"
-                type="primary">下载</el-button>
-            </a>
-          </template>
-        </el-table-column>
-
-      </el-table>
-    </el-main>
-
-    <el-footer><!--footer--></el-footer>
-
-  </el-container>
+            <el-table-column
+              label="文件下载">
+              <template slot-scope="scope">
+                <a :href="scope.row.fileHref">
+                  <el-button
+                    size="medium"
+                    round
+                    icon="el-icon-download"
+                    type="primary">下载</el-button>
+                </a>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-main>
+      </el-container>
+    </el-card>
+  </div>
 </template>
 
 <script>

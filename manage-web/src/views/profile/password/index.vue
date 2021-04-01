@@ -1,48 +1,50 @@
 <template>
   <div class="app-container">
-    <el-form :model="form" label-width="80px" :rules="rules" ref="form">
-      <el-row>
-        <el-col :xs="formColSpan.xs" :sm="formColSpan.sm" :md="formColSpan.md" :lg="formColSpan.lg">
-          <el-form-item label="用户名" prop="username">
-            <el-input :value="form.username" disabled></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :xs="formColSpan.xs" :sm="formColSpan.sm" :md="formColSpan.md" :lg="formColSpan.lg">
-          <el-form-item label="旧密码" prop="oldPassword">
-            <el-input v-model="form.oldPassword" type="password" autocomplete="off"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :xs="formColSpan.xs" :sm="formColSpan.sm" :md="formColSpan.md" :lg="formColSpan.lg">
-          <el-form-item label="新密码" prop="newPassword">
-            <el-input v-model="form.newPassword" type="password" autocomplete="off"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :xs="formColSpan.xs" :sm="formColSpan.sm" :md="formColSpan.md" :lg="formColSpan.lg">
-          <el-form-item label="确认密码" prop="checkPassword">
-            <el-input v-model="form.checkPassword" type="password" autocomplete="off"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-form-item>
-        <el-button
-          size="medium"
-          round
-          type="primary"
-          @click="submitForm('form')"
-          :disabled="buttonLoading||$store.state.user.roles[0]==='ghost'"
-          :loading="buttonLoading">提交</el-button>
-        <el-button
-          round
-          size="medium"
-          @click="resetForm('form')">重置</el-button>
-      </el-form-item>
-    </el-form>
+    <el-card shadow="hover">
+      <el-form :model="form" label-width="80px" :rules="rules" ref="form">
+        <el-row>
+          <el-col :xs="formColSpan.xs" :sm="formColSpan.sm" :md="formColSpan.md" :lg="formColSpan.lg">
+            <el-form-item label="用户名" prop="username">
+              <el-input :value="form.username" disabled></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :xs="formColSpan.xs" :sm="formColSpan.sm" :md="formColSpan.md" :lg="formColSpan.lg">
+            <el-form-item label="旧密码" prop="oldPassword">
+              <el-input v-model="form.oldPassword" type="password" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :xs="formColSpan.xs" :sm="formColSpan.sm" :md="formColSpan.md" :lg="formColSpan.lg">
+            <el-form-item label="新密码" prop="newPassword">
+              <el-input v-model="form.newPassword" type="password" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :xs="formColSpan.xs" :sm="formColSpan.sm" :md="formColSpan.md" :lg="formColSpan.lg">
+            <el-form-item label="确认密码" prop="checkPassword">
+              <el-input v-model="form.checkPassword" type="password" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-form-item>
+          <el-button
+            size="medium"
+            round
+            type="primary"
+            @click="submitForm('form')"
+            :disabled="buttonLoading||$store.state.user.roles[0]==='ghost'"
+            :loading="buttonLoading">提交</el-button>
+          <el-button
+            round
+            size="medium"
+            @click="resetForm('form')">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
   </div>
 </template>
 

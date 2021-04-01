@@ -1,63 +1,65 @@
 <template>
-  <el-container>
-    <el-main>
+  <div class="app-container">
+    <el-card shadow="hover">
+      <el-main>
 
-      <!--进度条
-      show-text: 是否显示进度条中间的文字或图片，默认是true（显示）
-                 我的逻辑是判断当前测速的次数是否是最大或者是否出错
-                 如果是最大或出错就显示官方的正确和错误的logo提示（好看）
-                 平时正常测速的时候就不显示文字（很丑）
-      percentage：进度条的百分比（响应式根据次数来动态增加）
-      status：进度条的状态，利用过滤器来筛选，如果次数达到最大次数则设为
-              ‘success’，如果为错误设为'exception'（动态给进度条设置样式）
-      -->
-      <el-progress
-        type="circle"
-        :show-text="count===maxCount || isError"
-        :percentage="count"
-        :width="200"
-        :stroke-width="10"
-        :status="count | statusFilter(maxCount,isError) "></el-progress>
-      <el-row el-row :gutter="10">
-        <el-col
-          :xs="{span: 24,offset: 0}"
-          :sm="{span: 12,offset: 6}"
-          :md="{span: 8,offset: 8}">
-          <el-input :value="speedArray | aveSpeedFilter" readonly>
-            <template slot="prepend">{{isDownload?'下载':'上行'}}平均速率</template>
-          </el-input>
-        </el-col>
-      </el-row>
-      <el-row el-row :gutter="10">
-        <el-col
-          :xs="{span: 24,offset: 0}"
-          :sm="{span: 12,offset: 6}"
-          :md="{span: 8,offset: 8}">
-          <el-input :value="speedArray | maxSpeedFilter" readonly>
-            <template slot="prepend">{{isDownload?'下载':'上行'}}最大速率</template>
-          </el-input>
-        </el-col>
-      </el-row>
-      <el-button
-        @click="downloadButton"
-        round
-        icon="el-icon-download"
-        :disabled="flag"
-        type="primary"
-        :loading="flag"
-        size="medium">测试下载速度
-      </el-button>
-      <el-button
-        @click="uploadButton"
-        round
-        icon="el-icon-upload"
-        :disabled="flag"
-        type="success"
-        :loading="flag"
-        size="medium">测试上行速度
-      </el-button>
-    </el-main>
-  </el-container>
+        <!--进度条
+        show-text: 是否显示进度条中间的文字或图片，默认是true（显示）
+                   我的逻辑是判断当前测速的次数是否是最大或者是否出错
+                   如果是最大或出错就显示官方的正确和错误的logo提示（好看）
+                   平时正常测速的时候就不显示文字（很丑）
+        percentage：进度条的百分比（响应式根据次数来动态增加）
+        status：进度条的状态，利用过滤器来筛选，如果次数达到最大次数则设为
+                ‘success’，如果为错误设为'exception'（动态给进度条设置样式）
+        -->
+        <el-progress
+          type="circle"
+          :show-text="count===maxCount || isError"
+          :percentage="count"
+          :width="200"
+          :stroke-width="10"
+          :status="count | statusFilter(maxCount,isError) "></el-progress>
+        <el-row el-row :gutter="10">
+          <el-col
+            :xs="{span: 24,offset: 0}"
+            :sm="{span: 12,offset: 6}"
+            :md="{span: 8,offset: 8}">
+            <el-input :value="speedArray | aveSpeedFilter" readonly>
+              <template slot="prepend">{{isDownload?'下载':'上行'}}平均速率</template>
+            </el-input>
+          </el-col>
+        </el-row>
+        <el-row el-row :gutter="10">
+          <el-col
+            :xs="{span: 24,offset: 0}"
+            :sm="{span: 12,offset: 6}"
+            :md="{span: 8,offset: 8}">
+            <el-input :value="speedArray | maxSpeedFilter" readonly>
+              <template slot="prepend">{{isDownload?'下载':'上行'}}最大速率</template>
+            </el-input>
+          </el-col>
+        </el-row>
+        <el-button
+          @click="downloadButton"
+          round
+          icon="el-icon-download"
+          :disabled="flag"
+          type="primary"
+          :loading="flag"
+          size="medium">测试下载速度
+        </el-button>
+        <el-button
+          @click="uploadButton"
+          round
+          icon="el-icon-upload"
+          :disabled="flag"
+          type="success"
+          :loading="flag"
+          size="medium">测试上行速度
+        </el-button>
+      </el-main>
+    </el-card>
+  </div>
 </template>
 
 <script>
@@ -282,5 +284,13 @@
 
   .el-row{
     margin: 15px;
+  }
+
+  @media (max-width:550px)  {
+    .el-button {
+      width: 100%;
+      margin-top: 20px;
+      margin-left: -10px;
+    }
   }
 </style>

@@ -1,98 +1,97 @@
 <template>
   <div class="app-container">
+    <el-card shadow="hover">
+      <el-header style="margin-top: 10px">
+        <el-page-header @back="routerBack" content="轨迹详情">
+        </el-page-header>
+      </el-header>
 
-    <el-header style="margin-top: 10px">
-      <el-page-header @back="routerBack" content="轨迹详情">
-      </el-page-header>
-    </el-header>
+      <el-amap vid="aMap"
+               class="aMap"
+               :plugin="plugins"
+               :center="center"
+               :zoom="zoom"><!--高德地图地图容器组件-->
+        <el-amap-polyline
+          :path="path"
+          :lineJoin="'round'"
+          strokeColor="#409EFF"
+          strokeOpacity="0.8"
+          strokeWeight="5"
+          strokeStyle= "solid"
+        /><!--轨迹折线-->
 
-    <el-amap vid="aMap"
-             class="aMap"
-             :plugin="plugins"
-             :center="center"
-             :zoom="zoom"><!--高德地图地图容器组件-->
-      <el-amap-polyline
-        :path="path"
-        :lineJoin="'round'"
-        strokeColor="#409EFF"
-        strokeOpacity="0.8"
-        strokeWeight="5"
-        strokeStyle= "solid"
-      /><!--轨迹折线-->
+        <el-amap-marker
+          vid="startMarker"
+          :position="startMarker.position"
+          title="起点"
+        /><!--起点标记-->
 
-      <el-amap-marker
-        vid="startMarker"
-        :position="startMarker.position"
-        title="起点"
-      /><!--起点标记-->
+        <el-amap-text
+          text="起点"
+          :position="startMarker.position"
+          :offset="[0,-50]"
+        /><!--起点文字-->
 
-      <el-amap-text
-        text="起点"
-        :position="startMarker.position"
-        :offset="[0,-50]"
-      /><!--起点文字-->
+        <el-amap-marker
+          vid="endMarker"
+          :position="endMarker.position"
+          title="终点"
+        /><!--终点标记-->
 
-      <el-amap-marker
-        vid="endMarker"
-        :position="endMarker.position"
-        title="终点"
-      /><!--终点标记-->
+        <el-amap-text
+          text="终点"
+          :position="endMarker.position"
+          :offset="[0,-50]"
+        /><!--终点文字-->
 
-      <el-amap-text
-        text="终点"
-        :position="endMarker.position"
-        :offset="[0,-50]"
-      /><!--终点文字-->
+      </el-amap>
 
-    </el-amap>
+      <el-row :gutter="10" style="margin-top: 15px"><!--响应式第一行-->
+        <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+          <el-input :value="vehicleNumber | plateNumberFilter" readonly>
+            <template slot="prepend">车牌号</template>
+          </el-input>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+          <el-input :value="mileage | mileageFilter " readonly>
+            <template slot="prepend">里程</template>
+          </el-input>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+          <el-input :value="aveAltitude" readonly>
+            <template slot="prepend">平均海拔</template>
+          </el-input>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+          <el-input :value="estimateFuelConsumptionAll" readonly>
+            <template slot="prepend">总耗油（估算）</template>
+          </el-input>
+        </el-col>
+      </el-row>
 
-    <el-row :gutter="10" style="margin-top: 15px"><!--响应式第一行-->
-      <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-        <el-input :value="vehicleNumber | plateNumberFilter" readonly>
-          <template slot="prepend">车牌号</template>
-        </el-input>
-      </el-col>
-      <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-        <el-input :value="mileage | mileageFilter " readonly>
-          <template slot="prepend">里程</template>
-        </el-input>
-      </el-col>
-      <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-        <el-input :value="aveAltitude" readonly>
-          <template slot="prepend">平均海拔</template>
-        </el-input>
-      </el-col>
-      <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-        <el-input :value="estimateFuelConsumptionAll" readonly>
-          <template slot="prepend">总耗油（估算）</template>
-        </el-input>
-      </el-col>
-    </el-row>
-
-    <el-row :gutter="10"><!--响应式第二行-->
-      <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-        <el-input :value="startPoint | pointFilter" readonly>
-          <template slot="prepend">起点</template>
-        </el-input>
-      </el-col>
-      <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-        <el-input :value="endPoint | pointFilter" readonly>
-          <template slot="prepend">终点</template>
-        </el-input>
-      </el-col>
-      <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-        <el-input :value="startTime | dateFilter" readonly>
-          <template slot="prepend">起点时间</template>
-        </el-input>
-      </el-col>
-      <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-        <el-input :value="endTime | dateFilter" readonly>
-          <template slot="prepend">终点时间</template>
-        </el-input>
-      </el-col>
-    </el-row>
-
-
+      <el-row :gutter="10"><!--响应式第二行-->
+        <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+          <el-input :value="startPoint | pointFilter" readonly>
+            <template slot="prepend">起点</template>
+          </el-input>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+          <el-input :value="endPoint | pointFilter" readonly>
+            <template slot="prepend">终点</template>
+          </el-input>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+          <el-input :value="startTime | dateFilter" readonly>
+            <template slot="prepend">起点时间</template>
+          </el-input>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+          <el-input :value="endTime | dateFilter" readonly>
+            <template slot="prepend">终点时间</template>
+          </el-input>
+        </el-col>
+      </el-row>
+    </el-card>
   </div>
 </template>
 
@@ -155,12 +154,8 @@ export default {
       if (point===undefined) return ;
       return '经度：'+point[0]+'，纬度：'+point[1];
     },
-    plateNumberFilter(plateNumber) {
-      return plateNumberFilter(plateNumber);
-    },
-    mileageFilter(mileage){
-      return mileageFilter(mileage);
-    }
+    plateNumberFilter,
+    mileageFilter
   },
   data() {
     return {
@@ -234,6 +229,13 @@ export default {
   .el-col {
     margin-top: 5px;
     padding: 5px;
+  }
+
+  /*如果屏幕宽度小于550px则地图容器高度为300px*/
+  @media (max-width:550px)  {
+    .aMap {
+      height: 300px;
+    }
   }
 
 </style>
