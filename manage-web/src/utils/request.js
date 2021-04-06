@@ -62,7 +62,7 @@ axiosInstance.interceptors.response.use(
   error => {
     console.log('response interceptors error->' + error) // for debug
     Message({
-      message: error.message,
+      message: '网络连接错误：'+error.message,
       type: 'error',
       duration: 5 * 1000
     })

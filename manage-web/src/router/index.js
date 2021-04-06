@@ -252,13 +252,6 @@ export const asyncRoutes = [
         component: () => import('@/views/supervisor/vehicle/index'),
       },
 
-      /*{ //机械监理
-        path: 'machine',
-        name: 'Machine',
-        meta: {title: '机械监理（待开发）',},
-        component: () => import('@/views/supervisor/machine/index')
-      },*/
-
       { //工时列表（根据车牌号）
         hidden: true,
         path: 'work/:vehicleNumber',
