@@ -84,11 +84,92 @@
             round>取消</el-button>
         </el-form-item>
       </el-form>
+
+      <div class="filter-container">
+
+        <el-select placeholder="根据客户端查询" v-model="listQuery.client" clearable @change="handleListQueryChange" style="margin-left: 15px">
+          <el-option
+            v-for=" item in clientOptions"
+            :key="item"
+            :label="item"
+            :value="item"
+          ></el-option>
+        </el-select>
+
+      </div>
+
+      <el-table
+        v-loading="listLoading"
+        style="width: 100%"
+        :data="list"
+        element-loading-text="加载中"
+        border
+        fit
+        highlight-current-row
+        :default-sort = "{prop: 'time', order: 'descending'}"
+      >
+
+        <!--<el-table-column label="序号" align="center" width="100">
+          <template slot-scope="scope">
+            {{ scope.row.id }}
+          </template>
+        </el-table-column>-->
+
+        <el-table-column label="操作名" align="center" min-width="200">
+          <template slot-scope="scope">
+            {{ scope.row.name }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="来源客户端" align="center" min-width="200">
+          <template slot-scope="scope">
+            {{ scope.row.client }}
+          </template>
+        </el-table-column>
+
+        <!--<el-table-column label="操作者" align="center">
+          <template slot-scope="scope">
+            {{ scope.row.executor }}
+          </template>
+        </el-table-column>-->
+
+        <el-table-column label="操作时间" align="center" min-width="300" sortable prop="time">
+          <template slot-scope="scope">
+            <i class="el-icon-time" />
+            {{ scope.row.time | timeFilter }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="ip地址" align="center" min-width="200">
+          <template slot-scope="scope">
+            {{ scope.row.ip }}
+          </template>
+        </el-table-column>
+
+      </el-table>
+      <el-pagination
+        style="margin-top: 15px"
+        background
+        :total="listQuery.totalSize"
+        :page-size="listQuery.pageSize"
+        :current-page.sync="listQuery.currentPage"
+        @current-change="handleListQueryChange"
+        layout="total, prev, pager, next, jumper">
+      </el-pagination>
+
     </el-card>
   </div>
 </template>
 
 <script>
+
+  import {
+    timeFilter
+  } from "@/utils/global-filters";
+
+  import {
+    getLoggerList
+  } from "@/api/logger";
 
   import {
     getUser,
@@ -104,6 +185,9 @@
 
   export default {
     name: "index",
+    filters: {
+      timeFilter
+    },
     data() {
       const validatorName = (rule, value, callback) => {
         if (!validateName(value)){
@@ -141,11 +225,22 @@
         },
         isUpdate: false,
         buttonLoading: false,
-        formColSpan:{ xs:24, sm:18, md:12, lg:10 }
+        formColSpan:{ xs:24, sm:18, md:12, lg:10 },
+        listLoading: true,
+        list: [ ],
+        listQuery: {
+          currentPage: 1,
+          pageSize: 10,
+          totalSize: 0,
+          client: undefined
+        },
+        clientOptions: [ ]
       }
     },
     created() {
       this.fetchData(this.id)
+      this.fetchClientOptions()
+      this.fetchLoggerList(this.name,this.listQuery.client,this.listQuery.currentPage, this.listQuery.pageSize)
     },
     methods: {
       submitUpdate(formName){
@@ -188,11 +283,29 @@
           this.$router.go(0)
         },1000*second) //多少秒后刷新当前页
       },
+      handleListQueryChange(){
+        this.fetchLoggerList(this.name,this.listQuery.client,this.listQuery.currentPage, this.listQuery.pageSize)
+      },
+      async fetchLoggerList(name,client,currentPage,pageSize) {
+        this.listLoading = true
+        const { data:loggerList } = await getLoggerList(this.name,client,currentPage,pageSize)
+        this.list = loggerList.items
+        this.listQuery.currentPage = loggerList.currentPage
+        this.listQuery.pageSize = loggerList.pageSize
+        this.listQuery.totalSize = loggerList.totalSize
+        this.listLoading = false
+      },
+      fetchClientOptions(){
+        this.clientOptions = [ 'manage-web', 'postman', 'upload-web', '未知' ];
+      }
     },
     computed: {
       id(){
         return this.$store.state.user.id
       },
+      name(){
+        return this.$store.state.user.name
+      }
     },
   }
 </script>
@@ -203,6 +316,9 @@
       width: 80%;
       margin-top: 20px;
       margin-left: -10px;
+    }
+    .el-select {
+      width: 45%;
     }
   }
 </style>

@@ -86,6 +86,7 @@
 </template>
 
 <script>
+
   import {
     timeFilter
   } from "@/utils/global-filters";
@@ -93,7 +94,10 @@
   import {
     getLoggerList
   } from "@/api/logger";
-  import {getUserList} from "@/api/user/user";
+
+  import {
+    getUserList
+  } from "@/api/user/user";
 
   export default {
     name: "index",
