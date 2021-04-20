@@ -56,7 +56,7 @@ const actions = {
       login({ username: username.trim(), password: password, validityDay: validityDay}).then(response => {
         const { data } = response
         commit('SET_TOKEN', data.token) //将token放入store的state中
-        setToken(data.token) //将token存入cookies
+        setToken(data.token,validityDay) //将token存入cookies
         resolve()
       }).catch(error => {
         reject(error)
@@ -91,10 +91,11 @@ const actions = {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         console.log(state.name,'退出')
-        commit('SET_TOKEN', '')
-        commit('SET_ROLES', [])
         removeToken()   // 移除cookies中的token（第一步必须这么做！！！）
         resetRouter()   // 重置路由
+        commit('SET_TOKEN', '')
+        commit('SET_ROLES', [])
+        commit('RESET_STATE')
         resolve()
       }).catch(error => {
         reject(error)

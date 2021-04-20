@@ -61,7 +61,6 @@
 
   export default {
     name: "index",
-
     created() {
       AMapLoader().then(AMap => {
         this.map = AMap; // 加载成功后将异步加载的高德原生js赋给this.map

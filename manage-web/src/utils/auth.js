@@ -7,9 +7,9 @@ export function getToken() {
   return Cookies.get(TokenKey)
 }
 
-//将key为vue_admin_template_token的token放入cookies中
-export function setToken(token) {
-  return Cookies.set(TokenKey, token)
+//将key为vue_admin_template_token的token放入cookies中（设置cookies过期时间（number类型））
+export function setToken(token,expires=7) {
+  return Cookies.set(TokenKey, token, { expires })
 }
 
 //将cookies中key为vue_admin_template_token的token移除

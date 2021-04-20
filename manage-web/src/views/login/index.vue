@@ -46,13 +46,13 @@
         type="primary"
         style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
-      <!--<div class="tips">
+      <div class="tips">
         <el-radio-group v-model="loginForm.validityDay" size="small">
-          <el-radio-button label="30">30天免登录</el-radio-button>
-          <el-radio-button label="180">180天免登录</el-radio-button>
-          <el-radio-button label="360">360天免登录</el-radio-button>
+          <el-radio-button :label="30">30天免登录</el-radio-button>
+          <el-radio-button :label="180">180天免登录</el-radio-button>
+          <el-radio-button :label="360">360天免登录</el-radio-button>
         </el-radio-group>
-      </div>-->
+      </div>
 
     </el-form>
   </div>

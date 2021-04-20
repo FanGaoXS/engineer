@@ -49,12 +49,10 @@ export default {
   },
   computed: {
     ...mapGetters([
+      'name',
       'sidebar',
       'avatar'
-    ]),
-    name() {
-      return this.$store.state.user.name;
-    }
+    ])
   },
   methods: {
     toggleSideBar() {

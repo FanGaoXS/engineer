@@ -27,7 +27,7 @@ public class CrudInterceptor implements HandlerInterceptor {
                              HttpServletResponse response,
                              Object handler) throws Exception {
         String client = request.getHeader("X-Client");//从header中获取client
-        //System.out.println("client = " + client);
+//        System.out.println("client = " + client);
         if (client==null||client.equals("")){//如果client为null则不放行
             return false;//不放行
         } else if (client.equals("upload-web")){//如果来自上传小程序则直接放行不进行身份验证的操作
@@ -45,7 +45,6 @@ public class CrudInterceptor implements HandlerInterceptor {
             response.getWriter().print("token异常："+e.getMessage());
             return false;//不放行
         }
-        System.out.println("CrudInterceptor拦截成功");
         return false;
     }
 }
