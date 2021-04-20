@@ -111,13 +111,16 @@
           if (valid){ //验证通过
             this.buttonLoading = true //按钮进入加载
             //向后端发起修改密码的请求
-            updatePassword(this.form).then(res=>{ //请求成功
+            updatePassword(this.form).then(async res=>{ //请求成功
               this.$notify({
-                type: res.data===true?'success':'error',
-                title: res.data===true?'成功':'失败',
+                type: res.data?'success':'error',
+                title: res.data?'成功，请重新登录！':'失败',
                 message: '修改密码'+(res.data===true?'成功':'失败')
               })
-              this.refreshView(2) //请求收到后2秒后刷新页面
+              if (res.data){ //如果修改密码成功，则强制退出，让用户重新登录
+                await this.$store.dispatch('user/logout')
+                this.$router.push('/login') //重定向到login
+              }
             }).catch(error=>{ //请求失败
               this.buttonLoading = false
               this.resetForm('form') //清空表单
@@ -131,15 +134,9 @@
       resetForm(formName) {
         this.$refs[formName].resetFields()
       },
-      //刷新页面
-      refreshView(second=2){
-        setTimeout(()=>{
-          this.buttonLoading = false
-          this.$router.go(0)
-        },1000*second) //多少秒后刷新当前页
-      }
     },
     computed: {
+
       id() {
         return this.$store.state.user.id
       },
