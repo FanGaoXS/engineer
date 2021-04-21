@@ -168,17 +168,18 @@
         this.$refs[formName].validate(valid=>{
           if (valid&&this.vehicleForm.uuid!==''){ //如果所有表单验证通过
             insertVehicle(this.vehicleForm).then(res => {
-              if (res.data){
-                this.$notify.success({
-                  title: '成功',
-                  message: res.message + ' 成功!'
-                })
-              } else {
-                this.$notify.error({
-                  title: '失败',
-                  message: res.message + ' 失败!'
-                })
-              }
+              console.log(res)
+              this.$notify({
+                type: res.data?'success':'error',
+                title: res.data?'成功':'失败',
+                message: res.message
+              })
+            }).catch(error=>{
+              console.log('新增车辆失败：',error)
+              this.$notify.error({
+                title: '失败',
+                message: error
+              })
             })
           }
         })

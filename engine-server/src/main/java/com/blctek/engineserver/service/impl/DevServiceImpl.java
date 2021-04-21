@@ -1,6 +1,7 @@
 package com.blctek.engineserver.service.impl;
 
 import com.blctek.engineserver.service.DevService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -15,13 +16,15 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class DevServiceImpl implements DevService {
 
-    //device服务器
-    public static String DEV_BASE_URL = "http://172.16.0.95:8880";
+    //device服务器（从application.yaml配置文件中读取值）
+    @Value("${engineer.deviceUrl}")
+    private String deviceUrl;
 
     @Override
     public HttpStatus insertDev(String deviceId,String number) {
+        System.out.println("deviceUrl = " + deviceUrl);
         RestTemplate restTemplate = new RestTemplate();
-        String url = DEV_BASE_URL + "/v1/vn/" + deviceId; // http请求的url
+        String url = deviceUrl + "/v1/vn/" + deviceId; // http请求的url
         HttpHeaders headers = new HttpHeaders();    //http请求的头
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);//设置http请求头为json
         //将headers和body封装成完整的http请求
