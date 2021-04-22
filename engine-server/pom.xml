@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.blctek</groupId>
     <artifactId>engine-server</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
     <name>engine-server</name>
     <description>工程用具数据后端</description>
     <properties>

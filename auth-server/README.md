@@ -1,2 +1,0 @@
-基于jwt的权限验证
-基于RestTemplate对http请求对ldap-server服务器的数据进行操作
