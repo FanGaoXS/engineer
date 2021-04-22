@@ -14,6 +14,7 @@ const getDefaultState = () => {
   }
 }
 
+//每次用户进入该项目都会执行该方法（从cookies中获得token）
 const state = getDefaultState()
 
 //同步方法
@@ -93,8 +94,6 @@ const actions = {
         console.log(state.name,'退出')
         removeToken()   // 移除cookies中的token（第一步必须这么做！！！）
         resetRouter()   // 重置路由
-        commit('SET_TOKEN', '')
-        commit('SET_ROLES', [])
         commit('RESET_STATE')
         resolve()
       }).catch(error => {
@@ -106,9 +105,9 @@ const actions = {
   // 移除token
   resetToken({ commit }) {
     return new Promise(resolve => {
+      removeToken() // must remove  token  first
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
-      removeToken() // must remove  token  first
       resolve()
     })
   },

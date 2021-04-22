@@ -1,3 +1,4 @@
+#当前配置文件名称
 spring:
   config:
     activate:
