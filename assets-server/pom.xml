@@ -8,9 +8,9 @@
         <version>2.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.blctek</groupId>
+    <groupId>com.fangaoxs</groupId>
     <artifactId>assets-server</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
     <name>assets-server</name>
     <description>静态资源服务器</description>
     <properties>
@@ -19,9 +19,9 @@
     <dependencies>
 
         <dependency><!--后端公用模块-->
-            <groupId>com.blctek</groupId>
+            <groupId>com.fangaoxs</groupId>
             <artifactId>common-server</artifactId>
-            <version>1.2.5</version>
+            <version>1.2.6</version>
         </dependency>
 
         <dependency>

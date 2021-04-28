@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.blctek.userserver.mapper.RoleMapper">
+<mapper namespace="com.fangaoxs.userserver.mapper.RoleMapper">
     <!--select的条件sql（全有）-->
     <sql id="selectCondition">
         <if test=" id!=null and id!='' ">
@@ -46,7 +46,7 @@
         r.description       AS rDescription
     </sql>
     <!--返回的结果集-->
-    <resultMap id="RoleMap" type="com.blctek.userserver.pojo.Role">
+    <resultMap id="RoleMap" type="com.fangaoxs.userserver.pojo.Role">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="chineseName" property="chineseName"/>
@@ -56,7 +56,7 @@
     <insert id="insertOne"
             keyProperty="id"
             useGeneratedKeys="true"
-            parameterType="com.blctek.userserver.pojo.Role">
+            parameterType="com.fangaoxs.userserver.pojo.Role">
         INSERT INTO
             role
             (name,chineseName,description)
@@ -65,7 +65,7 @@
     </insert>
     <!--删除一条记录-->
     <delete id="deleteOne"
-            parameterType="com.blctek.userserver.pojo.Role">
+            parameterType="com.fangaoxs.userserver.pojo.Role">
         DELETE FROM
             role
         WHERE
@@ -73,7 +73,7 @@
     </delete>
     <!--修改一条记录（根据id主键）-->
     <update id="updateOne"
-            parameterType="com.blctek.userserver.pojo.Role">
+            parameterType="com.fangaoxs.userserver.pojo.Role">
         UPDATE
             role
         <trim prefix="SET" suffixOverrides=",">
@@ -84,7 +84,7 @@
     </update>
     <!--查询所有（可分页，可单条件，可多条件）-->
     <select id="selectList"
-            parameterType="com.blctek.userserver.pojo.Role"
+            parameterType="com.fangaoxs.userserver.pojo.Role"
             resultMap="RoleMap">
         SELECT
             *
@@ -101,7 +101,7 @@
     </select>
     <!--查询一条（可单条件，可多条件）-->
     <select id="selectOne"
-            parameterType="com.blctek.userserver.pojo.Role"
+            parameterType="com.fangaoxs.userserver.pojo.Role"
             resultMap="RoleMap">
         SELECT
             *
@@ -113,7 +113,7 @@
     </select>
     <!--根据主键id（效率高）查询记录数（可单条件，可多条件）-->
     <select id="count"
-            parameterType="com.blctek.userserver.pojo.Role"
+            parameterType="com.fangaoxs.userserver.pojo.Role"
             resultType="long">
         SELECT
             count(id)

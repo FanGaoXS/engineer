@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.blctek.userserver.mapper.UserMapper">
+<mapper namespace="com.fangaoxs.userserver.mapper.UserMapper">
     <!--select的条件sql（全有）-->
     <sql id="selectCondition">
         <if test=" id!=null and id!='' ">
@@ -74,7 +74,7 @@
         u.roleId            AS uRoleId
     </sql>
     <!--返回的结果集-->
-    <resultMap id="userMap" type="com.blctek.userserver.pojo.User">
+    <resultMap id="userMap" type="com.fangaoxs.userserver.pojo.User">
         <id column="uId" property="id"/>
         <result column="uUuid" property="uuid"/>
         <result column="uUsername" property="username"/>
@@ -83,7 +83,7 @@
         <result column="uAvatar" property="avatar"/>
         <result column="uPhone" property="phone"/>
         <result column="uRoleId" property="roleId"/>
-        <association property="role" javaType="com.blctek.userserver.pojo.Role">
+        <association property="role" javaType="com.fangaoxs.userserver.pojo.Role">
             <id column="rId" property="id"/>
             <result column="rName" property="name"/>
             <result column="rChineseName" property="chineseName"/>
@@ -94,7 +94,7 @@
     <insert id="insertOne"
             keyProperty="id"
             useGeneratedKeys="true"
-            parameterType="com.blctek.userserver.pojo.User">
+            parameterType="com.fangaoxs.userserver.pojo.User">
         INSERT INTO
             user
             (uuid,username,password,name,avatar,phone,roleId)
@@ -103,12 +103,12 @@
     </insert>
     <!--删除一条-->
     <delete id="deleteOne"
-            parameterType="com.blctek.userserver.pojo.User">
+            parameterType="com.fangaoxs.userserver.pojo.User">
         DELETE FROM user WHERE id = #{id}
     </delete>
     <!--修改一条（根据id主键）-->
     <update id="updateOne"
-            parameterType="com.blctek.userserver.pojo.User">
+            parameterType="com.fangaoxs.userserver.pojo.User">
         UPDATE
             user
         <trim prefix="SET" suffixOverrides=",">
@@ -119,11 +119,11 @@
     </update>
     <!--查询所有（可分页，可单条件，可多条件）-->
     <select id="selectList"
-            parameterType="com.blctek.userserver.pojo.User"
+            parameterType="com.fangaoxs.userserver.pojo.User"
             resultMap="userMap">
         SELECT
             <include refid="userAs"></include>,
-            <include refid="com.blctek.userserver.mapper.RoleMapper.roleAs"></include>
+            <include refid="com.fangaoxs.userserver.mapper.RoleMapper.roleAs"></include>
         FROM
             user u
             JOIN role r on u.roleId = r.id
@@ -138,11 +138,11 @@
     </select>
     <!--查询一条（可单条件，可多条件）-->
     <select id="selectOne"
-            parameterType="com.blctek.userserver.pojo.User"
+            parameterType="com.fangaoxs.userserver.pojo.User"
             resultMap="userMap">
         SELECT
             <include refid="userAs"></include>,
-            <include refid="com.blctek.userserver.mapper.RoleMapper.roleAs"></include>
+            <include refid="com.fangaoxs.userserver.mapper.RoleMapper.roleAs"></include>
         FROM
             user u
             JOIN role r on u.roleId = r.id
@@ -152,7 +152,7 @@
     </select>
     <!--查询记录数（可单条件，可多条件）-->
     <select id="count"
-            parameterType="com.blctek.userserver.pojo.User"
+            parameterType="com.fangaoxs.userserver.pojo.User"
             resultType="long">
         SELECT
             count(u.id)

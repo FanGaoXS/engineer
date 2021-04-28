@@ -5,7 +5,6 @@ import request from '@/utils/request'
  * @returns {AxiosPromise}
  */
 export function deleteVehicle(row) {
-  /*console.log('deleteVehicle------>row',row)*/
   return request({
     url: 'engine-server/engineer/deleteVehicle',
     method: 'GET',
@@ -65,6 +64,7 @@ export function getVehicleList(currentPage,pageSize) {
 export function getWorkListByVehicleNumber(vehicleNumber) {
   // console.log(vehicleNumber);
   return request({
+    baseURL: 'https://car.blctek.com:8443',
     url: 'polyline-server/'+vehicleNumber,
     method: 'GET'
   });
@@ -77,9 +77,8 @@ export function getWorkListByVehicleNumber(vehicleNumber) {
  * @returns {AxiosPromise}
  */
 export async function getPointListByVehicleNumberAndDate(vehicleNumber,date) {
-  /*console.log(vehicleNumber);
-  console.log(date);*/
   return request({
+    baseURL: 'https://car.blctek.com:8443',
     url: 'polyline-server/'+vehicleNumber+'/'+date,
     method: 'GET',
   });

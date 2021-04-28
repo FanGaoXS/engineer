@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.blctek.engineserver.mapper.DriverMapper">
+<mapper namespace="com.fangaoxs.engineserver.mapper.DriverMapper">
     <!--select的条件sql（全有）-->
     <sql id="selectCondition">
         <if test=" id!=null and id!='' ">
@@ -46,7 +46,7 @@
         d.phone         AS dPhone
     </sql>
     <!--返回的结果集-->
-    <resultMap id="DriverMap" type="com.blctek.engineserver.pojo.Driver">
+    <resultMap id="DriverMap" type="com.fangaoxs.engineserver.pojo.Driver">
         <id column="dId" property="id"/>
         <result column="dUuid" property="uuid"/>
         <result column="dName" property="name"/>
@@ -56,7 +56,7 @@
     <insert id="insertOne"
             keyProperty="id"
             useGeneratedKeys="true"
-            parameterType="com.blctek.engineserver.pojo.Driver">
+            parameterType="com.fangaoxs.engineserver.pojo.Driver">
         INSERT INTO
             driver
             (uuid,name,phone)
@@ -65,7 +65,7 @@
     </insert>
     <!--删除一条记录-->
     <delete id="deleteOne"
-            parameterType="com.blctek.engineserver.pojo.Driver">
+            parameterType="com.fangaoxs.engineserver.pojo.Driver">
         DELETE FROM
             driver
         WHERE
@@ -73,7 +73,7 @@
     </delete>
     <!--修改一条记录（根据id主键）-->
     <update id="updateOne"
-            parameterType="com.blctek.engineserver.pojo.Driver">
+            parameterType="com.fangaoxs.engineserver.pojo.Driver">
         UPDATE
             driver
         <trim prefix="SET" suffixOverrides=",">
@@ -84,7 +84,7 @@
     </update>
     <!--查询所有（可分页，可单条件，可多条件）-->
     <select id="selectList"
-            parameterType="com.blctek.engineserver.pojo.Driver"
+            parameterType="com.fangaoxs.engineserver.pojo.Driver"
             resultMap="DriverMap">
         SELECT
             <include refid="driverAs"></include>
@@ -101,7 +101,7 @@
     </select>
     <!--查询一条（可单条件，可多条件）-->
     <select id="selectOne"
-            parameterType="com.blctek.engineserver.pojo.Driver"
+            parameterType="com.fangaoxs.engineserver.pojo.Driver"
             resultMap="DriverMap">
         SELECT
             <include refid="driverAs"></include>
@@ -113,7 +113,7 @@
     </select>
     <!--根据主键id（效率高）查询记录数（可单条件，可多条件）-->
     <select id="count"
-            parameterType="com.blctek.engineserver.pojo.Driver"
+            parameterType="com.fangaoxs.engineserver.pojo.Driver"
             resultType="long">
         SELECT
             count(d.id)

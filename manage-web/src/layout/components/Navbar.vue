@@ -8,7 +8,6 @@
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <el-avatar :size="40" class="user-avatar">{{name}}</el-avatar>
-          <!--<img :src="'blctek.ico'" class="user-avatar">-->
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">

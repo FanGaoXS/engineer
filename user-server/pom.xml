@@ -8,7 +8,7 @@
         <version>2.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.blctek</groupId>
+    <groupId>com.fangaoxs</groupId>
     <artifactId>user-server</artifactId>
     <version>2.0.1</version>
     <name>user-server</name>
@@ -18,15 +18,15 @@
     </properties>
     <dependencies>
 
+        <dependency><!--公用模块-->
+            <groupId>com.fangaoxs</groupId>
+            <artifactId>common-server</artifactId>
+            <version>1.2.6</version>
+        </dependency>
+
         <dependency><!--springboot-aop-->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-
-        <dependency><!--公用模块-->
-            <groupId>com.blctek</groupId>
-            <artifactId>common-server</artifactId>
-            <version>1.2.5</version>
         </dependency>
 
         <dependency><!--druid数据源-->

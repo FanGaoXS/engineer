@@ -16,7 +16,7 @@ spring:
         login-password: mysql
 
 server:
-  port: 8096
+  port: 8092
 
 #使用classpath*可以扫描所有的资源路径（包括jar），使用classpath只扫描当前的资源路径
 mybatis:

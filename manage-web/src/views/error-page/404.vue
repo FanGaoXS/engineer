@@ -10,7 +10,7 @@
       <div class="bullshit">
         <div class="bullshit__oops">出错啦!</div>
         <div class="bullshit__info">版权所有
-          <a style="color:#20a0ff" href="" target="_blank">步络骞科技有限公司</a>
+          <a style="color:#20a0ff" href="" target="_blank"><%= webpackConfig.name %></a>
         </div>
         <div class="bullshit__headline">{{ message }}</div>
         <div class="bullshit__info">请检查您输入的网址是否正确，或单击下面的按钮返回主页。</div>

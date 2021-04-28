@@ -8,7 +8,7 @@
         <version>2.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.bltek</groupId>
+    <groupId>com.fangaoxs</groupId>
     <artifactId>speed-server</artifactId>
     <version>2.0.0</version>
     <name>speed-server</name>
@@ -19,9 +19,9 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.blctek</groupId>
+            <groupId>com.fangaoxs</groupId>
             <artifactId>common-server</artifactId>
-            <version>1.2.5</version>
+            <version>1.2.6</version>
         </dependency>
 
         <dependency>

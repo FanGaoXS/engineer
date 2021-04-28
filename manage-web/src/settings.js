@@ -1,6 +1,8 @@
 module.exports = {
 
-  title: '步络骞后台管理系统',
+  title: '工程用具管理系统（仅供演示）',
+
+  logo: 'logo.png',
 
   /**
    * @type {boolean} true | false

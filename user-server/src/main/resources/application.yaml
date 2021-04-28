@@ -15,7 +15,7 @@ spring:
         login-password: mysql
 #端口号
 server:
-  port: 8097
+  port: 8095
 #mybatis相关
 mybatis:
   mapper-locations: classpath*:mybatis/mapper/*Mapper.xml

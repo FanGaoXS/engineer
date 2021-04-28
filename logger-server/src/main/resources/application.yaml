@@ -13,7 +13,7 @@ spring:
         login-password: mysql
 
 server:
-  port: 8099
+  port: 8093
 
 mybatis:
   mapper-locations: classpath*:mybatis/mapper/*Mapper.xml

@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-header>
-      车辆信息上传
+      {{isVehicleForm?'车辆':'机械'}}信息上传
     </el-header>
     <el-main>
       <el-button-group>
@@ -11,7 +11,7 @@
       <router-view/>
     </el-main>
     <el-footer>
-      Copyright©blctek.com
+      仅供演示
     </el-footer>
   </el-container>
 </template>

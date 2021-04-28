@@ -14,9 +14,7 @@
 </template>
 
 <script>
-
-
-
+  import settings from "@/settings";
   export default {
   name: 'SidebarLogo',
   props: {
@@ -27,9 +25,11 @@
   },
   data() {
     return {
-      title: '步络骞科技有限公司',
-      logo: 'blctek.ico'
+      title: settings.title,
+      logo: settings.logo
     }
+  },
+  created() {
   }
 }
 </script>
@@ -49,7 +49,7 @@
   width: 100%;
   height: 50px;
   line-height: 50px;
-  background: white;
+  background: #2b2f3a;
   text-align: center;
   overflow: hidden;
 

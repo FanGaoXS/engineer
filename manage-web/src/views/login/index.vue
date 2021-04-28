@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">步络骞后台管理系统</h3>
+        <h3 class="title">{{title}}</h3>
       </div>
 
       <el-form-item prop="username">
@@ -59,10 +59,13 @@
 </template>
 
 <script>
+
 import {
   validUsername,
   validPassword
 } from '@/utils/validate'
+
+import settings from "@/settings";
 
 export default {
   name: 'Login',
@@ -97,7 +100,8 @@ export default {
       },
       loading: false,
       passwordType: 'password',
-      redirect: undefined
+      redirect: undefined,
+      title: settings.title
     }
   },
   watch: {
