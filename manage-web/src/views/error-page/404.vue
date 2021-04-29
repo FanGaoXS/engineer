@@ -10,7 +10,7 @@
       <div class="bullshit">
         <div class="bullshit__oops">出错啦!</div>
         <div class="bullshit__info">版权所有
-          <a style="color:#20a0ff" href="" target="_blank"><%= webpackConfig.name %></a>
+          <a style="color:#20a0ff" href="" target="_blank">{{title}}</a>
         </div>
         <div class="bullshit__headline">{{ message }}</div>
         <div class="bullshit__info">请检查您输入的网址是否正确，或单击下面的按钮返回主页。</div>
@@ -21,9 +21,14 @@
 </template>
 
 <script>
-
+import settings from "@/settings";
 export default {
   name: 'Page404',
+  data() {
+    return {
+      title: settings.title
+    }
+  },
   computed: {
     message() {
       return '该页面不被允许访问...'

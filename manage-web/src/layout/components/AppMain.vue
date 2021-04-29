@@ -1,9 +1,10 @@
 <template>
   <section class="app-main">
     <transition name="fade-transform" mode="out-in">
-      <keep-alive>
+      <!--<keep-alive>不启用keep-alive缓存
         <router-view :key="key" />
-      </keep-alive>
+      </keep-alive>-->
+      <router-view :key="key"/>
     </transition>
   </section>
 </template>

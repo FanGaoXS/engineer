@@ -86,14 +86,14 @@
               size="medium"
               round
               icon="el-icon-edit"
-              :disabled="!checkPermission(['admin','developer','supervisor'])"
+              v-permission="['admin','developer','supervisor']"
               @click="handleUpdate(scope.row,scope.$index)">修改</el-button>
             <el-button
               type="danger"
               size="medium"
               round
               icon="el-icon-delete"
-              :disabled="!checkPermission(['admin','developer'])"
+              v-permission="['admin','developer','supervisor']"
               @click="handleDelete(scope.row,scope.$index)">删除</el-button>
           </template>
         </el-table-column>
@@ -201,9 +201,12 @@ import {
   IMAGE_PREFIX_URL  //图片资源前缀
 } from "@/utils/global-variable";
 
-import checkPermission from "@/utils/permission";
+import permission from "@/directive/permission/permission";
 
 export default {
+  directives:{
+    permission
+  },
   filters: {
     plateNumberFilter,
     timeFilter,
@@ -342,8 +345,7 @@ export default {
       this.listQuery.pageSize = vehicleList.pageSize
       this.listQuery.totalSize = vehicleList.totalSize
       this.listLoading = false;
-    },
-    checkPermission
+    }
   },
 }
 </script>

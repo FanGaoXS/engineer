@@ -36,7 +36,7 @@
             round
             type="primary"
             @click="submitForm('form')"
-            :disabled="buttonLoading||$store.state.user.roles[0]==='ghost'"
+            v-permission="['admin','developer','supervisor']"
             :loading="buttonLoading">提交</el-button>
           <el-button
             round
@@ -52,10 +52,16 @@
   import {
     validPassword
   } from "@/utils/validate";
-  import {updatePassword} from "@/api/user/profile";
+  import {
+    updatePassword
+  } from "@/api/user/profile";
+  import permission from "@/directive/permission/permission";
 
   export default {
     name: "index",
+    directives:{
+      permission
+    },
     data() {
       const validatorPassword = (rule, value, callback) => {
         if (!validPassword(value)){

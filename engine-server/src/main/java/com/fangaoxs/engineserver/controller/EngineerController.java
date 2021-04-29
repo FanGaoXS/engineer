@@ -30,8 +30,8 @@ import java.util.UUID;
 public class EngineerController {
     @Autowired
     private EngineerService engineerService;
-    @Autowired
-    private DevService devService;
+    /*@Autowired
+    private DevService devService;*/
 
     @CrudLog("新增车辆及其驾驶员信息")
     @PostMapping("/insertVehicle")
@@ -57,10 +57,10 @@ public class EngineerController {
         engineer.setModelId(voEngineer.getModel().getId());
         engineer.setVehicleNumber(voEngineer.getVehicleNumber());
         engineer.setPlateType(voEngineer.getPlateType());
-        HttpStatus statusCode = devService.insertDev(engineer.getDeviceId(), engineer.getVehicleNumber());
+//        HttpStatus statusCode = devService.insertDev(engineer.getDeviceId(), engineer.getVehicleNumber());
         Boolean result = engineerService.insertEngineerAndDriver(driver, engineer);
         return new ResultResponse()
-                .setCode(statusCode.value())
+                .setCode(20000)
                 .setMessage("新增车辆 "+voEngineer.getVehicleNumber())
                 .setData(result);//返回新增的结果
     }
@@ -89,10 +89,10 @@ public class EngineerController {
         engineer.setModelId(voEngineer.getModel().getId());
         engineer.setMachineNumber(voEngineer.getMachineNumber());
         engineer.setEngineNumber(voEngineer.getEngineNumber());
-        HttpStatus statusCode = devService.insertDev(engineer.getDeviceId(), engineer.getEngineNumber());
+//        HttpStatus statusCode = devService.insertDev(engineer.getDeviceId(), engineer.getEngineNumber());
         Boolean result = engineerService.insertEngineerAndDriver(driver, engineer);
         return new ResultResponse()
-                .setCode(statusCode.value())
+                .setCode(20000)
                 .setMessage("新增机械 "+voEngineer.getEngineNumber())
                 .setData(result);//返回新增结果
     }

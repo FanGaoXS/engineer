@@ -1,11 +1,10 @@
 import axios from 'axios'
 import { Notification } from 'element-ui'
 
-console.log(process.env["VUE_APP_BASE_URL"])
 
 //创建axios实例，配置baseURL和timeout
 const axiosInstance = axios.create({
-  baseURL: process.env["VUE_APP_BASE_URL"],
+  baseURL: process.env.VUE_APP_BASE_URL,
   timeout: 1000*5
 })
 

@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'vue_admin_template_token'
+const TokenKey = 'vue_token'
 
 //从cookies里获得key为'vue_admin_template_token'的token
 export function getToken() {
@@ -8,7 +8,7 @@ export function getToken() {
 }
 
 //将key为vue_admin_template_token的token放入cookies中（设置cookies过期时间（number类型））
-export function setToken(token,expires=7) {
+export function setToken(token,expires=1) {
   return Cookies.set(TokenKey, token, { expires })
 }
 

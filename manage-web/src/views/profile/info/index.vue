@@ -59,14 +59,14 @@
                 type="primary"
                 icon="el-icon-edit"
                 size="medium"
-                :disabled="$store.state.user.roles[0]==='ghost'"
+                v-permission="['admin','developer','supervisor']"
                 round>修改信息</el-button>
               <el-button
                 @click="$router.push('Password')"
                 type="primary"
                 icon="el-icon-edit"
                 size="medium"
-                :disabled="$store.state.user.roles[0]==='ghost'"
+                v-permission="['admin','developer','supervisor']"
                 round>修改密码</el-button>
             </el-form-item>
             <el-form-item v-show="isUpdate">
@@ -190,8 +190,13 @@
     validatePhone
   } from "@/utils/validate";
 
+  import permission from "@/directive/permission/permission";
+
   export default {
     name: "index",
+    directives:{
+      permission
+    },
     filters: {
       timeFilter
     },

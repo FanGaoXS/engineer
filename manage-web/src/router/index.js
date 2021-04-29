@@ -123,8 +123,13 @@ export const asyncRoutes = [
     path: '/logger',
     component: Layout,
     redirect: '/logger/operation',
-    // name: 'Logger',
-    // meta: { title: '日志管理', icon: 'el-icon-tickets'},
+    name: 'Logger',
+    meta: {
+      title: '日志管理',
+      icon: 'el-icon-tickets',
+      roles: [ 'admin', 'developer', 'ghost' ]
+    },
+    alwaysShow: true,
     children: [
       {
         name: 'Operation',
@@ -132,8 +137,7 @@ export const asyncRoutes = [
         component: () => import('@/views/logger/operation/index'),
         meta: {
           title: '操作日志',
-          icon: 'el-icon-tickets',
-          roles: [ 'admin', 'developer', 'ghost' ]
+          icon: 'el-icon-tickets'
         }
       }
     ]
@@ -149,21 +153,23 @@ export const asyncRoutes = [
       icon: 'el-icon-s-check',
       roles: [ 'admin', 'developer', 'ghost' ]
     },
+    alwaysShow: true,
     children: [
-      {
-        name: 'User',
-        path: 'user',
-        component: () => import('@/views/system/user/index'),
-        meta: {
-          title: '用户管理',
-        }
-      },
       {
         name: 'Role',
         path: 'role',
         component: () => import('@/views/system/role/index'),
         meta: {
-          title: '角色管理',
+          title: '角色管理'
+        }
+      },
+      {
+        name: 'User',
+        path: 'user',
+        cache: false,
+        component: () => import('@/views/system/user/index'),
+        meta: {
+          title: '用户管理'
         }
       }
     ]
@@ -178,7 +184,7 @@ export const asyncRoutes = [
     meta: {
       title: '工程用具',
       icon: 'el-icon-truck',
-      roles: [ 'admin', 'developer', 'supervisor', 'ghost' ]
+      roles: [ 'admin', 'developer', 'ghost', 'supervisor' ]
     },
     alwaysShow: true,
     children: [
@@ -211,8 +217,9 @@ export const asyncRoutes = [
     meta: {
       title: '类型管理',
       icon: 'el-icon-s-data',
-      roles: [ 'admin', 'developer', 'supervisor', 'ghost' ]
+      roles: [ 'admin', 'developer', 'ghost', 'supervisor' ]
     },
+    alwaysShow: true,
     children: [
 
       { //车辆类型
@@ -239,7 +246,7 @@ export const asyncRoutes = [
     meta: {
       title: '工程监理',
       icon: 'el-icon-s-order',
-      roles: [ 'admin', 'developer', 'supervisor', 'ghost' ]
+      roles: [ 'admin', 'developer', 'ghost', 'supervisor' ]
     },
     alwaysShow: true,
     children: [

@@ -15,7 +15,7 @@
           size="medium"
           round
           icon="el-icon-upload"
-          :disabled="!checkPermission(['admin','developer'])"
+          v-permission="['admin','developer']"
           @click="handleInsert" style="margin-left: 15px">添加</el-button>
       </div>
       <el-table
@@ -63,15 +63,19 @@
               size="medium"
               round
               icon="el-icon-edit"
+              :disabled="scope.row.role.name==='admin'"
               @click="handleUpdate(scope.row,scope.$index)"
-              :disabled="(scope.row.username==='admin')||!(checkPermission(['admin','developer']))">修改</el-button>
+              v-permission="['admin','developer']">
+            修改</el-button>
             <el-button
               type="danger"
               size="medium"
               round
               icon="el-icon-delete"
               @click="handleDelete(scope.row,scope.$index)"
-              :disabled="(scope.row.username==='admin')||!(checkPermission(['admin','developer']))">删除</el-button>
+              :disabled="scope.row.role.name==='admin'"
+              v-permission="['admin','developer']">
+            删除</el-button>
           </template>
         </el-table-column>
 
@@ -167,9 +171,12 @@
     validatePhone
   } from "@/utils/validate";
 
-  import checkPermission from "@/utils/permission";
+  import permission from "@/directive/permission/permission";
 
   export default {
+    directives:{
+      permission
+    },
     name: "index",
     data() {
       const validatorUsername = (rule, value, callback) => {
@@ -339,8 +346,7 @@
         getRoleList(null,null).then(res=>{
           this.roleOptions = res.data.items;
         })
-      },
-      checkPermission
+      }
     },
   }
 </script>

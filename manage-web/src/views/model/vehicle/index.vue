@@ -8,7 +8,7 @@
           round
           type="primary"
           size="medium"
-          :disabled="!checkPermission(['admin','developer','supervisor'])"
+          v-permission="['admin','developer','supervisor']"
           @click="handleInsert">
           添加
         </el-button>
@@ -54,7 +54,7 @@
               icon="el-icon-edit"
               type="primary"
               size="medium"
-              :disabled="!checkPermission(['admin','developer','supervisor'])"
+              v-permission="['admin','developer','supervisor']"
               @click="handleUpdate(scope.row)">
               修改
             </el-button>
@@ -63,7 +63,7 @@
               size="medium"
               icon="el-icon-delete"
               type="danger"
-              :disabled="!checkPermission(['admin','developer','supervisor'])"
+              v-permission="['admin','developer','supervisor']"
               @click="handleDelete(scope.row,scope.$index)">
               删除
             </el-button>
@@ -142,10 +142,11 @@ import {
   updateModel,
   deleteModel
 } from "@/api/model";
-
-import checkPermission from "@/utils/permission";
-
+import permission from "@/directive/permission/permission";
 export default {
+  directives:{
+    permission
+  },
   data() {
     return {
       buttonLoading: false,
@@ -298,8 +299,7 @@ export default {
           message: '删除类型失败，请联系管理员：'+error
         })
       })
-    },
-    checkPermission
+    }
   }
 }
 </script>
