@@ -91,11 +91,11 @@ const actions = {
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
+        resolve(state.name)
         console.log(state.name,'退出')
         removeToken()   // 移除cookies中的token（第一步必须这么做！！！）
         resetRouter()   // 重置路由
         commit('RESET_STATE')
-        resolve()
       }).catch(error => {
         reject(error)
       })

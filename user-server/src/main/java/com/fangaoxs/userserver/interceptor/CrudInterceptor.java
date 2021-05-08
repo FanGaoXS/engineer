@@ -30,7 +30,7 @@ public class CrudInterceptor implements HandlerInterceptor {
             List<String> roleList = new ArrayList<>();
             roleList.add("admin");
             roleList.add("developer");
-            return roleList.contains(role); //判断角色是否在允许范围内
+            return roleList.contains(role); //判断角色是否在允许范围内（存在返回true，否则返回false）
         } catch (RuntimeException e){ //token异常
             e.printStackTrace();
             response.setCharacterEncoding("UTF-8");

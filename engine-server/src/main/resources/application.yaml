@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: prod #当前激活的application环境配置
+    active: dev #当前激活的application环境配置
 
   application:
     name: engine-server

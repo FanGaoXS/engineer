@@ -47,6 +47,10 @@
         style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
       <div class="tips">
+        <span>用户名：ghost</span>
+        <span>密码：ghost123</span>
+      </div>
+      <div class="tips">
         <el-radio-group v-model="loginForm.validityDay" size="small">
           <el-radio-button :label="30">30天免登录</el-radio-button>
           <el-radio-button :label="180">180天免登录</el-radio-button>

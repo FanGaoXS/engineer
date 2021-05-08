@@ -82,7 +82,7 @@ public class EngineerServiceImpl implements EngineerService {
         engineer.setPageSize(pageSize);
         List<Engineer> engineerList = engineerMapper.selectList(engineer);
         ArrayList<VoEngineer> voEngineerList = new ArrayList<>();
-        engineerList.forEach(engineer1 -> voEngineerList.add(new VoEngineer(engineer1)));
+        engineerList.forEach(dbEngineer -> voEngineerList.add(new VoEngineer(dbEngineer)));
         return voEngineerList;
     }
 
