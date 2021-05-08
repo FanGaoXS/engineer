@@ -14,9 +14,19 @@
 </template>
 
 <script>
+
   import settings from "@/settings";
+
   export default {
   name: 'SidebarLogo',
+  computed: {
+    title() {
+      return settings.title
+    },
+    logo() {
+      return settings.logo
+    }
+  },
   props: {
     collapse: {
       type: Boolean,
@@ -25,11 +35,8 @@
   },
   data() {
     return {
-      title: settings.title,
-      logo: settings.logo
+
     }
-  },
-  created() {
   }
 }
 </script>

@@ -73,6 +73,11 @@ import settings from "@/settings";
 
 export default {
   name: 'Login',
+  computed: {
+    title() {
+      return settings.title;
+    }
+  },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
@@ -104,8 +109,7 @@ export default {
       },
       loading: false,
       passwordType: 'password',
-      redirect: undefined,
-      title: settings.title
+      redirect: undefined
     }
   },
   watch: {
