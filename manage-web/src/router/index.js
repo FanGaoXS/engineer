@@ -78,7 +78,7 @@ export const constantRoutes = [
     ]
   },
 
-  { //相关下载
+  /*{ //相关下载
     path: '/download',
     component: Layout,
     redirect: '/download/app',
@@ -93,7 +93,7 @@ export const constantRoutes = [
         meta: { title: '配置程序' }
       }
     ]
-  },
+  },*/
 
   { //拓展功能
     path: '/expand',
@@ -127,7 +127,7 @@ export const asyncRoutes = [
     meta: {
       title: '日志管理',
       icon: 'el-icon-tickets',
-      roles: [ 'admin', 'developer', 'ghost' ]
+      roles: [ 'admin', 'developer', 'test' ]
     },
     alwaysShow: true,
     children: [
@@ -151,7 +151,7 @@ export const asyncRoutes = [
     meta: {
       title: '系统权限',
       icon: 'el-icon-s-check',
-      roles: [ 'admin', 'developer', 'ghost' ]
+      roles: [ 'admin', 'developer', 'test' ]
     },
     alwaysShow: true,
     children: [
@@ -184,7 +184,7 @@ export const asyncRoutes = [
     meta: {
       title: '工程用具',
       icon: 'el-icon-truck',
-      roles: [ 'admin', 'developer', 'ghost', 'supervisor' ]
+      roles: [ 'admin', 'developer', 'test', 'supervisor' ]
     },
     alwaysShow: true,
     children: [
@@ -217,7 +217,7 @@ export const asyncRoutes = [
     meta: {
       title: '类型管理',
       icon: 'el-icon-s-data',
-      roles: [ 'admin', 'developer', 'ghost', 'supervisor' ]
+      roles: [ 'admin', 'developer', 'test', 'supervisor' ]
     },
     alwaysShow: true,
     children: [
@@ -246,7 +246,7 @@ export const asyncRoutes = [
     meta: {
       title: '工程监理',
       icon: 'el-icon-s-order',
-      roles: [ 'admin', 'developer', 'ghost', 'supervisor' ]
+      roles: [ 'admin', 'developer', 'test', 'supervisor' ]
     },
     alwaysShow: true,
     children: [

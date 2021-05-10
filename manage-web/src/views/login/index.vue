@@ -7,9 +7,9 @@
       </div>
 
       <el-form-item prop="username">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-        </span>
+      <span class="svg-container">
+        <svg-icon icon-class="user" />
+      </span>
         <el-input
           ref="username"
           v-model="loginForm.username"
@@ -22,9 +22,9 @@
       </el-form-item>
 
       <el-form-item prop="password">
-        <span class="svg-container">
-          <svg-icon icon-class="password" />
-        </span>
+      <span class="svg-container">
+        <svg-icon icon-class="password" />
+      </span>
         <el-input
           :key="passwordType"
           ref="password"
@@ -37,8 +37,8 @@
           @keyup.enter.native="handleLogin"
         />
         <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-        </span>
+        <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+      </span>
       </el-form-item>
 
       <el-button
@@ -47,8 +47,8 @@
         style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
       <div class="tips">
-        <span>用户名：ghost</span>
-        <span>密码：ghost123</span>
+        <span>用户名：testtest</span>
+        <span>密码：testtest123</span>
       </div>
       <div class="tips">
         <el-radio-group v-model="loginForm.validityDay" size="small">
