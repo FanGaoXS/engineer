@@ -16,6 +16,11 @@
               首页
             </el-dropdown-item>
           </router-link>
+          <router-link to="/profile/info">
+            <el-dropdown-item>
+              个人中心
+            </el-dropdown-item>
+          </router-link>
           <router-link to="/profile/password">
             <el-dropdown-item>
               修改密码

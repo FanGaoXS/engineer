@@ -60,7 +60,7 @@ export const constantRoutes = [
   { //个人中心
     path: '/profile',
     component: Layout,
-    redirect: '/profile/info',
+    hidden: true,
     children: [
       {
         path: 'info',

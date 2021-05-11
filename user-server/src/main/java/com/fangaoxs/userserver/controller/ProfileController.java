@@ -13,6 +13,8 @@ import com.fangaoxs.userserver.vo.VoUserUpdatePassword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Created with IntelliJ IDEA.
  *
