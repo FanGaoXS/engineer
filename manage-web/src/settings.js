@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '工程用具管理系统（仅供演示）',
+  title: '工程车辆管理系统（仅供演示）',
 
   logo: 'logo.png',
 

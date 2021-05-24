@@ -90,7 +90,7 @@
         <el-col :xs="24" :sm="24" :md="16" :lg="18">
           <div class="filter-container">
 
-            <el-select placeholder="根据客户端查询" v-model="listQuery.client" clearable @change="handleListQueryChange" style="margin-left: 15px">
+            <el-select placeholder="根据客户端查询" v-model="listQuery.client" clearable @change="handleListQueryConditionChange" style="margin-left: 15px">
               <el-option
                 v-for=" item in clientOptions"
                 :key="item"
@@ -293,6 +293,10 @@
           this.buttonLoading = false
           this.$router.go(0)
         },1000*second) //多少秒后刷新当前页
+      },
+      handleListQueryConditionChange(){ //利用关键字查询分页时，将当前页置为1再重新请求数据
+        this.listQuery.currentPage = 1
+        this.fetchLoggerList()
       },
       handleListQueryChange(){
         this.fetchLoggerList()

@@ -3,7 +3,7 @@
     <el-card shadow="hover">
       <div class="filter-container">
 
-        <el-select placeholder="根据用户查询" v-model="listQuery.executor" clearable @change="handleListQueryChange">
+        <el-select placeholder="根据用户查询" v-model="listQuery.executor" clearable @change="handleListQueryConditionChange">
           <el-option
             v-for=" item in executorOptions"
             :key="item.name"
@@ -12,7 +12,7 @@
           ></el-option>
         </el-select>
 
-        <el-select placeholder="根据客户端查询" v-model="listQuery.client" clearable @change="handleListQueryChange" style="margin-left: 15px">
+        <el-select placeholder="根据客户端查询" v-model="listQuery.client" clearable @change="handleListQueryConditionChange" style="margin-left: 15px">
           <el-option
             v-for=" item in clientOptions"
             :key="item"
@@ -125,12 +125,16 @@
       this.fetchList(this.listQuery.executor,this.listQuery.client,this.listQuery.currentPage, this.listQuery.pageSize)
     },
     methods: {
-      handleListQueryChange(){
-        this.fetchList(this.listQuery.executor,this.listQuery.client,this.listQuery.currentPage, this.listQuery.pageSize)
+      handleListQueryConditionChange(){ //利用关键字查询分页时，将当前页置为1再重新请求数据
+        this.listQuery.currentPage = 1
+        this.fetchList()
       },
-      async fetchList(executor,client,currentPage,pageSize) {
+      handleListQueryChange(){
+        this.fetchList()
+      },
+      async fetchList() {
         this.listLoading = true
-        const { data:loggerList } = await getLoggerList(executor,client,currentPage,pageSize)
+        const { data:loggerList } = await getLoggerList(this.listQuery.executor,this.listQuery.client,this.listQuery.currentPage, this.listQuery.pageSize)
         this.list = loggerList.items
         this.listQuery.currentPage = loggerList.currentPage
         this.listQuery.pageSize = loggerList.pageSize
